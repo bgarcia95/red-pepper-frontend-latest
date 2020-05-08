@@ -108,10 +108,9 @@ const useStyles = makeStyles((theme) => ({
 const LogOutButton = withStyles(() => ({
   root: {
     color: "black",
-    backgroundColor: grey[300],
+    backgroundColor: "rgba(241, 250, 238, 0.7)",
     "&:hover": {
-      backgroundColor: grey[700],
-      color: "white",
+      backgroundColor: "rgba(241, 250, 238, 1)",
     },
   },
 }))(Button);
