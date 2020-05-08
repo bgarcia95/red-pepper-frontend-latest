@@ -24,41 +24,49 @@ import { FaUtensils } from "react-icons/fa";
 import { Button } from "@material-ui/core";
 
 import { grey, red } from "@material-ui/core/colors";
+import { NavLink } from "react-router-dom";
 
 const drawerOptions = () => {
   const options = [
     {
       text: "Insumos",
       icon: <FaPepperHot size="1.2rem" />,
+      to: "/supplies",
     },
     {
       text: "Proveedores",
       icon: <FaUsers size="1.2rem" />,
+      to: "/suppliers",
     },
     {
       text: "Compra Insumos",
       icon: <FaShoppingCart size="1.2rem" />,
+      to: "/supplies-purchase",
     },
     {
       text: "Categorías",
       icon: <FaList size="1.2rem" />,
+      to: "/categories",
     },
     {
       text: "Platos",
       icon: <FaUtensils size="1.2rem" />,
+      to: "/dishes",
     },
     {
       text: "Combos",
       icon: <FastfoodIcon />,
+      to: "/combos",
     },
     {
       text: "Mesas",
       icon: <TabletIcon />,
+      to: "/tables",
     },
   ];
 
   return options.map((item, index) => (
-    <ListItem button key={index}>
+    <ListItem component={NavLink} to={item.to} button key={index}>
       <ListItemIcon key={index}>{item.icon}</ListItemIcon>
       <ListItemText primary={item.text} />
     </ListItem>
@@ -130,17 +138,6 @@ const Navigation = (props) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>{drawerOptions()}</List>
-      {/* <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
     </div>
   );
 
@@ -202,10 +199,6 @@ const Navigation = (props) => {
 };
 
 Navigation.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
