@@ -1,6 +1,6 @@
 import React from "react";
 import Navigation from "../components/Navigation/Navigation";
-import { Typography, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import AppRouter from "../router/AppRouter";
 
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
