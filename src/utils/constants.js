@@ -1,1 +1,1 @@
-export const SERVER_URL = process.env.PUBLIC_URL;
+export const { REACT_APP_SERVER_URL } = process.env;
