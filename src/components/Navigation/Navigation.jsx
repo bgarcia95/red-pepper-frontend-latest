@@ -26,6 +26,58 @@ import { Button } from "@material-ui/core";
 import { grey, red } from "@material-ui/core/colors";
 import { NavLink } from "react-router-dom";
 
+// Styles
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    backgroundColor: red[500],
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerContainer: {
+    overflow: "auto",
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    backgroundColor: grey[50],
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
+const LogOutButton = withStyles(() => ({
+  root: {
+    color: "black",
+    backgroundColor: "rgba(241, 250, 238, 0.7)",
+    "&:hover": {
+      backgroundColor: "rgba(241, 250, 238, 1)",
+    },
+  },
+}))(Button);
+
+// Menu Options
 const drawerOptions = () => {
   const options = [
     {
@@ -72,56 +124,6 @@ const drawerOptions = () => {
     </ListItem>
   ));
 };
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-    backgroundColor: red[500],
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: grey[50],
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
-
-const LogOutButton = withStyles(() => ({
-  root: {
-    color: "black",
-    backgroundColor: "rgba(241, 250, 238, 0.7)",
-    "&:hover": {
-      backgroundColor: "rgba(241, 250, 238, 1)",
-    },
-  },
-}))(Button);
 
 const Navigation = (props) => {
   const { window } = props;
