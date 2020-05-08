@@ -19,7 +19,7 @@ const AppRouter = () => {
       <Route path="/combos" component={Combos} />
       <Route path="/tables" component={Tables} />
       <Route path="/" component={Supplies} />
-      <Redirect from="/" exact to={Supplies} />
+      <Redirect from="/" exact to="supplies" />
     </Switch>
   );
 };
