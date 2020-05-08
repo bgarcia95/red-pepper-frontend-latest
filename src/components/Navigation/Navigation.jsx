@@ -23,7 +23,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaUtensils } from "react-icons/fa";
 import { Button } from "@material-ui/core";
 
-import { purple, grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 
 const drawerOptions = () => {
   const options = [
@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    backgroundColor: red[500],
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -93,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: grey[50],
   },
   content: {
     flexGrow: 1,
@@ -103,12 +105,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogOutButton = withStyles((theme) => ({
+const LogOutButton = withStyles(() => ({
   root: {
     color: "black",
     backgroundColor: grey[300],
     "&:hover": {
-      backgroundColor: grey[600],
+      backgroundColor: grey[700],
       color: "white",
     },
   },
@@ -162,7 +164,7 @@ const Navigation = (props) => {
           <Typography variant="h6" noWrap className={classes.title}>
             Red Pepper App
           </Typography>
-          <LogOutButton>Login</LogOutButton>
+          <LogOutButton>Logout</LogOutButton>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
