@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import TabletIcon from "@material-ui/icons/Tablet";
@@ -21,6 +21,9 @@ import { FaUsers } from "react-icons/fa";
 import { FaList } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUtensils } from "react-icons/fa";
+import { Button } from "@material-ui/core";
+
+import { purple, grey } from "@material-ui/core/colors";
 
 const drawerOptions = () => {
   const options = [
@@ -95,9 +98,23 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
-function ResponsiveDrawer(props) {
+const LogOutButton = withStyles((theme) => ({
+  root: {
+    color: "black",
+    backgroundColor: grey[300],
+    "&:hover": {
+      backgroundColor: grey[600],
+      color: "white",
+    },
+  },
+}))(Button);
+
+const Navigation = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -142,9 +159,10 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
+          <Typography variant="h6" noWrap className={classes.title}>
+            Red Pepper App
           </Typography>
+          <LogOutButton>Login</LogOutButton>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -180,9 +198,9 @@ function ResponsiveDrawer(props) {
       </nav>
     </div>
   );
-}
+};
 
-ResponsiveDrawer.propTypes = {
+Navigation.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -190,4 +208,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default Navigation;
