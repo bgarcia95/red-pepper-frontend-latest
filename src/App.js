@@ -1,10 +1,13 @@
 import React from "react";
 import Layout from "./hoc/Layout";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   return (
     <div className="App">
-      <Layout />
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
     </div>
   );
 };
