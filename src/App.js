@@ -1,9 +1,10 @@
 import React from "react";
+import Layout from "./hoc/Layout";
 
 function App() {
   return (
     <div className="App">
-      <p>Hello World!</p>
+      <Layout />
     </div>
   );
 }
