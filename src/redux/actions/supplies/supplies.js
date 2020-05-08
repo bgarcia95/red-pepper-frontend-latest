@@ -1,4 +1,4 @@
-import axiosClient from "../../config/axios";
+import http from "../../../services/httpService";
 import {
   GET_SUPPLIES_START,
   GET_SUPPLIES_SUCCESS,
@@ -24,7 +24,7 @@ export const getSuppliesAction = () => {
     dispatch(getSuppliesStart());
 
     // Retrieve data from API
-    axiosClient
+    http
       .get("/supply")
       .then((response) => {
         // console.log(response);
