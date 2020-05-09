@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
-import SuppliesTable from "../../components/Table/Table";
+import TableFormat from "../../components/Table/Table";
 import { Typography, Container, Divider } from "@material-ui/core";
 
 const Supplies = () => {
@@ -19,6 +19,7 @@ const Supplies = () => {
     "Descripción",
     "Unidad de Medida",
     "Cantidad Mínima",
+    "Acciones",
   ];
 
   return (
@@ -29,7 +30,7 @@ const Supplies = () => {
         </Typography>
         <Divider style={{ margin: "2rem 0" }} />
         <div style={{ margin: "2rem 0" }} />
-        <SuppliesTable payload={supplies} tableHeaders={tableHeaders} />
+        <TableFormat payload={supplies} tableHeaders={tableHeaders} />
       </Container>
     </React.Fragment>
   );
