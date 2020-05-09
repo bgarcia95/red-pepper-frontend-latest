@@ -14,7 +14,8 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
-import { TableHead } from "@material-ui/core";
+import { TableHead, Button, withStyles } from "@material-ui/core";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-function TablePaginationActions(props) {
+const TablePaginationActions = (props) => {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -84,7 +85,7 @@ function TablePaginationActions(props) {
       </IconButton>
     </div>
   );
-}
+};
 
 TablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
@@ -98,7 +99,26 @@ const useStyles2 = makeStyles({
   },
 });
 
-const SuppliesTable = (props) => {
+// Action Buttons
+
+const EditButton = withStyles(() => ({
+  root: {
+    height: "30px",
+  },
+}))(Button);
+
+const DeleteButton = withStyles(() => ({
+  root: {
+    color: "white",
+    backgroundColor: "rgba(255,0,0, 0.8)",
+    "&:hover": {
+      backgroundColor: "rgba(255,0,0, 1)",
+    },
+    height: "30px",
+  },
+}))(Button);
+
+const TableFormat = (props) => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -141,14 +161,25 @@ const SuppliesTable = (props) => {
             for (const key in item) {
               keyValues.push(key);
             }
-
             return (
-              <TableRow key={item["id"]}>
+              <TableRow key={item.id}>
                 {keyValues.map((key, index) => (
                   <TableCell key={index} align="center">
                     {item[key]}
                   </TableCell>
                 ))}
+                <TableCell className="button-container">
+                  <EditButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() => console.log(item.id)}
+                  >
+                    <FaEdit size="18" />
+                  </EditButton>
+                  <DeleteButton variant="contained">
+                    <FaTrash />
+                  </DeleteButton>
+                </TableCell>
               </TableRow>
             );
           })}
@@ -182,4 +213,4 @@ const SuppliesTable = (props) => {
   );
 };
 
-export default SuppliesTable;
+export default TableFormat;
