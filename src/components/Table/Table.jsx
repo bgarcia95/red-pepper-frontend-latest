@@ -14,8 +14,9 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
-import { TableHead, Button, withStyles } from "@material-ui/core";
+import { TableHead } from "@material-ui/core";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { EditButton, DeleteButton } from "../Buttons/Buttons";
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -87,36 +88,20 @@ const TablePaginationActions = (props) => {
   );
 };
 
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
-const useStyles2 = makeStyles({
+const useStyles2 = makeStyles((theme) => ({
   table: {
     minWidth: 500,
   },
-});
-
-// Action Buttons
-
-const EditButton = withStyles(() => ({
-  root: {
-    height: "30px",
-  },
-}))(Button);
-
-const DeleteButton = withStyles(() => ({
-  root: {
-    color: "white",
-    backgroundColor: "rgba(255,0,0, 0.8)",
-    "&:hover": {
-      backgroundColor: "rgba(255,0,0, 1)",
+  buttonContainer: {
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
     },
-    height: "30px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
-}))(Button);
+}));
 
 const TableFormat = (props) => {
   const classes = useStyles2();
@@ -168,17 +153,19 @@ const TableFormat = (props) => {
                     {item[key]}
                   </TableCell>
                 ))}
-                <TableCell className="button-container">
-                  <EditButton
-                    variant="contained"
-                    color="primary"
-                    onClick={() => console.log(item.id)}
-                  >
-                    <FaEdit size="18" />
-                  </EditButton>
-                  <DeleteButton variant="contained">
-                    <FaTrash />
-                  </DeleteButton>
+                <TableCell>
+                  <div className={classes.buttonContainer}>
+                    <EditButton
+                      variant="contained"
+                      color="primary"
+                      onClick={() => console.log(item.id)}
+                    >
+                      <FaEdit size="18" />
+                    </EditButton>
+                    <DeleteButton variant="contained">
+                      <FaTrash />
+                    </DeleteButton>
+                  </div>
                 </TableCell>
               </TableRow>
             );
@@ -193,7 +180,7 @@ const TableFormat = (props) => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, { label: "Todos", value: -1 }]}
               colSpan={6}
               count={payload.length}
               rowsPerPage={rowsPerPage}
@@ -205,6 +192,10 @@ const TableFormat = (props) => {
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}
+              labelDisplayedRows={({ from, to, count }) => {
+                return "" + from + "-" + to + " de " + count;
+              }}
+              labelRowsPerPage="Filas por página"
             />
           </TableRow>
         </TableFooter>
