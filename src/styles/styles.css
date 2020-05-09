@@ -1,3 +1,10 @@
 .makeStyles-toolbar-8 {
   background-color: rgb(244, 67, 54);
 }
+
+.button-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
