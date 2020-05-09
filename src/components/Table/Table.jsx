@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -15,8 +14,9 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { TableHead } from "@material-ui/core";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import { EditButton, DeleteButton } from "../Buttons/Buttons";
+import { FaTrash } from "react-icons/fa";
+import { DeleteButton } from "../Buttons/Buttons";
+import FormDialog from "../Modals/FormDialog";
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -129,78 +129,74 @@ const TableFormat = (props) => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>{headerOptions()}</TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? payload.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : payload
-          ).map((item) => {
-            let keyValues = [];
-            for (const key in item) {
-              keyValues.push(key);
-            }
-            return (
-              <TableRow key={item.id}>
-                {keyValues.map((key, index) => (
-                  <TableCell key={index} align="center">
-                    {item[key]}
+    <React.Fragment>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>{headerOptions()}</TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? payload.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : payload
+            ).map((item) => {
+              let keyValues = [];
+              for (const key in item) {
+                keyValues.push(key);
+              }
+              return (
+                <TableRow key={item.id}>
+                  {keyValues.map((key, index) => (
+                    <TableCell key={index} align="center">
+                      {item[key]}
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <div className={classes.buttonContainer}>
+                      <FormDialog buttonLabel="Editar" supply={item} />
+                      <DeleteButton variant="contained">
+                        <FaTrash />
+                      </DeleteButton>
+                    </div>
                   </TableCell>
-                ))}
-                <TableCell>
-                  <div className={classes.buttonContainer}>
-                    <EditButton
-                      variant="contained"
-                      color="primary"
-                      onClick={() => console.log(item.id)}
-                    >
-                      <FaEdit size="18" />
-                    </EditButton>
-                    <DeleteButton variant="contained">
-                      <FaTrash />
-                    </DeleteButton>
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
+                </TableRow>
+              );
+            })}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "Todos", value: -1 }]}
+                colSpan={tableHeaders.length}
+                count={payload.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { "aria-label": "rows per page" },
+                  native: true,
+                }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+                labelDisplayedRows={({ from, to, count }) => {
+                  return "" + from + "-" + to + " de " + count;
+                }}
+                labelRowsPerPage="Filas por página"
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "Todos", value: -1 }]}
-              colSpan={6}
-              count={payload.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
-                native: true,
-              }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-              labelDisplayedRows={({ from, to, count }) => {
-                return "" + from + "-" + to + " de " + count;
-              }}
-              labelRowsPerPage="Filas por página"
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </React.Fragment>
   );
 };
 

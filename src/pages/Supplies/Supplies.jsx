@@ -2,9 +2,26 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
 import TableFormat from "../../components/Table/Table";
-import { Typography, Container, Divider } from "@material-ui/core";
+import {
+  Typography,
+  Container,
+  Divider,
+  Grid,
+  makeStyles,
+} from "@material-ui/core";
+import FormDialog from "../../components/Modals/FormDialog";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  container: {
+    textAlign: "center",
+  },
+}));
 
 const Supplies = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     const getSupplies = () => dispatch(getSuppliesAction());
@@ -29,6 +46,9 @@ const Supplies = () => {
           Administración de Insumos
         </Typography>
         <Divider style={{ margin: "2rem 0" }} />
+        <Grid item xs={12} className={classes.container}>
+          <FormDialog buttonLabel="Agregar Insumo" />
+        </Grid>
         <div style={{ margin: "2rem 0" }} />
         <TableFormat payload={supplies} tableHeaders={tableHeaders} />
       </Container>
