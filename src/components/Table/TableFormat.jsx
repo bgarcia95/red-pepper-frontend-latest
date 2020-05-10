@@ -107,7 +107,7 @@ const TableFormat = (props) => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { payload, tableHeaders } = props;
+  const { payload, tableHeaders, formTarget } = props;
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, payload.length - page * rowsPerPage);
 
@@ -156,7 +156,11 @@ const TableFormat = (props) => {
                   ))}
                   <TableCell>
                     <div className={classes.buttonContainer}>
-                      <FormDialog buttonLabel="Editar" supply={item} />
+                      <FormDialog
+                        formTarget={formTarget}
+                        buttonLabel="Editar"
+                        payload={item}
+                      />
                       <DeleteButton variant="contained">
                         <FaTrash />
                       </DeleteButton>
