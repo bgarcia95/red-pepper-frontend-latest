@@ -2,6 +2,9 @@ import {
   GET_SUPPLIES_START,
   GET_SUPPLIES_SUCCESS,
   GET_SUPPLIES_ERROR,
+  ADD_SUPPLY_START,
+  ADD_SUPPLY_SUCCESS,
+  ADD_SUPPLY_ERROR,
 } from "../../utils/actions";
 
 // Default state
@@ -34,7 +37,23 @@ export default (state = suppliesDefaultState, action) => {
         isLoading: false,
         error: true,
       };
+    case ADD_SUPPLY_START:
+      return {
+        ...state,
+        error: null,
+      };
+    case ADD_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        supplies: [...state.supplies, action.supply],
+        error: null,
+      };
 
+    case ADD_SUPPLY_ERROR:
+      return {
+        ...state,
+        error: true,
+      };
     default:
       return state;
   }
