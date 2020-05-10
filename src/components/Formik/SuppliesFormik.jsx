@@ -2,9 +2,10 @@ import React from "react";
 import { TextField, FormControl, makeStyles } from "@material-ui/core";
 import { AddButton, CancelButton } from "../Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
-
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { addSupplyAction } from "../../redux/actions/supplies/supplies";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SuppliesFormik = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { toggle } = props;
 
   return (
@@ -58,6 +60,23 @@ const SuppliesFormik = (props) => {
           handleBlur,
           isValid,
         } = props;
+
+        const onSubmit = (e) => {
+          e.preventDefault();
+
+          dispatch(
+            addSupplyAction({
+              Name: values.name,
+              Description: values.description,
+              MinimumQty: values.minimumQty,
+              Presentation: values.presentation,
+              UnitOfMeasure: values.unitOfMeasure,
+            })
+          );
+
+          toggle();
+        };
+
         return (
           <React.Fragment>
             <form className={classes.form}>
@@ -166,7 +185,7 @@ const SuppliesFormik = (props) => {
                   Cancelar
                 </CancelButton>
                 <AddButton
-                  onClick={toggle}
+                  onClick={(e) => onSubmit(e)}
                   variant="contained"
                   disabled={!dirty || isSubmitting || !isValid}
                 >
