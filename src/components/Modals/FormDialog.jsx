@@ -6,6 +6,7 @@ import SuppliesFormik from "../Formik/SuppliesFormik";
 import { makeStyles } from "@material-ui/core";
 import { EditButton, AddButton } from "../Buttons/Buttons";
 import { FaEdit } from "react-icons/fa";
+import SuppliersFormik from "../Formik/SuppliersFormik";
 
 const useStyles = makeStyles((theme) => ({
   formControlLabel: {
@@ -23,12 +24,13 @@ const FormDialog = (props) => {
 
   const [open, setOpen] = React.useState(false);
 
+  const { title } = props;
+
   const toggleModal = () => {
     setOpen(!open);
   };
 
   let button = "";
-  let title = "";
 
   if (buttonLabel === "Editar") {
     button = (
@@ -36,10 +38,28 @@ const FormDialog = (props) => {
         <FaEdit size="18" />
       </EditButton>
     );
-    title = "Editar Insumo";
   } else {
-    button = <AddButton onClick={toggleModal}>{buttonLabel}</AddButton>;
-    title = "Agregar Insumo";
+    button = (
+      <AddButton variant="contained" onClick={toggleModal}>
+        {buttonLabel}
+      </AddButton>
+    );
+  }
+
+  let form;
+  let sufix = "";
+
+  switch (props.formTarget) {
+    case "supply":
+      form = <SuppliesFormik {...props} />;
+      sufix = "Insumo";
+      break;
+    case "supplier":
+      form = <SuppliersFormik {...props} />;
+      sufix = "Proveedor";
+      break;
+    default:
+      break;
   }
 
   return (
@@ -52,11 +72,9 @@ const FormDialog = (props) => {
         fullWidth={true}
       >
         <DialogTitle id="form-dialog-title" className={classes.center}>
-          {title}
+          {title ? title : `Editar ${sufix}`}
         </DialogTitle>
-        <DialogContent>
-          <SuppliesFormik toggle={toggleModal} supply={props.supply} />
-        </DialogContent>
+        <DialogContent>{form}</DialogContent>
       </Dialog>
     </div>
   );
