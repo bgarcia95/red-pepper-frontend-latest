@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
-import TableFormat from "../../components/Table/Table";
+import TableFormat from "../../components/Table/TableFormat";
 import {
   Typography,
   Container,
@@ -39,6 +39,8 @@ const Supplies = () => {
     "Acciones",
   ];
 
+  const formTarget = "supply";
+
   return (
     <React.Fragment>
       <Container>
@@ -47,10 +49,18 @@ const Supplies = () => {
         </Typography>
         <Divider style={{ margin: "2rem 0" }} />
         <Grid item xs={12} className={classes.container}>
-          <FormDialog buttonLabel="Agregar Insumo" />
+          <FormDialog
+            formTarget={formTarget}
+            buttonLabel="Agregar Insumo"
+            title="Agregar Insumo"
+          />
         </Grid>
         <div style={{ margin: "2rem 0" }} />
-        <TableFormat payload={supplies} tableHeaders={tableHeaders} />
+        <TableFormat
+          payload={supplies}
+          tableHeaders={tableHeaders}
+          formTarget={formTarget}
+        />
       </Container>
     </React.Fragment>
   );
