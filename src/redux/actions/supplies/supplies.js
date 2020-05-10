@@ -3,7 +3,11 @@ import {
   GET_SUPPLIES_START,
   GET_SUPPLIES_SUCCESS,
   GET_SUPPLIES_ERROR,
+  ADD_SUPPLY_START,
+  ADD_SUPPLIER_SUCCESS,
+  ADD_SUPPLY_ERROR,
 } from "../../utils/actions";
+import Swal from "sweetalert2";
 
 // All GET methods
 export const getSuppliesStart = () => ({
@@ -33,6 +37,44 @@ export const getSuppliesAction = () => {
       .catch((error) => {
         console.log(error);
         dispatch(getSuppliesError());
+      });
+  };
+};
+
+// ALL POST METHODS
+
+export const addSupplyStart = () => ({
+  type: ADD_SUPPLY_START,
+});
+
+export const addSupplySuccess = (supply) => ({
+  type: ADD_SUPPLIER_SUCCESS,
+  supply,
+});
+
+export const addSupplyError = (error) => ({
+  type: ADD_SUPPLY_ERROR,
+  error,
+});
+
+export const addSupplyAction = (supply) => {
+  return (dispatch) => {
+    dispatch(addSupplyStart());
+
+    // Insert into db
+    http
+      .post("/supply", supply)
+      .then((response) => {
+        dispatch(addSupplySuccess(response.data));
+        Swal.fire(
+          "¡Guardado!",
+          "El insumo fue guardado satisfactoriamente",
+          "success"
+        );
+        dispatch(getSuppliesAction());
+      })
+      .catch((error) => {
+        dispatch(addSupplyError(error));
       });
   };
 };
