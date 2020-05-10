@@ -4,8 +4,8 @@ import {
   GET_SUPPLIES_SUCCESS,
   GET_SUPPLIES_ERROR,
   ADD_SUPPLY_START,
-  ADD_SUPPLIER_SUCCESS,
   ADD_SUPPLY_ERROR,
+  ADD_SUPPLY_SUCCESS,
 } from "../../utils/actions";
 import Swal from "sweetalert2";
 
@@ -48,7 +48,7 @@ export const addSupplyStart = () => ({
 });
 
 export const addSupplySuccess = (supply) => ({
-  type: ADD_SUPPLIER_SUCCESS,
+  type: ADD_SUPPLY_SUCCESS,
   supply,
 });
 
