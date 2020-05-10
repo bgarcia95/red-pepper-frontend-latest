@@ -9,6 +9,9 @@ import {
   UPDATE_SUPPLY_START,
   UPDATE_SUPPLY_SUCCESS,
   UPDATE_SUPPLY_ERROR,
+  DELETE_SUPPLY_START,
+  DELETE_SUPPLY_SUCCESS,
+  DELETE_SUPPLY_ERROR,
 } from "../../utils/actions";
 import Swal from "sweetalert2";
 
@@ -116,6 +119,37 @@ export const updateSupplyAction = (supply) => {
       .catch((error) => {
         console.log(error);
         dispatch(updateSupplyError(error));
+      });
+  };
+};
+
+// ALL DELETE METHODS
+
+export const deleteSupplyStart = () => ({
+  type: DELETE_SUPPLY_START,
+});
+
+export const deleteSupplySuccess = (id) => ({
+  type: DELETE_SUPPLY_SUCCESS,
+  id,
+});
+
+export const deleteSupplyError = (error) => ({
+  type: DELETE_SUPPLY_ERROR,
+  error,
+});
+export const deleteSupplyAction = (id) => {
+  return (dispatch) => {
+    dispatch(deleteSupplyStart());
+
+    http
+      .delete(`/supply?id=${id}`)
+      .then((response) => {
+        dispatch(deleteSupplySuccess(id));
+        dispatch(getSuppliesAction());
+      })
+      .catch((error) => {
+        dispatch(deleteSupplyError(error));
       });
   };
 };
