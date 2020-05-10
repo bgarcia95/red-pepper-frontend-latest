@@ -51,11 +51,11 @@ const FormDialog = (props) => {
 
   switch (props.formTarget) {
     case "supply":
-      form = <SuppliesFormik {...props} />;
+      form = <SuppliesFormik {...props} toggle={toggleModal} modal={open} />;
       sufix = "Insumo";
       break;
     case "supplier":
-      form = <SuppliersFormik {...props} />;
+      form = <SuppliersFormik {...props} toggle={toggleModal} modal={open} />;
       sufix = "Proveedor";
       break;
     default:
