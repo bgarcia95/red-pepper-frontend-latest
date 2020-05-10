@@ -32,12 +32,12 @@ const SuppliesFormik = (props) => {
   return (
     <Formik
       initialValues={{
-        name: props.supply ? props.supply.name : "",
+        name: props.payload ? props.payload.name : "",
         center: classes.center,
-        description: props.supply ? props.supply.description : "",
-        minimumQty: props.supply ? props.supply.minimumQty : "",
-        presentation: props.supply ? props.supply.presentation : "",
-        unitOfMeasure: props.supply ? props.supply.unitOfMeasure : "",
+        description: props.payload ? props.payload.description : "",
+        minimumQty: props.payload ? props.payload.minimumQty : "",
+        presentation: props.payload ? props.payload.presentation : "",
+        unitOfMeasure: props.payload ? props.payload.unitOfMeasure : "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -170,7 +170,7 @@ const SuppliesFormik = (props) => {
                   variant="contained"
                   disabled={!dirty || isSubmitting || !isValid}
                 >
-                  Agregar
+                  Confirmar
                 </AddButton>
               </div>
             </DialogActions>
