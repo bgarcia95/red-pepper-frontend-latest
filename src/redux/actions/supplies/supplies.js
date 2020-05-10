@@ -108,7 +108,7 @@ export const updateSupplyAction = (supply) => {
         dispatch(updateSupplySuccess(response.data));
         Swal.fire(
           "¡Guardado!",
-          "El insumo fue guardado satisfactoriamente",
+          "El insumo fue actualizado satisfactoriamente",
           "success"
         );
         dispatch(getSuppliesAction());
