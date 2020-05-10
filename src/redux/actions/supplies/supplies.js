@@ -6,6 +6,9 @@ import {
   ADD_SUPPLY_START,
   ADD_SUPPLY_ERROR,
   ADD_SUPPLY_SUCCESS,
+  UPDATE_SUPPLY_START,
+  UPDATE_SUPPLY_SUCCESS,
+  UPDATE_SUPPLY_ERROR,
 } from "../../utils/actions";
 import Swal from "sweetalert2";
 
@@ -75,6 +78,44 @@ export const addSupplyAction = (supply) => {
       })
       .catch((error) => {
         dispatch(addSupplyError(error));
+      });
+  };
+};
+
+// ALL PUT (PATCH) METHODS
+
+export const updateSupplyStart = () => ({
+  type: UPDATE_SUPPLY_START,
+});
+
+export const updateSupplySuccess = (supply) => ({
+  type: UPDATE_SUPPLY_SUCCESS,
+  supply,
+});
+
+export const updateSupplyError = (error) => ({
+  type: UPDATE_SUPPLY_ERROR,
+  error,
+});
+
+export const updateSupplyAction = (supply) => {
+  return (dispatch) => {
+    dispatch(updateSupplyStart());
+
+    http
+      .put("/supply", supply)
+      .then((response) => {
+        dispatch(updateSupplySuccess(response.data));
+        Swal.fire(
+          "¡Guardado!",
+          "El insumo fue guardado satisfactoriamente",
+          "success"
+        );
+        dispatch(getSuppliesAction());
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(updateSupplyError(error));
       });
   };
 };

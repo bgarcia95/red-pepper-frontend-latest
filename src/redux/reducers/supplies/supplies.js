@@ -5,6 +5,9 @@ import {
   ADD_SUPPLY_START,
   ADD_SUPPLY_SUCCESS,
   ADD_SUPPLY_ERROR,
+  UPDATE_SUPPLY_START,
+  UPDATE_SUPPLY_SUCCESS,
+  UPDATE_SUPPLY_ERROR,
 } from "../../utils/actions";
 
 // Default state
@@ -50,6 +53,25 @@ export default (state = suppliesDefaultState, action) => {
       };
 
     case ADD_SUPPLY_ERROR:
+      return {
+        ...state,
+        error: true,
+      };
+
+    case UPDATE_SUPPLY_START:
+      return {
+        ...state,
+        error: null,
+      };
+    case UPDATE_SUPPLY_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        supplies: state.supplies.map(
+          (supply) => supply.id === action.supply.id && (supply = action.supply)
+        ),
+      };
+    case UPDATE_SUPPLY_ERROR:
       return {
         ...state,
         error: true,
