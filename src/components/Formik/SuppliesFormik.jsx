@@ -1,11 +1,14 @@
 import React from "react";
-import { TextField, FormControl, makeStyles } from "@material-ui/core";
+import { TextField, makeStyles, Grid, FormControl } from "@material-ui/core";
 import { AddButton, CancelButton } from "../Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addSupplyAction } from "../../redux/actions/supplies/supplies";
+import {
+  addSupplyAction,
+  updateSupplyAction,
+} from "../../redux/actions/supplies/supplies";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -29,17 +32,16 @@ const useStyles = makeStyles((theme) => ({
 const SuppliesFormik = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { toggle } = props;
+  const { toggle, payload } = props;
 
   return (
     <Formik
       initialValues={{
-        name: props.payload ? props.payload.name : "",
-        center: classes.center,
-        description: props.payload ? props.payload.description : "",
-        minimumQty: props.payload ? props.payload.minimumQty : "",
-        presentation: props.payload ? props.payload.presentation : "",
-        unitOfMeasure: props.payload ? props.payload.unitOfMeasure : "",
+        name: payload ? payload.name : "",
+        description: payload ? payload.description : "",
+        minimumQty: payload ? payload.minimumQty : "",
+        presentation: payload ? payload.presentation : "",
+        unitOfMeasure: payload ? payload.unitOfMeasure : "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -64,23 +66,27 @@ const SuppliesFormik = (props) => {
         const onSubmit = (e) => {
           e.preventDefault();
 
-          dispatch(
-            addSupplyAction({
-              Name: values.name,
-              Description: values.description,
-              MinimumQty: values.minimumQty,
-              Presentation: values.presentation,
-              UnitOfMeasure: values.unitOfMeasure,
-            })
-          );
+          const supply = {
+            Name: values.name,
+            Description: values.description,
+            MinimumQty: values.minimumQty,
+            Presentation: values.presentation,
+            UnitOfMeasure: values.unitOfMeasure,
+          };
+
+          if (payload) {
+            dispatch(updateSupplyAction({ ...supply, Id: payload.id }));
+          } else {
+            dispatch(addSupplyAction(supply));
+          }
 
           toggle();
         };
 
         return (
           <React.Fragment>
-            <form className={classes.form}>
-              <FormControl fullWidth={true} className={classes.formControl}>
+            <form className={classes.form} onSubmit={onSubmit}>
+              <FormControl className={classes.formControl}>
                 <TextField
                   error={errors.name && touched.name}
                   id="name"
@@ -99,7 +105,7 @@ const SuppliesFormik = (props) => {
                   <div className="input-feedback">{errors.name}</div>
                 )}
               </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <TextField
                   error={errors.presentation && touched.presentation}
                   id="presentation"
@@ -118,7 +124,7 @@ const SuppliesFormik = (props) => {
                   <div className="input-feedback">{errors.presentation}</div>
                 )}
               </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <TextField
                   error={errors.description && touched.description}
                   id="description"
@@ -137,7 +143,7 @@ const SuppliesFormik = (props) => {
                   <div className="input-feedback">{errors.description}</div>
                 )}
               </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <TextField
                   error={errors.unitOfMeasure && touched.unitOfMeasure}
                   id="unitOfMeasure"
@@ -156,7 +162,7 @@ const SuppliesFormik = (props) => {
                   <div className="input-feedback">{errors.unitOfMeasure}</div>
                 )}
               </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
+              <FormControl className={classes.formControl}>
                 <TextField
                   error={errors.minimumQty && touched.minimumQty}
                   id="minimumQty"
@@ -177,22 +183,21 @@ const SuppliesFormik = (props) => {
                   <div className="input-feedback">{errors.minimumQty}</div>
                 )}
               </FormControl>
+              <DialogActions>
+                <div className={classes.center}>
+                  <CancelButton onClick={toggle} variant="contained">
+                    Cancelar
+                  </CancelButton>
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={!dirty || isSubmitting || !isValid}
+                  >
+                    Confirmar
+                  </AddButton>
+                </div>
+              </DialogActions>
             </form>
-
-            <DialogActions>
-              <div className={classes.center}>
-                <CancelButton onClick={toggle} variant="contained">
-                  Cancelar
-                </CancelButton>
-                <AddButton
-                  onClick={(e) => onSubmit(e)}
-                  variant="contained"
-                  disabled={!dirty || isSubmitting || !isValid}
-                >
-                  Confirmar
-                </AddButton>
-              </div>
-            </DialogActions>
           </React.Fragment>
         );
       }}
