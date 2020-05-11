@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -13,7 +13,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
-import { TableHead } from "@material-ui/core";
+import { TableHead, Backdrop, CircularProgress } from "@material-ui/core";
 import { FaTrash } from "react-icons/fa";
 import { DeleteButton } from "../Buttons/Buttons";
 import FormDialog from "../Modals/FormDialog";
@@ -25,11 +25,13 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
+let rowsCount = 0;
+
 const TablePaginationActions = (props) => {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
-
+  rowsCount = count;
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
   };
@@ -107,9 +109,24 @@ const TableFormat = (props) => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { payload, tableHeaders, formTarget } = props;
+  const {
+    payload,
+    tableHeaders,
+    formTarget,
+    onDelete,
+    isLoading,
+    isProcessing,
+    isFetching,
+  } = props;
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, payload.length - page * rowsPerPage);
+
+  // To fix out of range issue on Table
+  useEffect(() => {
+    if (payload.length <= rowsPerPage && page > 0) {
+      setPage(0);
+    }
+  }, [payload.length, rowsPerPage, page]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -130,48 +147,94 @@ const TableFormat = (props) => {
 
   return (
     <React.Fragment>
+      {isProcessing && (
+        <Backdrop id="myBackdrop" className={classes.backdrop} open={true}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="custom pagination table">
           <TableHead>
             <TableRow>{headerOptions()}</TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? payload.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : payload
-            ).map((item) => {
-              let keyValues = [];
-              for (const key in item) {
-                keyValues.push(key);
-              }
-              return (
-                <TableRow key={item.id}>
-                  {keyValues.map((key, index) => (
-                    <TableCell key={index} align="center">
-                      {item[key]}
+            {isLoading || isFetching ? (
+              <TableRow>
+                <TableCell
+                  colSpan={tableHeaders.length}
+                  rowSpan={rowsPerPage}
+                  style={{ textAlign: "center" }}
+                >
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            ) : (
+              <React.Fragment>
+                {Object.keys(payload).length === 0 && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={tableHeaders.length}
+                      rowSpan={rowsPerPage}
+                      style={{ textAlign: "center" }}
+                    >
+                      No data available
                     </TableCell>
-                  ))}
-                  <TableCell>
-                    <div className={classes.buttonContainer}>
-                      <FormDialog
-                        formTarget={formTarget}
-                        buttonLabel="Editar"
-                        payload={item}
-                      />
-                      <DeleteButton variant="contained">
-                        <FaTrash />
-                      </DeleteButton>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                  </TableRow>
+                )}
+                {(rowsPerPage > 0
+                  ? payload.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : payload
+                ).map((item) => {
+                  let keyValues = [];
+                  for (const key in item) {
+                    keyValues.push(key);
+                  }
+                  return (
+                    <TableRow key={item.id}>
+                      {keyValues.map((key, index) => (
+                        <TableCell key={index} align="center">
+                          {item[key]}
+                        </TableCell>
+                      ))}
+                      <TableCell>
+                        <div className={classes.buttonContainer}>
+                          <FormDialog
+                            formTarget={formTarget}
+                            buttonLabel="Editar"
+                            payload={item}
+                          />
+                          <DeleteButton
+                            variant="contained"
+                            onClick={() => {
+                              onDelete(item.id);
+
+                              // if (rowsCount < payload.length && page > 0) {
+                              //   setPage(page - 1);
+                              // }
+                              // if (payload.length >= rowsPerPage && page > 0) {
+                              //   setPage(page - 1);
+                              // }
+                            }}
+                          >
+                            <FaTrash />
+                          </DeleteButton>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </React.Fragment>
+            )}
 
             {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
+              <TableRow
+                style={{
+                  height: 30 * emptyRows,
+                }}
+              >
                 <TableCell colSpan={6} />
               </TableRow>
             )}
@@ -183,9 +246,11 @@ const TableFormat = (props) => {
                 colSpan={tableHeaders.length}
                 count={payload.length}
                 rowsPerPage={rowsPerPage}
-                page={page}
+                page={page > 0 && payload.length === rowsPerPage ? 0 : page}
                 SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
                   native: true,
                 }}
                 onChangePage={handleChangePage}
