@@ -7,6 +7,7 @@ import Categories from "../pages/Categories/Categories";
 import Dishes from "../pages/Dishes/Dishes";
 import Combos from "../pages/Combos/Combos";
 import Tables from "../pages/Tables/Tables";
+import Login from "../pages/Login/Login";
 
 const AppRouter = () => {
   return (
@@ -18,6 +19,7 @@ const AppRouter = () => {
       <Route path="/dishes" component={Dishes} />
       <Route path="/combos" component={Combos} />
       <Route path="/tables" component={Tables} />
+      <Route path="/login" component={Login} />
       <Route path="/" component={Supplies} />
       <Redirect from="/" exact to="supplies" />
     </Switch>
