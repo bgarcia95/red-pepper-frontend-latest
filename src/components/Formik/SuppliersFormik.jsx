@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, FormControl, makeStyles } from "@material-ui/core";
-import { AddButton, CancelButton } from "../Buttons/Buttons";
+import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 
 import { Formik } from "formik";

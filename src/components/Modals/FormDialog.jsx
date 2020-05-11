@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SuppliesFormik from "../Formik/SuppliesFormik";
 import { makeStyles } from "@material-ui/core";
-import { EditButton, AddButton } from "../Buttons/Buttons";
+import { EditButton, AddButton } from "../UI/Buttons/Buttons";
 import { FaEdit } from "react-icons/fa";
 import SuppliersFormik from "../Formik/SuppliersFormik";
 
