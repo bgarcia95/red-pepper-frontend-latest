@@ -17,6 +17,7 @@ import { TableHead, Backdrop, CircularProgress } from "@material-ui/core";
 import { FaTrash } from "react-icons/fa";
 import { DeleteButton } from "../Buttons/Buttons";
 import FormDialog from "../Modals/FormDialog";
+import { v4 as uuid } from "uuid";
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,7 @@ const TablePaginationActions = (props) => {
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
   rowsCount = count;
+
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
   };
@@ -103,6 +105,10 @@ const useStyles2 = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "blue",
+  },
 }));
 
 const TableFormat = (props) => {
@@ -126,7 +132,7 @@ const TableFormat = (props) => {
     if (payload.length <= rowsPerPage && page > 0) {
       setPage(0);
     }
-  }, [payload.length, rowsPerPage, page]);
+  }, [payload.length, rowsPerPage, page, payload]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -159,8 +165,9 @@ const TableFormat = (props) => {
           </TableHead>
           <TableBody>
             {isLoading || isFetching ? (
-              <TableRow>
+              <TableRow key={uuid()}>
                 <TableCell
+                  key={uuid()}
                   colSpan={tableHeaders.length}
                   rowSpan={rowsPerPage}
                   style={{ textAlign: "center" }}
@@ -171,8 +178,9 @@ const TableFormat = (props) => {
             ) : (
               <React.Fragment>
                 {Object.keys(payload).length === 0 && (
-                  <TableRow>
+                  <TableRow key={uuid()}>
                     <TableCell
+                      key={uuid()}
                       colSpan={tableHeaders.length}
                       rowSpan={rowsPerPage}
                       style={{ textAlign: "center" }}
@@ -193,9 +201,9 @@ const TableFormat = (props) => {
                     keyValues.push(key);
                   }
                   return (
-                    <TableRow key={item.id}>
-                      {keyValues.map((key, index) => (
-                        <TableCell key={index} align="center">
+                    <TableRow key={uuid()}>
+                      {keyValues.map((key) => (
+                        <TableCell key={uuid()} align="center">
                           {item[key]}
                         </TableCell>
                       ))}
