@@ -140,12 +140,10 @@ export const deleteSupplyError = (error) => ({
 });
 export const deleteSupplyAction = (id) => {
   return (dispatch) => {
-    dispatch(deleteSupplyStart());
-
     http
       .delete(`/supply?id=${id}`)
       .then((response) => {
-        dispatch(deleteSupplySuccess(id));
+        dispatch(deleteSupplySuccess(response.data.id));
         dispatch(getSuppliesAction());
       })
       .catch((error) => {
