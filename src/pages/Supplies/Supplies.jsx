@@ -77,31 +77,29 @@ const Supplies = () => {
   const isFetching = useSelector((state) => state.supplies.isFetching);
 
   return (
-    <React.Fragment>
-      <Container>
-        <Typography variant="h5" align="center">
-          Administración de Insumos
-        </Typography>
-        <Divider style={{ margin: "2rem 0" }} />
-        <Grid item xs={12} className={classes.container}>
-          <FormDialog
-            formTarget={formTarget}
-            buttonLabel="Agregar Insumo"
-            title="Agregar Insumo"
-          />
-        </Grid>
-        <div style={{ margin: "2rem 0" }} />
-        <TableFormat
-          payload={supplies}
-          tableHeaders={tableHeaders}
+    <Container>
+      <Typography variant="h5" align="center">
+        Administración de Insumos
+      </Typography>
+      <Divider style={{ margin: "2rem 0" }} />
+      <Grid item xs={12} className={classes.container}>
+        <FormDialog
           formTarget={formTarget}
-          onDelete={onDelete}
-          isLoading={isLoading}
-          isProcessing={isProcessing}
-          isFetching={isFetching}
+          buttonLabel="Agregar Insumo"
+          title="Agregar Insumo"
         />
-      </Container>
-    </React.Fragment>
+      </Grid>
+      <div style={{ margin: "2rem 0" }} />
+      <TableFormat
+        payload={supplies}
+        tableHeaders={tableHeaders}
+        formTarget={formTarget}
+        onDelete={onDelete}
+        isLoading={isLoading}
+        isProcessing={isProcessing}
+        isFetching={isFetching}
+      />
+    </Container>
   );
 };
 
