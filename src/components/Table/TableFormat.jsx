@@ -26,13 +26,10 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-let rowsCount = 0;
-
 const TablePaginationActions = (props) => {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
-  rowsCount = count;
 
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
@@ -236,7 +233,7 @@ const TableFormat = (props) => {
                 })}
               </React.Fragment>
             )}
-
+            {/* 
             {emptyRows > 0 && (
               <TableRow
                 style={{
@@ -245,7 +242,7 @@ const TableFormat = (props) => {
               >
                 <TableCell colSpan={6} />
               </TableRow>
-            )}
+            )} */}
           </TableBody>
           <TableFooter>
             <TableRow>
