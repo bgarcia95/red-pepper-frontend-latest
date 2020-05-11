@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
+import {
+  getSuppliesAction,
+  deleteSupplyStart,
+} from "../../redux/actions/supplies/supplies";
 import TableFormat from "../../components/Table/TableFormat";
 import {
   Typography,
@@ -10,6 +13,8 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import FormDialog from "../../components/Modals/FormDialog";
+import Swal from "sweetalert2";
+import { deleteSupplyAction } from "../../redux/actions/supplies/supplies";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,12 +28,14 @@ const useStyles = makeStyles((theme) => ({
 const Supplies = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const supplies = useSelector((state) => state.supplies.supplies);
+
   useEffect(() => {
     const getSupplies = () => dispatch(getSuppliesAction());
     getSupplies();
   }, [dispatch]);
 
-  const supplies = useSelector((state) => state.supplies.supplies);
   const tableHeaders = [
     "ID",
     "Nombre",
@@ -40,6 +47,34 @@ const Supplies = () => {
   ];
 
   const formTarget = "supply";
+
+  // Remove Supply
+  const onDelete = (id) => {
+    dispatch(deleteSupplyStart());
+    Swal.fire({
+      title: "¿Estás seguro/a?",
+      text: "Un insumo eliminado no puede ser restaurado.  ",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, remover!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        dispatch(deleteSupplyAction(id));
+        Swal.fire(
+          "¡Removido!",
+          "El registro fué removido satisfactoriamente.",
+          "success"
+        );
+      }
+    });
+  };
+
+  // Loading
+  const isLoading = useSelector((state) => state.supplies.isLoading);
+  const isProcessing = useSelector((state) => state.supplies.isProcessing);
+  const isFetching = useSelector((state) => state.supplies.isFetching);
 
   return (
     <React.Fragment>
@@ -60,6 +95,10 @@ const Supplies = () => {
           payload={supplies}
           tableHeaders={tableHeaders}
           formTarget={formTarget}
+          onDelete={onDelete}
+          isLoading={isLoading}
+          isProcessing={isProcessing}
+          isFetching={isFetching}
         />
       </Container>
     </React.Fragment>
