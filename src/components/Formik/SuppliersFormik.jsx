@@ -53,6 +53,7 @@ const SuppliersFormik = (props) => {
           handleBlur,
           isValid,
         } = props;
+
         return (
           <React.Fragment>
             <form className={classes.form}>

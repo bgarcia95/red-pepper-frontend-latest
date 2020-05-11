@@ -15,7 +15,7 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { TableHead, Backdrop, CircularProgress } from "@material-ui/core";
 import { FaTrash } from "react-icons/fa";
-import { DeleteButton } from "../Buttons/Buttons";
+import { DeleteButton } from "../UI/Buttons/Buttons";
 import FormDialog from "../Modals/FormDialog";
 import { v4 as uuid } from "uuid";
 
