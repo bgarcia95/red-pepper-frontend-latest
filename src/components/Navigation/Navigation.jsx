@@ -62,7 +62,7 @@ const Navigation = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated } = props;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -98,7 +98,9 @@ const Navigation = (props) => {
           <Typography variant="h6" noWrap className={classes.title}>
             Red Pepper App
           </Typography>
-          {isAuthenticated ? <LogOutButton>Logout</LogOutButton> : null}
+          {isAuthenticated ? (
+            <LogOutButton onClick={props.onLogout}>Logout</LogOutButton>
+          ) : null}
         </Toolbar>
       </AppBar>
 
