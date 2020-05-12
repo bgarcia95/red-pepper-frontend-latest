@@ -28,6 +28,7 @@ export const authLogout = () => ({
 
 export const logoutAction = () => {
   return (dispatch) => {
+    authService.logout();
     dispatch(authLogout());
   };
 };
@@ -43,7 +44,7 @@ export const trySignUp = () => {
   };
 };
 
-export const login = (user) => {
+export const loginAction = (user) => {
   return async (dispatch) => {
     dispatch(authStart());
     try {
@@ -57,15 +58,22 @@ export const login = (user) => {
         timer: 1500,
       });
     } catch (error) {
-      console.log(error);
-      dispatch(authError(error));
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: error,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      if (error) {
+        if (error.response) {
+          const errorMessage =
+            error.response.status !== 400
+              ? error.response.data
+              : error.response.statusText;
+          dispatch(authError(errorMessage));
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Credenciales incorrectas",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      }
     }
   };
 };
