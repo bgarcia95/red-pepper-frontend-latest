@@ -1,30 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
-
-import FastfoodIcon from "@material-ui/icons/Fastfood";
-import TabletIcon from "@material-ui/icons/Tablet";
-import { FaPepperHot } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
-import { FaList } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaUtensils } from "react-icons/fa";
-import { Button } from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { grey, red } from "@material-ui/core/colors";
-import { NavLink } from "react-router-dom";
+import { drawerOptions } from "./utils/drawerOptions";
+import { LogOutButton } from "../UI/Buttons/Buttons";
 
 // Styles
 const drawerWidth = 240;
@@ -67,69 +56,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogOutButton = withStyles(() => ({
-  root: {
-    color: "black",
-    backgroundColor: "rgba(241, 250, 238, 0.7)",
-    "&:hover": {
-      backgroundColor: "rgba(241, 250, 238, 1)",
-    },
-  },
-}))(Button);
-
-// Menu Options
-const drawerOptions = () => {
-  const options = [
-    {
-      text: "Insumos",
-      icon: <FaPepperHot size="1.2rem" />,
-      to: "/supplies",
-    },
-    {
-      text: "Proveedores",
-      icon: <FaUsers size="1.2rem" />,
-      to: "/suppliers",
-    },
-    {
-      text: "Compra Insumos",
-      icon: <FaShoppingCart size="1.2rem" />,
-      to: "/supplies-purchase",
-    },
-    {
-      text: "Categorías",
-      icon: <FaList size="1.2rem" />,
-      to: "/categories",
-    },
-    {
-      text: "Platos",
-      icon: <FaUtensils size="1.2rem" />,
-      to: "/dishes",
-    },
-    {
-      text: "Combos",
-      icon: <FastfoodIcon />,
-      to: "/combos",
-    },
-    {
-      text: "Mesas",
-      icon: <TabletIcon />,
-      to: "/tables",
-    },
-  ];
-
-  return options.map((item, index) => (
-    <ListItem component={NavLink} to={item.to} button key={index}>
-      <ListItemIcon key={index}>{item.icon}</ListItemIcon>
-      <ListItemText primary={item.text} />
-    </ListItem>
-  ));
-};
-
+// Main Component
 const Navigation = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -150,58 +83,62 @@ const Navigation = (props) => {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
+          {isAuthenticated ? (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : null}
+
           <Typography variant="h6" noWrap className={classes.title}>
             Red Pepper App
           </Typography>
-          <LogOutButton>Logout</LogOutButton>
+          {isAuthenticated ? <LogOutButton>Logout</LogOutButton> : null}
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
+
+      {isAuthenticated ? (
+        <nav className={classes.drawer} aria-label="menu options">
+          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              anchor={theme.direction === "rtl" ? "right" : "left"}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+
+          <Hidden xsDown implementation="css">
+            <Drawer
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              variant="permanent"
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
+      ) : null}
     </div>
   );
-};
-
-Navigation.propTypes = {
-  window: PropTypes.func,
 };
 
 export default Navigation;
