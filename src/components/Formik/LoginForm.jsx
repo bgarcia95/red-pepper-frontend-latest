@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
@@ -28,8 +28,6 @@ const LoginForm = (props) => {
   const { history, error } = props;
   const dispatch = useDispatch();
 
-  console.log(error);
-
   return (
     <Formik
       initialValues={{
@@ -58,7 +56,7 @@ const LoginForm = (props) => {
             Password: values.password,
           };
 
-          await dispatch(loginAction(user)).then(() => {
+          dispatch(loginAction(user)).then(() => {
             if (!error && error !== null) {
               history.push("/supplies");
             }
