@@ -2,10 +2,10 @@ import React from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
-import { login } from "../../services/authService";
-import Swal from "sweetalert2";
 import * as Yup from "yup";
 import { AddButton } from "../UI/Buttons/Buttons";
+import { useDispatch, connect } from "react-redux";
+import { loginAction } from "../../redux/actions/auth/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginForm = (props) => {
   const classes = useStyles();
-  const { history } = props;
+  const { history, error } = props;
+  const dispatch = useDispatch();
+
+  console.log(error);
 
   return (
     <Formik
@@ -55,25 +58,12 @@ const LoginForm = (props) => {
             Password: values.password,
           };
 
-          try {
-            await login(user);
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Bienvenido/a!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            history.push("/supplies");
-          } catch (error) {
-            Swal.fire({
-              position: "center",
-              icon: "error",
-              title: error,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
+          await dispatch(loginAction(user)).then(() => {
+            if (!error && error !== null) {
+              history.push("/supplies");
+            }
+          });
+          console.log("Error from Submit", error);
         };
 
         return (
@@ -128,4 +118,10 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+  return {
+    error: state.auth.error,
+  };
+};
+
+export default connect(mapStateToProps)(LoginForm);
