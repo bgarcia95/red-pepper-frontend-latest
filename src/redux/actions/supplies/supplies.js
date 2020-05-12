@@ -37,7 +37,6 @@ export const getSuppliesAction = () => {
     http
       .get("/supply")
       .then((response) => {
-        // console.log(response);
         dispatch(getSuppliesSuccess(response.data));
       })
       .catch((error) => {
