@@ -41,3 +41,13 @@ export const CancelButton = withStyles(() => ({
     height: "50px",
   },
 }))(Button);
+
+export const LogOutButton = withStyles(() => ({
+  root: {
+    color: "black",
+    backgroundColor: "rgba(241, 250, 238, 0.7)",
+    "&:hover": {
+      backgroundColor: "rgba(241, 250, 238, 1)",
+    },
+  },
+}))(Button);
