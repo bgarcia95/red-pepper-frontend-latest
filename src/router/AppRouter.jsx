@@ -20,8 +20,8 @@ const AppRouter = () => {
       <Route path="/combos" component={Combos} />
       <Route path="/tables" component={Tables} />
       <Route path="/login" component={Login} />
-      <Route path="/" component={Supplies} />
-      <Redirect from="/" exact to="supplies" />
+      <Route path="/" component={Login} />
+      <Redirect from="/" exact to="login" />
     </Switch>
   );
 };
