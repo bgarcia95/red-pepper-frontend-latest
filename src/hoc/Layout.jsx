@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "../components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "../router/AppRouter";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { logoutAction } from "../redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.token);
+  const { isAuthenticated } = props;
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -39,4 +39,9 @@ const Layout = (props) => {
   );
 };
 
-export default withRouter(Layout);
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.token,
+  };
+};
+export default withRouter(connect(mapStateToProps)(Layout));
