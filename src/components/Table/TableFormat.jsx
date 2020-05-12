@@ -233,7 +233,7 @@ const TableFormat = (props) => {
                 })}
               </React.Fragment>
             )}
-            {/* 
+
             {emptyRows > 0 && (
               <TableRow
                 style={{
@@ -242,7 +242,7 @@ const TableFormat = (props) => {
               >
                 <TableCell colSpan={6} />
               </TableRow>
-            )} */}
+            )}
           </TableBody>
           <TableFooter>
             <TableRow>
