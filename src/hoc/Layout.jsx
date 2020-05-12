@@ -2,6 +2,9 @@ import React from "react";
 import Navigation from "../components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "../router/AppRouter";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutAction } from "../redux/actions/auth/auth";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,17 +18,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Layout = () => {
+const Layout = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.token);
+
+  const logoutHandler = () => {
+    dispatch(logoutAction());
+    props.history.push("/");
+  };
+
   return (
     <div className={classes.root}>
-      <Navigation />
+      <Navigation isAuthenticated={isAuthenticated} onLogout={logoutHandler} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <AppRouter />
+        <AppRouter isAuthenticated={isAuthenticated} />
       </main>
     </div>
   );
 };
 
-export default Layout;
+export default withRouter(Layout);
