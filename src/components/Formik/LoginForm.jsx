@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { TextField, makeStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
@@ -61,7 +61,6 @@ const LoginForm = (props) => {
               history.push("/supplies");
             }
           });
-          console.log("Error from Submit", error);
         };
 
         return (
