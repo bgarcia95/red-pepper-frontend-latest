@@ -6,5 +6,5 @@ import tokenReducer from "./auth/auth";
 export default combineReducers({
   supplies: suppliesReducer,
   suppliers: suppliersReducer,
-  token: tokenReducer,
+  auth: tokenReducer,
 });
