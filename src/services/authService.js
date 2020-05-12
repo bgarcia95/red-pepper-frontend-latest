@@ -42,3 +42,15 @@ export const getDecodedToken = () => {
     return null;
   }
 };
+
+export const logout = () => {
+  localStorage.removeItem(tokenKey);
+};
+
+export default {
+  getJwt,
+  getDecodedToken,
+  trySignUp,
+  login,
+  logout,
+};
