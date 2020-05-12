@@ -29,7 +29,7 @@ const AppRouter = (props) => {
         <Route path="/dishes" component={Dishes} />
         <Route path="/combos" component={Combos} />
         <Route path="/tables" component={Tables} />
-        <Route path="/login" component={Login} />
+        {/* <Route path="/login" component={Login} /> */}
         {/* <Route path="/" component={Supplies} /> */}
         <Redirect from="/" exact to="supplies" />
       </Switch>
