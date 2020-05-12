@@ -1,15 +1,20 @@
-import React from "react";
-import configureStore from "./redux/store/configureStore";
-import { Provider } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Layout from "./hoc/Layout";
-
-const store = configureStore();
+import { trySignUp } from "./redux/actions/auth/auth";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const onTrySignUp = () => dispatch(trySignUp());
+    onTrySignUp();
+  }, [dispatch]);
+
   return (
-    <Provider store={store}>
+    <React.Fragment>
       <Layout />
-    </Provider>
+    </React.Fragment>
   );
 };
 
