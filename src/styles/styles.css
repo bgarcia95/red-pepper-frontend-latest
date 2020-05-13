@@ -22,3 +22,17 @@ input.error {
     margin-left: 5px !important;
   }
 }
+
+/* Error message */
+
+.error--message {
+  /* background-color: rgba(207, 77, 68, 0.5); */
+  color: #000 !important;
+  background-color: #ffdddd !important;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(207, 77, 68, 0.5);
+}
