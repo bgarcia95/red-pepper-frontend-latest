@@ -76,7 +76,7 @@ export default (state = suppliersDefaultState, action) => {
       return {
         ...state,
         error: null,
-        suppliers: state.supplies.map(
+        suppliers: state.suppliers.map(
           (supplier) =>
             supplier.id === action.supplier.id && (supplier = action.supplier)
         ),
