@@ -36,15 +36,18 @@ const FormDialog = (props) => {
 
   let form;
   let sufix = "";
+  let dialogSize = "";
 
   switch (props.formTarget) {
     case "supply":
       form = <SuppliesFormik {...props} toggle={toggleModal} modal={open} />;
       sufix = "Insumo";
+      dialogSize = "md";
       break;
     case "supplier":
       form = <SuppliersFormik {...props} toggle={toggleModal} modal={open} />;
       sufix = "Proveedor";
+      dialogSize = "sm";
       break;
     default:
       break;
@@ -57,7 +60,7 @@ const FormDialog = (props) => {
         open={open}
         onClose={toggleModal}
         aria-labelledby="form-dialog-title"
-        maxWidth="md"
+        maxWidth={dialogSize}
         fullWidth={true}
       >
         <DialogTitle id="form-dialog-title" className="text-center">
