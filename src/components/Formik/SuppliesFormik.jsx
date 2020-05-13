@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, makeStyles, FormControl, Grid } from "@material-ui/core";
+import { TextField, FormControl, Grid } from "@material-ui/core";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
@@ -10,24 +10,7 @@ import {
   updateSupplyAction,
 } from "../../redux/actions/supplies/supplies";
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    margin: "auto",
-    // width: "fit-content",
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-}));
-
 const SuppliesFormik = (props) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const { toggle, payload } = props;
 
@@ -82,7 +65,7 @@ const SuppliesFormik = (props) => {
 
         return (
           <React.Fragment>
-            <form className={classes.form} onSubmit={onSubmit}>
+            <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
