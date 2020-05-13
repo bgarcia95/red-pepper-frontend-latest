@@ -13,6 +13,7 @@ import {
   DELETE_SUPPLIER_SUCCESS,
   DELETE_SUPPLIER_ERROR,
 } from "../../utils/actions";
+import Swal from "sweetalert2";
 
 // All GET methods
 export const getSuppliersStart = () => ({
