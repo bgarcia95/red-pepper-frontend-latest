@@ -28,6 +28,7 @@ export default (state = suppliesDefaultState, action) => {
       return {
         ...state,
         isFetching: true,
+        error: false,
       };
     case GET_SUPPLIES_SUCCESS:
       return {
