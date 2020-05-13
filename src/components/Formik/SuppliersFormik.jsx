@@ -6,16 +6,22 @@ import InputMask from "react-input-mask";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
+import {
+  updateSupplierAction,
+  addSupplierAction,
+} from "../../redux/actions/suppliers/suppliers";
+import { useDispatch } from "react-redux";
 
 const SuppliersFormik = (props) => {
-  const { toggle } = props;
+  const { toggle, payload } = props;
+  const dispatch = useDispatch();
 
   return (
     <Formik
       initialValues={{
-        name: props.payload ? props.payload.name : "",
-        address: props.payload ? props.payload.address : "",
-        telephone: props.payload ? props.payload.telephone : "",
+        name: payload ? payload.name : "",
+        address: payload ? payload.address : "",
+        telephone: payload ? payload.telephone : "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -35,9 +41,27 @@ const SuppliersFormik = (props) => {
           isValid,
         } = props;
 
+        const onSubmit = (e) => {
+          e.preventDefault();
+
+          const supplier = {
+            Name: values.name,
+            Telephone: values.telephone,
+            Address: values.address,
+          };
+
+          if (payload) {
+            dispatch(updateSupplierAction({ ...supplier, Id: payload.id }));
+          } else {
+            dispatch(addSupplierAction(supplier));
+          }
+
+          toggle();
+        };
+
         return (
           <React.Fragment>
-            <form className="form-control">
+            <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={12}>
                   <FormControl fullWidth={true}>
@@ -113,22 +137,21 @@ const SuppliersFormik = (props) => {
                   </FormControl>
                 </Grid>
               </Grid>
+              <DialogActions>
+                <div className="center-content">
+                  <CancelButton onClick={toggle} variant="contained">
+                    Cancelar
+                  </CancelButton>
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={!dirty || isSubmitting || !isValid}
+                  >
+                    Confirmar
+                  </AddButton>
+                </div>
+              </DialogActions>
             </form>
-
-            <DialogActions>
-              <div className="center-content">
-                <CancelButton onClick={toggle} variant="contained">
-                  Cancelar
-                </CancelButton>
-                <AddButton
-                  onClick={toggle}
-                  variant="contained"
-                  disabled={!dirty || isSubmitting || !isValid}
-                >
-                  Confirmar
-                </AddButton>
-              </div>
-            </DialogActions>
           </React.Fragment>
         );
       }}
