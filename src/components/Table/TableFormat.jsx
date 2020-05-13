@@ -264,7 +264,7 @@ const TableFormat = (props) => {
                 labelDisplayedRows={({ from, to, count }) => {
                   return "" + from + "-" + to + " de " + count;
                 }}
-                labelRowsPerPage="Filas por página"
+                labelRowsPerPage="Registros por página"
               />
             </TableRow>
           </TableFooter>
