@@ -106,8 +106,7 @@ const Navigation = (props) => {
 
       {isAuthenticated ? (
         <nav className={classes.drawer} aria-label="menu options">
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-
+          {/* Mobile Version */}
           <Hidden smUp implementation="css">
             <Drawer
               container={container}
@@ -126,6 +125,7 @@ const Navigation = (props) => {
             </Drawer>
           </Hidden>
 
+          {/* Desktop Version */}
           <Hidden xsDown implementation="css">
             <Drawer
               classes={{
