@@ -4,11 +4,9 @@ import {
   getSuppliesAction,
   deleteSupplyStart,
 } from "../../redux/actions/supplies/supplies";
-import TableFormat from "../../components/Table/TableFormat";
-import { Typography, Container, Divider, Grid } from "@material-ui/core";
-import FormDialog from "../../components/Modals/FormDialog";
 import Swal from "sweetalert2";
 import { deleteSupplyAction } from "../../redux/actions/supplies/supplies";
+import PageContainer from "../../components/PageContainer/PageContainer";
 
 const Supplies = () => {
   const dispatch = useDispatch();
@@ -62,34 +60,19 @@ const Supplies = () => {
   const isLoadingData = useSelector((state) => state.supplies.error);
 
   return (
-    <Container>
-      <Typography variant="h5" align="center">
-        Administración de Insumos
-      </Typography>
-      <Divider style={{ margin: "2rem 0" }} />
-      <Grid item xs={12} className="text-center">
-        <FormDialog
-          formTarget={formTarget}
-          buttonLabel="Agregar Insumo"
-          title="Agregar Insumo"
-        />
-      </Grid>
-      <div style={{ margin: "2rem 0" }} />
-      {isLoadingData && (
-        <div className="error--message">
-          <p>Hubo un problema cargando la informacion...</p>
-        </div>
-      )}
-      <TableFormat
-        payload={supplies}
-        tableHeaders={tableHeaders}
-        formTarget={formTarget}
-        onDelete={onDelete}
-        isLoading={isLoading}
-        isProcessing={isProcessing}
-        isFetching={isFetching}
-      />
-    </Container>
+    <PageContainer
+      pageTitle="Administración de Insumos"
+      suppliers={supplies}
+      formTarget={formTarget}
+      tableHeaders={tableHeaders}
+      isLoading={isLoading}
+      isProcessing={isProcessing}
+      isFetching={isFetching}
+      isLoadingData={isLoadingData}
+      buttonLabel="Agregar Insumo"
+      dialogTitle="Agregar Insumo"
+      onDelete={onDelete}
+    />
   );
 };
 
