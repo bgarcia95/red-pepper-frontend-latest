@@ -47,13 +47,26 @@ input.error {
   margin: 0 auto !important;
 }
 
+/* For Forms */
 .form-control {
   display: flex;
   flex-direction: column;
   margin: auto;
+  width: 100%;
 }
-
+/* 
 .form--input {
   margin-top: 20px;
   min-width: 120px;
+} */
+
+.button--submit {
+  margin: 24px 0 16px 0;
 }
+
+.login-container {
+  margin-top: 64px;
+  text-align: center;
+}
+
+/* . For Forms */
