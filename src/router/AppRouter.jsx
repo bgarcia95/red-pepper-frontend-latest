@@ -22,16 +22,16 @@ const AppRouter = (props) => {
   if (isAuthenticated) {
     appRoutes = (
       <Switch>
-        <Route path="/supplies" component={Supplies} />
-        <Route path="/suppliers" component={Supppliers} />
-        <Route path="/supplies-purchase" component={SuppliesPurchase} />
-        <Route path="/categories" component={Categories} />
-        <Route path="/dishes" component={Dishes} />
+        <Route path="/insumos" component={Supplies} />
+        <Route path="/proveedores" component={Supppliers} />
+        <Route path="/compra-insumos" component={SuppliesPurchase} />
+        <Route path="/categorias" component={Categories} />
+        <Route path="/platos" component={Dishes} />
         <Route path="/combos" component={Combos} />
-        <Route path="/tables" component={Tables} />
+        <Route path="/mesas" component={Tables} />
         {/* <Route path="/login" component={Login} /> */}
         {/* <Route path="/" component={Supplies} /> */}
-        <Redirect from="/" exact to="supplies" />
+        <Redirect from="/" exact to="insumos" />
       </Switch>
     );
   }
