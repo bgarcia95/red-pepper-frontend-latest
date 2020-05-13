@@ -46,3 +46,14 @@ input.error {
 .center-content {
   margin: 0 auto !important;
 }
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.form--input {
+  margin-top: 20px;
+  min-width: 120px;
+}
