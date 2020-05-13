@@ -41,6 +41,7 @@ export default (state = suppliesDefaultState, action) => {
       return {
         ...state,
         isLoading: false,
+        isFetching: false,
         error: true,
       };
     case ADD_SUPPLY_START:
