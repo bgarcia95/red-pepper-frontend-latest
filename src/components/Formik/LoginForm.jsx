@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, makeStyles } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -7,24 +7,7 @@ import { AddButton } from "../UI/Buttons/Buttons";
 import { useDispatch, connect } from "react-redux";
 import { loginAction } from "../../redux/actions/auth/auth";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 const LoginForm = (props) => {
-  const classes = useStyles();
   const { history, error } = props;
   const dispatch = useDispatch();
 
@@ -65,11 +48,11 @@ const LoginForm = (props) => {
 
         return (
           <React.Fragment>
-            <div className={classes.paper}>
+            <div className="login-container">
               <Typography component="h1" variant="h5">
                 Iniciar Sesión
               </Typography>
-              <form className={classes.form} onSubmit={onSubmit}>
+              <form className="form-control" onSubmit={onSubmit}>
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -101,7 +84,7 @@ const LoginForm = (props) => {
                 <AddButton
                   type="submit"
                   fullWidth
-                  className={classes.submit}
+                  className="button--submit"
                   disabled={!dirty || isSubmitting || !isValid}
                 >
                   Ingresar
