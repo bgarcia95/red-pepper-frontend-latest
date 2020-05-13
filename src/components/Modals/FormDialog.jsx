@@ -3,24 +3,12 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SuppliesFormik from "../Formik/SuppliesFormik";
-import { makeStyles } from "@material-ui/core";
 import { EditButton, AddButton } from "../UI/Buttons/Buttons";
 import { FaEdit } from "react-icons/fa";
 import SuppliersFormik from "../Formik/SuppliersFormik";
 
-const useStyles = makeStyles((theme) => ({
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-  center: {
-    margin: "0 auto",
-  },
-}));
-
 const FormDialog = (props) => {
   const { buttonLabel } = props;
-
-  const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
 
@@ -69,9 +57,10 @@ const FormDialog = (props) => {
         open={open}
         onClose={toggleModal}
         aria-labelledby="form-dialog-title"
+        maxWidth="md"
         fullWidth={true}
       >
-        <DialogTitle id="form-dialog-title" className={classes.center}>
+        <DialogTitle id="form-dialog-title" className="text-center">
           {title ? title : `Editar ${sufix}`}
         </DialogTitle>
         <DialogContent>{form}</DialogContent>
