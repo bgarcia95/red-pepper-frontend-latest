@@ -1,3 +1,4 @@
+/* For toolbar on mobile devices */
 .makeStyles-toolbar-8 {
   background-color: rgb(244, 67, 54);
 }
@@ -10,20 +11,12 @@ input.error {
 
 .input-feedback {
   color: red !important;
-  margin-top: 0.25rem;
+  margin: 0.25rem 0 0 0.25rem;
 }
 
-.center-content {
-  margin: 0 auto !important;
-}
+/* Here ends Formik styles */
 
-@media (min-width: 640px) {
-  button + button {
-    margin-left: 5px !important;
-  }
-}
-
-/* Error message */
+/* Error message when getting data fails*/
 
 .error--message {
   /* background-color: rgba(207, 77, 68, 0.5); */
@@ -35,4 +28,21 @@ input.error {
   flex-direction: column;
   justify-content: center;
   border: 1px solid rgba(207, 77, 68, 0.5);
+}
+
+/* Here ends Error Message */
+
+/* For buttons within Modal */
+@media (min-width: 640px) {
+  button + button {
+    margin-left: 5px !important;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.center-content {
+  margin: 0 auto !important;
 }
