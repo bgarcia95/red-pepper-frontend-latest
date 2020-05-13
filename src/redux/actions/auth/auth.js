@@ -3,6 +3,8 @@ import {
   AUTH_ERROR,
   AUTH_SUCCESS,
   AUTH_LOGOUT,
+  // SET_MAIN_USER_TOKEN_START,
+  // SET_MAIN_USER_TOKEN_SUCCESS,
 } from "./../../utils/actions";
 import authService from "../../../services/authService";
 import Swal from "sweetalert2";
@@ -11,9 +13,11 @@ export const authStart = () => ({
   type: AUTH_START,
 });
 
+// currentUserToken
 export const authSuccess = (token, decodedToken) => ({
   type: AUTH_SUCCESS,
   token,
+  // currentUserToken,
   decodedToken,
 });
 
@@ -25,6 +29,15 @@ export const authError = (error) => ({
 export const authLogout = () => ({
   type: AUTH_LOGOUT,
 });
+
+// export const setMainUserTokenStart = () => ({
+//   type: SET_MAIN_USER_TOKEN_START,
+// });
+
+// export const setMainUserTokenSuccess = (currentUserToken) => ({
+//   type: SET_MAIN_USER_TOKEN_SUCCESS,
+//   currentUserToken,
+// });
 
 export const logoutAction = () => {
   return (dispatch) => {
@@ -39,7 +52,13 @@ export const trySignUp = () => {
     if (!credentials) {
       dispatch(logoutAction());
     } else {
-      dispatch(authSuccess(credentials.token, credentials.decodedToken));
+      dispatch(
+        authSuccess(
+          credentials.token,
+          // credentials.currentUserToken,
+          credentials.decodedToken
+        )
+      );
     }
   };
 };
@@ -49,7 +68,13 @@ export const loginAction = (user) => {
     dispatch(authStart());
     try {
       const credentials = await authService.login(user);
-      dispatch(authSuccess(credentials.token, authService.getDecodedToken()));
+      dispatch(
+        authSuccess(
+          credentials.token,
+          // credentials.currentUserToken,
+          authService.getDecodedToken()
+        )
+      );
       Swal.fire({
         position: "center",
         icon: "success",
@@ -77,3 +102,11 @@ export const loginAction = (user) => {
     }
   };
 };
+
+// export const setMainUserToken = (currentUserToken) => {
+//   return (dispatch) => {
+//     dispatch(setMainUserTokenStart());
+//     authService.setCurrentUserToken(currentUserToken);
+//     dispatch(setMainUserTokenSuccess(currentUserToken));
+//   };
+// };
