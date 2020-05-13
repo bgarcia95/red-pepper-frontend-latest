@@ -99,7 +99,7 @@ const Navigation = (props) => {
             Red Pepper App
           </Typography>
           {isAuthenticated ? (
-            <LogOutButton onClick={props.onLogout}>Logout</LogOutButton>
+            <LogOutButton onClick={props.onLogout}>Cerrar Sesión</LogOutButton>
           ) : null}
         </Toolbar>
       </AppBar>
