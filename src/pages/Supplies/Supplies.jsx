@@ -75,6 +75,7 @@ const Supplies = () => {
   const isLoading = useSelector((state) => state.supplies.isLoading);
   const isProcessing = useSelector((state) => state.supplies.isProcessing);
   const isFetching = useSelector((state) => state.supplies.isFetching);
+  const isLoadingData = useSelector((state) => state.supplies.error);
 
   return (
     <Container>
@@ -90,6 +91,11 @@ const Supplies = () => {
         />
       </Grid>
       <div style={{ margin: "2rem 0" }} />
+      {isLoadingData && (
+        <div className="error--message">
+          <p>Hubo un problema cargando la informacion...</p>
+        </div>
+      )}
       <TableFormat
         payload={supplies}
         tableHeaders={tableHeaders}
