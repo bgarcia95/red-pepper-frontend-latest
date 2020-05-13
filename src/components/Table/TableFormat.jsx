@@ -182,7 +182,7 @@ const TableFormat = (props) => {
                       rowSpan={rowsPerPage}
                       style={{ textAlign: "center" }}
                     >
-                      No data available
+                      No hay información disponible
                     </TableCell>
                   </TableRow>
                 )}
