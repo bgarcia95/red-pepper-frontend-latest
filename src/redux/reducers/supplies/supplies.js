@@ -48,18 +48,21 @@ export default (state = suppliesDefaultState, action) => {
       return {
         ...state,
         error: null,
+        isProcessing: true,
       };
     case ADD_SUPPLY_SUCCESS:
       return {
         ...state,
         supplies: [...state.supplies, action.supply],
         error: null,
+        isProcessing: false,
       };
 
     case ADD_SUPPLY_ERROR:
       return {
         ...state,
         error: true,
+        isProcessing: false,
       };
 
     case UPDATE_SUPPLY_START:
