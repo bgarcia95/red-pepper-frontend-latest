@@ -56,7 +56,7 @@ export const drawerOptions = () => {
 
   return options.map((item, index) => (
     <ListItem component={NavLink} to={item.to} button key={index}>
-      <ListItemIcon key={index}>{item.icon}</ListItemIcon>
+      <ListItemIcon>{item.icon}</ListItemIcon>
       <ListItemText primary={item.text} />
     </ListItem>
   ));
