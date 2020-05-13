@@ -1,32 +1,13 @@
 import React from "react";
-import { TextField, FormControl, makeStyles } from "@material-ui/core";
+import { TextField, FormControl, Grid } from "@material-ui/core";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
+import InputMask from "react-input-mask";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-const useStyles = makeStyles((theme) => ({
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    margin: "auto",
-    width: "fit-content",
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-  center: {
-    margin: "0 auto",
-  },
-}));
-
 const SuppliersFormik = (props) => {
-  const classes = useStyles();
   const { toggle } = props;
 
   return (
@@ -56,68 +37,86 @@ const SuppliersFormik = (props) => {
 
         return (
           <React.Fragment>
-            <form className={classes.form}>
-              <FormControl fullWidth={true} className={classes.formControl}>
-                <TextField
-                  error={errors.name && touched.name}
-                  id="name"
-                  label="Nombre"
-                  variant="outlined"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.name && touched.name
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
-                )}
-              </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
-                <TextField
-                  error={errors.address && touched.address}
-                  id="address"
-                  label="Dirección"
-                  variant="outlined"
-                  value={values.address}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.address && touched.address
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.address && touched.address && (
-                  <div className="input-feedback">{errors.address}</div>
-                )}
-              </FormControl>
-              <FormControl fullWidth={true} className={classes.formControl}>
-                <TextField
-                  error={errors.telephone && touched.telephone}
-                  id="telephone"
-                  label="Teléfono"
-                  variant="outlined"
-                  value={values.telephone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.telephone && touched.telephone
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.telephone && touched.telephone && (
-                  <div className="input-feedback">{errors.telephone}</div>
-                )}
-              </FormControl>
+            <form className="form-control">
+              <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <FormControl fullWidth={true}>
+                    <TextField
+                      error={errors.name && touched.name}
+                      id="name"
+                      label="Nombre"
+                      variant="outlined"
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.name && touched.name
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                    />
+                    {errors.name && touched.name && (
+                      <div className="input-feedback">{errors.name}</div>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth={true}>
+                    <InputMask
+                      value={values.telephone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      mask="9999-9999"
+                      maskChar=""
+                    >
+                      {() => (
+                        <TextField
+                          id="telephone"
+                          label="Teléfono"
+                          variant="outlined"
+                          error={errors.telephone && touched.telephone}
+                          className={
+                            errors.telephone && touched.telephone
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                      )}
+                    </InputMask>
+
+                    {errors.telephone && touched.telephone && (
+                      <div className="input-feedback">{errors.telephone}</div>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl fullWidth={true}>
+                    <TextField
+                      error={errors.address && touched.address}
+                      id="address"
+                      label="Dirección"
+                      variant="outlined"
+                      value={values.address}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.address && touched.address
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                      multiline
+                      rows={4}
+                    />
+                    {errors.address && touched.address && (
+                      <div className="input-feedback">{errors.address}</div>
+                    )}
+                  </FormControl>
+                </Grid>
+              </Grid>
             </form>
 
             <DialogActions>
-              <div className={classes.center}>
+              <div className="center-content">
                 <CancelButton onClick={toggle} variant="contained">
                   Cancelar
                 </CancelButton>
