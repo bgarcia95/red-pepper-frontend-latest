@@ -5,28 +5,12 @@ import {
   deleteSupplyStart,
 } from "../../redux/actions/supplies/supplies";
 import TableFormat from "../../components/Table/TableFormat";
-import {
-  Typography,
-  Container,
-  Divider,
-  Grid,
-  makeStyles,
-} from "@material-ui/core";
+import { Typography, Container, Divider, Grid } from "@material-ui/core";
 import FormDialog from "../../components/Modals/FormDialog";
 import Swal from "sweetalert2";
 import { deleteSupplyAction } from "../../redux/actions/supplies/supplies";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  container: {
-    textAlign: "center",
-  },
-}));
-
 const Supplies = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const supplies = useSelector((state) => state.supplies.supplies);
@@ -83,7 +67,7 @@ const Supplies = () => {
         Administración de Insumos
       </Typography>
       <Divider style={{ margin: "2rem 0" }} />
-      <Grid item xs={12} className={classes.container}>
+      <Grid item xs={12} className="text-center">
         <FormDialog
           formTarget={formTarget}
           buttonLabel="Agregar Insumo"
