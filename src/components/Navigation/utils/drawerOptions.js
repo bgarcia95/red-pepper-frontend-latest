@@ -20,27 +20,27 @@ export const drawerOptions = () => {
     {
       text: "Insumos",
       icon: <FaPepperHot size="1.2rem" />,
-      to: "/supplies",
+      to: "/insumos",
     },
     {
       text: "Proveedores",
       icon: <FaUsers size="1.2rem" />,
-      to: "/suppliers",
+      to: "/proveedores",
     },
     {
       text: "Compra Insumos",
       icon: <FaShoppingCart size="1.2rem" />,
-      to: "/supplies-purchase",
+      to: "/compra-insumos",
     },
     {
       text: "Categorías",
       icon: <FaList size="1.2rem" />,
-      to: "/categories",
+      to: "/categorias",
     },
     {
       text: "Platos",
       icon: <FaUtensils size="1.2rem" />,
-      to: "/dishes",
+      to: "/platos",
     },
     {
       text: "Combos",
@@ -50,7 +50,7 @@ export const drawerOptions = () => {
     {
       text: "Mesas",
       icon: <TabletIcon />,
-      to: "/tables",
+      to: "/mesas",
     },
   ];
 
