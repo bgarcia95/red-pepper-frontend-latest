@@ -72,7 +72,7 @@ const PurchasesFormik = (props) => {
                           ? "text-input error"
                           : "text-input"
                       }
-                      disabled={payload}
+                      disabled={payload ? true : false}
                     />
                     {errors.invoiceNumber && touched.invoiceNumber && (
                       <div className="input-feedback">
@@ -112,6 +112,7 @@ const PurchasesFormik = (props) => {
                           : "text-input"
                       }
                       onBlur={handleBlur}
+                      disabled={payload ? true : false}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -120,7 +121,6 @@ const PurchasesFormik = (props) => {
                           error={errors.providerName && touched.providerName}
                         />
                       )}
-                      disabled={payload}
                     />
                     {errors.providerName && touched.providerName && (
                       <div className="input-feedback">
@@ -144,7 +144,7 @@ const PurchasesFormik = (props) => {
                           ? "text-input error"
                           : "text-input"
                       }
-                      disabled={payload}
+                      disabled={payload ? true : false}
                     />
                     {errors.emmisionDate && touched.emmisionDate && (
                       <div className="input-feedback">
@@ -170,7 +170,7 @@ const PurchasesFormik = (props) => {
                           ? "text-input error"
                           : "text-input"
                       }
-                      disabled={payload}
+                      disabled={payload ? true : false}
                     />
                     {errors.total && touched.total && (
                       <div className="input-feedback">{errors.total}</div>
