@@ -7,16 +7,10 @@ import FormDialog from "../../components/Modals/FormDialog";
 const PageContainer = (props) => {
   const {
     pageTitle,
-    suppliers,
     formTarget,
-    tableHeaders,
-    isLoading,
-    isProcessing,
-    isFetching,
     isLoadingData,
     buttonLabel,
     dialogTitle,
-    onDelete,
   } = props;
 
   return (
@@ -40,15 +34,7 @@ const PageContainer = (props) => {
             <p>Hubo un problema cargando la informacion...</p>
           </div>
         )}
-        <TableFormat
-          payload={suppliers}
-          tableHeaders={tableHeaders}
-          formTarget={formTarget}
-          onDelete={onDelete}
-          isLoading={isLoading}
-          isProcessing={isProcessing}
-          isFetching={isFetching}
-        />
+        <TableFormat {...props} />
       </Container>
     </React.Fragment>
   );
