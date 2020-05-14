@@ -123,7 +123,7 @@ const TableFormat = (props) => {
                     )
                   : payload
                 ).map((item) => (
-                  <TableRow key={item.id}>
+                  <TableRow key={uuid()}>
                     {tableHeaders.map(({ field }) => (
                       <TableCell key={uuid()} align="center">
                         {item[field]}
