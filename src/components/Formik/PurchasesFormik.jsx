@@ -7,6 +7,14 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { getSuppliersAction } from "../../redux/actions/suppliers/suppliers";
+import moment from "moment";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+import "moment/locale/es";
+moment.locale("es");
 
 const PurchasesFormik = (props) => {
   const { toggle, payload } = props;
@@ -21,18 +29,19 @@ const PurchasesFormik = (props) => {
     <Formik
       initialValues={{
         invoiceNumber: payload ? payload.invoiceNumber : "",
-        emmisionDate: payload ? payload.emmisionDate : "",
+        emmisionDate: payload ? payload.emmisionDate : null,
         providerId: payload ? payload.providerId : null,
         providerName: "",
         presentation: payload ? payload.presentation : "",
         total: payload ? payload.total : 0.0,
+        locale: "es",
       }}
       validationSchema={Yup.object().shape({
         invoiceNumber: Yup.number()
           .typeError("El valor ingresado debe ser numérico")
           .positive("El valor debe ingresado debe ser positivo")
           .required("Requerido"),
-        emmisionDate: Yup.string().required("Requerido"),
+        // emmisionDate: Yup.string().required("Requerido"),
         providerName: Yup.string().required("Requerido"),
         total: Yup.number()
           .min(1, "El valor minimo debe ser igual o mayor a $1")
@@ -131,7 +140,7 @@ const PurchasesFormik = (props) => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
-                    <TextField
+                    {/* <TextField
                       error={errors.emmisionDate && touched.emmisionDate}
                       id="emmisionDate"
                       label="Fecha de Emisión"
@@ -150,7 +159,31 @@ const PurchasesFormik = (props) => {
                       <div className="input-feedback">
                         {errors.emmisionDate}
                       </div>
-                    )}
+                    )} */}
+                    <MuiPickersUtilsProvider
+                      libInstance={moment}
+                      utils={MomentUtils}
+                      locale={values.locale}
+                    >
+                      <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="DD/MM/YYYY"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Fecha de Emision"
+                        value={values.emmisionDate}
+                        onChange={(date) =>
+                          setFieldValue(
+                            "emmisionDate",
+                            moment(date).format("MM/DD/YYYY")
+                          )
+                        }
+                        KeyboardButtonProps={{
+                          "aria-label": "change date",
+                        }}
+                      />
+                    </MuiPickersUtilsProvider>
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={3}>
