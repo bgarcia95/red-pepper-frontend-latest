@@ -16,7 +16,12 @@ const Suppliers = () => {
   }, [dispatch]);
 
   const suppliers = useSelector((state) => state.suppliers.suppliers);
-  const tableHeaders = ["ID", "Nombre", "Dirección", "Teléfono", "Acciones"];
+  const tableHeaders = [
+    { text: "ID", field: "id" },
+    { text: "Nombre", field: "name" },
+    { text: "Dirección", field: "address" },
+    { text: "Teléfono", field: "telephone" },
+  ];
 
   const formTarget = "supplier";
 
@@ -52,7 +57,7 @@ const Suppliers = () => {
   return (
     <PageContainer
       pageTitle="Administración de Proveedores"
-      suppliers={suppliers}
+      payload={suppliers}
       formTarget={formTarget}
       tableHeaders={tableHeaders}
       isLoading={isLoading}

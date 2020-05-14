@@ -19,13 +19,12 @@ const Supplies = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    "ID",
-    "Nombre",
-    "Presentación",
-    "Descripción",
-    "Unidad de Medida",
-    "Cantidad Mínima",
-    "Acciones",
+    { text: "ID", field: "id" },
+    { text: "Nombre", field: "name" },
+    { text: "Presentación", field: "presentation" },
+    { text: "Descripción", field: "description" },
+    { text: "Unidad de Medida", field: "unitOfMeasure" },
+    { text: "Cantidad Mínima", field: "minimumQty" },
   ];
 
   const formTarget = "supply";
@@ -62,7 +61,7 @@ const Supplies = () => {
   return (
     <PageContainer
       pageTitle="Administración de Insumos"
-      suppliers={supplies}
+      payload={supplies}
       formTarget={formTarget}
       tableHeaders={tableHeaders}
       isLoading={isLoading}
