@@ -25,16 +25,19 @@ const PurchasesFormik = (props) => {
         providerId: payload ? payload.providerId : null,
         providerName: "",
         presentation: payload ? payload.presentation : "",
-        total: payload ? payload.total : "",
+        total: payload ? payload.total : 0.0,
       }}
       validationSchema={Yup.object().shape({
         invoiceNumber: Yup.number()
           .typeError("El valor ingresado debe ser numérico")
           .positive("El valor debe ingresado debe ser positivo")
-          .required("age is required"),
+          .required("Requerido"),
         emmisionDate: Yup.string().required("Requerido"),
         providerName: Yup.string().required("Requerido"),
-        total: Yup.number().required("Requerido"),
+        total: Yup.number()
+          .min(1, "El valor minimo debe ser igual o mayor a $1")
+          .typeError("Requerido")
+          .required("Requerido"),
       })}
     >
       {(props) => {
@@ -83,7 +86,6 @@ const PurchasesFormik = (props) => {
                     <Autocomplete
                       id="providerName"
                       name="providerName"
-                      error={errors.providerName && touched.providerName}
                       options={suppliers}
                       getOptionLabel={(option) => option.name}
                       onChange={(e, newValue) => {
@@ -159,7 +161,7 @@ const PurchasesFormik = (props) => {
                       label="Total"
                       variant="outlined"
                       type="number"
-                      inputProps={{ min: "0", step: "1" }}
+                      inputProps={{ min: "0", step: "0.5" }}
                       value={values.total}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -185,6 +187,10 @@ const PurchasesFormik = (props) => {
                     type="submit"
                     variant="contained"
                     disabled={!dirty || isSubmitting || !isValid}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      console.log("clicked!");
+                    }}
                   >
                     Confirmar
                   </AddButton>
