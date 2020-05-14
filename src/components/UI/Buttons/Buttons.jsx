@@ -51,3 +51,9 @@ export const LogOutButton = withStyles(() => ({
     },
   },
 }))(Button);
+
+export const WatchButton = withStyles(() => ({
+  root: {
+    height: "30px",
+  },
+}))(Button);
