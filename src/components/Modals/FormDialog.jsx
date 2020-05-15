@@ -59,7 +59,7 @@ const FormDialog = (props) => {
     case "purchase":
       form = <PurchasesFormik {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Ver Factura";
-      dialogSize = "xl";
+      dialogSize = "lg";
       break;
     default:
       break;
