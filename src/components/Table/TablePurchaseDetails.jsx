@@ -7,6 +7,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { DeleteButton } from "../UI/Buttons/Buttons";
+import { FaTrash } from "react-icons/fa";
 
 const TAX_RATE = 0.13;
 
@@ -16,35 +18,21 @@ const useStyles = makeStyles({
   },
 });
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
-
-function priceRow(qty, unit) {
-  return qty * unit;
-}
-
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
-
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-const TablePurchaseDetails = () => {
+const TablePurchaseDetails = (props) => {
   const classes = useStyles();
+  const { payload, onDeleteItem, invoiceTotal } = props;
+
+  const ccyFormat = (num) => {
+    return `${num.toFixed(2)}`;
+  };
+
+  const subtotal = (items) => {
+    return items.map(({ total }) => total).reduce((sum, i) => sum + i, 0);
+  };
+
+  const invoiceSubtotal = subtotal(payload);
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  // invoiceTotal(invoiceTaxes, invoiceSubtotal);
 
   return (
     <TableContainer component={Paper}>
@@ -55,21 +43,28 @@ const TablePurchaseDetails = () => {
               Detalles
             </TableCell>
             <TableCell align="right">Precio</TableCell>
+            <TableCell align="center">Acción</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Desc</TableCell>
             <TableCell align="right">Cant.</TableCell>
             <TableCell align="right">Unitario</TableCell>
             <TableCell align="right">Total</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+          {payload.map((item) => (
+            <TableRow key={item.desc}>
+              <TableCell>{item.desc}</TableCell>
+              <TableCell align="right">{item.qty}</TableCell>
+              <TableCell align="right">{item.unit}</TableCell>
+              <TableCell align="right">{ccyFormat(item.total)}</TableCell>
+              <TableCell align="center">
+                <DeleteButton onClick={() => onDeleteItem(item.supplyId)}>
+                  <FaTrash size="18" />
+                </DeleteButton>
+              </TableCell>
             </TableRow>
           ))}
 
@@ -79,7 +74,7 @@ const TablePurchaseDetails = () => {
             <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Tax</TableCell>
+            <TableCell>IVA</TableCell>
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
               0
             )} %`}</TableCell>
@@ -87,7 +82,9 @@ const TablePurchaseDetails = () => {
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            <TableCell align="right">
+              {ccyFormat(invoiceTotal(invoiceTaxes, invoiceSubtotal))}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
