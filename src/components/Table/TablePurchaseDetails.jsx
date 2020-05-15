@@ -43,14 +43,14 @@ const TablePurchaseDetails = (props) => {
               Detalles
             </TableCell>
             <TableCell align="right">Precio</TableCell>
-            <TableCell align="center">Acción</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Desc</TableCell>
             <TableCell align="right">Cant.</TableCell>
             <TableCell align="right">Unitario</TableCell>
             <TableCell align="right">Total</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="center">Acción</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
