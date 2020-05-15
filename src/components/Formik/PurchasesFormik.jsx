@@ -101,6 +101,8 @@ const PurchasesFormik = (props) => {
           e.preventDefault();
           const price = values.quantity * values.unitPrice;
           const supply = {
+            supplyId: values.supplyId,
+            expDate: values.expirationDate,
             desc: values.supplyName,
             qty: values.quantity,
             unit: values.unitPrice,
@@ -113,6 +115,16 @@ const PurchasesFormik = (props) => {
 
           clearDetailHandler();
         };
+
+        const onDeleteItem = (id) => {
+          setFieldValue(
+            "purchaseDetails",
+            values.purchaseDetails.filter((item) => item.supplyId !== id)
+          );
+        };
+
+        const invoiceTotal = (invoiceTaxes, invoiceSubtotal) =>
+          invoiceTaxes + invoiceSubtotal;
 
         return (
           <React.Fragment>
@@ -403,7 +415,7 @@ const PurchasesFormik = (props) => {
                   <AddButton
                     disabled={
                       !values.supplyName ||
-                      values.unitPrice <= 0 ||
+                      values.quantity <= 0 ||
                       values.unitPrice <= 0
                     }
                     variant="contained"
@@ -418,7 +430,11 @@ const PurchasesFormik = (props) => {
                   <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                  <TablePurchaseDetails />
+                  <TablePurchaseDetails
+                    payload={values.purchaseDetails}
+                    onDeleteItem={onDeleteItem}
+                    invoiceTotal={invoiceTotal}
+                  />
                 </Grid>
               </Grid>
               <DialogActions>
