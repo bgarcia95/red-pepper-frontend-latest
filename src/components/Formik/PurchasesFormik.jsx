@@ -45,9 +45,9 @@ const PurchasesFormik = (props) => {
         supplyId: null,
         supplyName: null,
         supplyInputName: "",
-        quantity: 0,
+        quantity: "",
         expirationDate: null,
-        unitPrice: 0.0,
+        unitPrice: "",
         presentation: payload ? payload.presentation : "",
         purchaseDetails: [],
         total: payload ? payload.total : 0.0,
@@ -60,19 +60,12 @@ const PurchasesFormik = (props) => {
           .required("Requerido"),
         providerName: Yup.string().required("Requerido"),
         emmisionDate: Yup.date().typeError("Requerido").required(),
-        // supplyName: Yup.string().required("Requerido").nullable(),
         quantity: Yup.number()
-          // .min(1, "El valor minimo debe ser igual o mayor a 1")
-          .typeError("Requerido")
+          .positive("El valor ingresado debe ser mayor a 0")
           .required("Requerido"),
-        // expirationDate: Yup.date().typeError("Requerido").required(),
         unitPrice: Yup.number()
-          // .min(1, "El valor minimo debe ser igual o mayor a $1")
-          .typeError("Requerido")
+          .positive("El valor ingresado debe ser mayor a 0")
           .required("Requerido"),
-        // supplyInputName: Yup.mixed()
-        //   .oneOf([Yup.ref("supplyName"), null], "Seleccione una opcion valida")
-        //   .required("Requerido"),
         supplyInputName: Yup.string().required("Requerido"),
       })}
     >
@@ -87,15 +80,21 @@ const PurchasesFormik = (props) => {
           handleBlur,
           isValid,
           setFieldValue,
+          setFieldTouched,
         } = props;
 
         const clearDetailHandler = () => {
           setFieldValue("supplyName", null);
-          setFieldValue("supplyInputName", "");
           setFieldValue("supplyId", null);
+          setFieldValue("supplyInputName", "");
           setFieldValue("expirationDate", null);
-          setFieldValue("quantity", 0);
-          setFieldValue("unitPrice", 0.0);
+          setFieldValue("quantity", "");
+          setFieldValue("unitPrice", "");
+
+          setFieldTouched("supplyInputName", false);
+          setFieldTouched("quantity", false);
+          setFieldTouched("unitPrice", false);
+          setFieldTouched("expirationDate", false);
         };
 
         const onSubmitSupply = (e) => {
@@ -347,13 +346,13 @@ const PurchasesFormik = (props) => {
                 <Grid item xs={12} md={2}>
                   <FormControl fullWidth={true}>
                     <TextField
-                      name="quantity"
                       id="quantity"
+                      name="quantity"
                       label="Cantidad"
                       error={errors.quantity && touched.quantity}
                       variant="outlined"
                       type="number"
-                      inputProps={{ min: "0", step: "1" }}
+                      inputProps={{ min: "1", step: "1" }}
                       value={values.quantity}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -372,12 +371,13 @@ const PurchasesFormik = (props) => {
                 <Grid item xs={12} md={2}>
                   <FormControl fullWidth={true}>
                     <TextField
-                      error={errors.unitPrice && touched.unitPrice}
                       id="unitPrice"
+                      name="unitPrice"
                       label="Precio Unitario"
+                      error={errors.unitPrice && touched.unitPrice}
                       variant="outlined"
                       type="number"
-                      inputProps={{ min: "0", step: "1" }}
+                      inputProps={{ min: "1", step: "1" }}
                       value={values.unitPrice}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -393,13 +393,18 @@ const PurchasesFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={2} className="text-center">
+                <Grid
+                  item
+                  xs={12}
+                  md={2}
+                  className="text-center"
+                  style={{ marginTop: "5px" }}
+                >
                   <AddButton
                     disabled={
                       !values.supplyName ||
-                      !values.quantity ||
-                      !values.unitPrice ||
-                      values.supplyName !== values.supplyInputName
+                      values.unitPrice <= 0 ||
+                      values.unitPrice <= 0
                     }
                     variant="contained"
                     onClick={(e) => {
