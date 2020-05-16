@@ -7,9 +7,12 @@ import { FaEdit, FaEye } from "react-icons/fa";
 import SuppliesFormik from "../Formik/SuppliesFormik";
 import SuppliersFormik from "../Formik/SuppliersFormik";
 import PurchasesFormik from "../Formik/PurchasesFormik";
+import { clearPurchaseDetails } from "../../redux/actions/supplies-purchases/purchases";
+import { useDispatch } from "react-redux";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
+  const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
 
@@ -70,7 +73,12 @@ const FormDialog = (props) => {
       {button}
       <Dialog
         open={open}
-        onClose={toggleModal}
+        onClose={() => {
+          toggleModal();
+          if (props.formTarget === "purchase") {
+            dispatch(clearPurchaseDetails());
+          }
+        }}
         aria-labelledby="form-dialog-title"
         maxWidth={dialogSize}
         fullWidth={true}
