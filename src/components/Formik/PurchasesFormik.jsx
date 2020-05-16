@@ -18,7 +18,6 @@ import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
 import TablePurchaseDetails from "../Table/TablePurchaseDetails";
 import {
   addPurchaseAction,
-  getPurchaseDetailsAction,
   clearPurchaseDetails,
 } from "../../redux/actions/supplies-purchases/purchases";
 import Swal from "sweetalert2";
@@ -69,9 +68,6 @@ const PurchasesFormik = (props) => {
   const { toggle, payload } = props;
   const suppliers = useSelector((state) => state.suppliers.suppliers);
   const supplies = useSelector((state) => state.supplies.supplies);
-  const purchaseDetails = useSelector(
-    (state) => state.purchases.purchaseDetails
-  );
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -79,13 +75,7 @@ const PurchasesFormik = (props) => {
     getSuppliers();
     const getSupplies = () => dispatch(getSuppliesAction());
     getSupplies();
-
-    if (payload) {
-      const getPurchaseDetails = () =>
-        dispatch(getPurchaseDetailsAction(payload.id));
-      getPurchaseDetails();
-    }
-  }, [dispatch, payload]);
+  }, [dispatch]);
 
   const suppliesSelect = supplies.map(({ name, id }) => ({
     label: name,
@@ -113,7 +103,7 @@ const PurchasesFormik = (props) => {
         quantity: "",
         expirationDate: null,
         unitPrice: "",
-        purchaseDetails: [],
+        purchaseDetails: payload ? payload.details : [],
         total: payload ? payload.total : "",
         locale: "es",
       }}
@@ -163,10 +153,10 @@ const PurchasesFormik = (props) => {
           const price = values.quantity * values.unitPrice;
           const supply = {
             supplyId: values.supplyId,
-            expDate: values.expirationDate,
+            expirationDate: values.expirationDate,
             desc: values.supplyName,
-            qty: values.quantity,
-            unit: values.unitPrice,
+            quantity: values.quantity,
+            unitPrice: values.unitPrice,
             total: price,
           };
 
@@ -201,8 +191,8 @@ const PurchasesFormik = (props) => {
             SupplyId: detail.supplyId,
             ExpirationDate:
               detail.expDate === null ? "0001-01-01 00:00:00" : detail.expDate,
-            Quantity: detail.qty,
-            UnitPrice: detail.unit,
+            Quantity: detail.quantity,
+            UnitPrice: detail.unitPrice,
             Total: detail.total,
           }));
 
@@ -236,6 +226,11 @@ const PurchasesFormik = (props) => {
           });
         };
 
+        const filteredProvider = (id) =>
+          suppliers
+            .filter((supplier) => supplier.id === id)
+            .map((filtered) => filtered.name);
+
         return (
           <React.Fragment>
             <form className="form-control">
@@ -266,112 +261,137 @@ const PurchasesFormik = (props) => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
-                    <Autocomplete
-                      id="providerInputName"
-                      name="providerInputName"
-                      options={suppliersSelect}
-                      getOptionLabel={(option) =>
-                        typeof option === "string" ? option : option.label
-                      }
-                      getOptionSelected={(option, value) =>
-                        value === option.label
-                      }
-                      value={values.providerName}
-                      onChange={(event, newValue) => {
-                        if (newValue !== null) {
-                          setFieldValue("providerName", newValue.label);
-                          setFieldValue("providerId", newValue.value);
-                          setFieldValue("providerInputName", newValue.label);
-                        }
-                      }}
-                      inputValue={values.providerInputName}
-                      onInputChange={(event, newInputValue, reason) => {
-                        setFieldValue("providerInputName", newInputValue);
+                    {payload ? (
+                      <TextField
+                        label="Proveedor"
+                        variant="outlined"
+                        value={filteredProvider(payload.providerId)}
+                        disabled={payload ? true : false}
+                      />
+                    ) : (
+                      <React.Fragment>
+                        <Autocomplete
+                          id="providerInputName"
+                          name="providerInputName"
+                          options={suppliersSelect}
+                          getOptionLabel={(option) =>
+                            typeof option === "string" ? option : option.label
+                          }
+                          getOptionSelected={(option, value) =>
+                            value === option.label
+                          }
+                          value={values.providerName}
+                          onChange={(event, newValue) => {
+                            if (newValue !== null) {
+                              setFieldValue("providerName", newValue.label);
+                              setFieldValue("providerId", newValue.value);
+                              setFieldValue(
+                                "providerInputName",
+                                newValue.label
+                              );
+                            }
+                          }}
+                          inputValue={values.providerInputName}
+                          onInputChange={(event, newInputValue, reason) => {
+                            setFieldValue("providerInputName", newInputValue);
 
-                        if (event.target.value === "") {
-                          setFieldValue("providerInputName", "");
-                          setFieldValue("providerName", null);
-                          setFieldValue("providerId", null);
-                        }
-                        if (reason === "clear") {
-                          setFieldValue("providerName", null);
-                          setFieldValue("providerId", null);
-                          setFieldValue("providerInputName", "");
-                        }
-                      }}
-                      className={
-                        errors.providerInputName && touched.providerInputName
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      onBlur={handleBlur}
-                      disabled={payload ? true : false}
-                      noOptionsText="No hay opciones"
-                      clearText="Limpiar"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Insumo"
-                          variant="outlined"
-                          error={
+                            if (event.target.value === "") {
+                              setFieldValue("providerInputName", "");
+                              setFieldValue("providerName", null);
+                              setFieldValue("providerId", null);
+                            }
+                            if (reason === "clear") {
+                              setFieldValue("providerName", null);
+                              setFieldValue("providerId", null);
+                              setFieldValue("providerInputName", "");
+                            }
+                          }}
+                          className={
                             errors.providerInputName &&
                             touched.providerInputName
+                              ? "text-input error"
+                              : "text-input"
                           }
+                          onBlur={handleBlur}
+                          disabled={payload ? true : false}
+                          noOptionsText="No hay opciones"
+                          clearText="Limpiar"
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Proveedor"
+                              variant="outlined"
+                              error={
+                                errors.providerInputName &&
+                                touched.providerInputName
+                              }
+                            />
+                          )}
                         />
-                      )}
-                    />
-                    {errors.providerInputName && touched.providerInputName && (
-                      <div className="input-feedback">
-                        {errors.providerInputName}
-                      </div>
+                        {errors.providerInputName &&
+                          touched.providerInputName && (
+                            <div className="input-feedback">
+                              {errors.providerInputName}
+                            </div>
+                          )}
+                      </React.Fragment>
                     )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
-                    <ThemeProvider theme={defaultMaterialTheme}>
-                      <MuiPickersUtilsProvider
-                        libInstance={moment}
-                        utils={MomentUtils}
-                        locale={values.locale}
-                      >
-                        <KeyboardDatePicker
-                          id="emissionDate"
-                          name="emissionDate"
-                          label="Fecha de Emision"
-                          value={values.emissionDate}
-                          onChange={(date) =>
-                            setFieldValue(
-                              "emissionDate",
-                              moment(date).format("MM/DD/YYYY")
-                            )
-                          }
-                          autoOk
-                          disableFuture={true}
-                          error={errors.emissionDate && touched.emissionDate}
-                          onBlur={handleBlur}
-                          className={
-                            errors.emissionDate && touched.emissionDate
-                              ? "text-input error"
-                              : "text-input"
-                          }
-                          variant="inline"
-                          inputVariant="outlined"
-                          format="DD/MM/YYYY"
-                          InputAdornmentProps={{ position: "end" }}
-                          KeyboardButtonProps={{
-                            "aria-label": "change date",
-                          }}
-                          invalidDateMessage="Formato de fecha incorrecto"
-                          disabled={payload ? true : false}
-                        />
-                      </MuiPickersUtilsProvider>
-                      {errors.emissionDate && touched.emissionDate && (
-                        <div className="input-feedback">
-                          {errors.emissionDate}
-                        </div>
-                      )}
-                    </ThemeProvider>
+                    {payload ? (
+                      <TextField
+                        label="Fecha de Emisión"
+                        variant="outlined"
+                        value={moment(values.emissionDate).format("DD/MM/YYYY")}
+                        disabled={payload ? true : false}
+                      />
+                    ) : (
+                      <ThemeProvider theme={defaultMaterialTheme}>
+                        <MuiPickersUtilsProvider
+                          libInstance={moment}
+                          utils={MomentUtils}
+                          locale={values.locale}
+                        >
+                          <KeyboardDatePicker
+                            id="emissionDate"
+                            name="emissionDate"
+                            label="Fecha de Emision"
+                            value={values.emissionDate}
+                            onChange={(date) =>
+                              setFieldValue(
+                                "emissionDate",
+                                moment(date).format("MM/DD/YYYY")
+                              )
+                            }
+                            autoOk
+                            disableFuture={true}
+                            error={errors.emissionDate && touched.emissionDate}
+                            onBlur={handleBlur}
+                            className={
+                              errors.emissionDate && touched.emissionDate
+                                ? "text-input error"
+                                : "text-input"
+                            }
+                            variant="inline"
+                            inputVariant="outlined"
+                            format="DD/MM/YYYY"
+                            InputAdornmentProps={{ position: "end" }}
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+                            }}
+                            invalidDateMessage="Formato de fecha incorrecto"
+                            disabled={payload ? true : false}
+                          />
+                        </MuiPickersUtilsProvider>
+                        {errors.emissionDate && touched.emissionDate && (
+                          <div className="input-feedback">
+                            {errors.emissionDate}
+                          </div>
+                        )}
+                      </ThemeProvider>
+                    )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
@@ -575,13 +595,13 @@ const PurchasesFormik = (props) => {
                 <Grid item xs={12}>
                   <TablePurchaseDetails
                     payload={values.purchaseDetails}
-                    purchaseDetails={purchaseDetails}
                     onDeleteItem={onDeleteItem}
                     invoiceTotal={invoiceTotal}
                     TAX_RATE={TAX_RATE}
                     invoiceSubtotal={invoiceSubtotal}
                     invoiceTaxes={invoiceTaxes}
                     supplies={supplies}
+                    fetchedDetails={payload ? payload.details : null}
                   />
                 </Grid>
               </Grid>
