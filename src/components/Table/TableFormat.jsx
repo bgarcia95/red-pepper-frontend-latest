@@ -97,7 +97,7 @@ const TableFormat = (props) => {
                   key={uuid()}
                   colSpan={tableHeaders.length + 1}
                   rowSpan={rowsPerPage}
-                  style={{ textAlign: "center" }}
+                  className="text-center"
                 >
                   <CircularProgress />
                 </TableCell>
@@ -110,7 +110,7 @@ const TableFormat = (props) => {
                       key={uuid()}
                       colSpan={tableHeaders.length}
                       rowSpan={rowsPerPage}
-                      style={{ textAlign: "center" }}
+                      className="text-center"
                     >
                       No hay información disponible
                     </TableCell>
