@@ -377,191 +377,201 @@ const PurchasesFormik = (props) => {
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <Autocomplete
-                      id="supplyInputName"
-                      name="supplyInputName"
-                      options={suppliesSelect}
-                      getOptionLabel={(option) =>
-                        typeof option === "string" ? option : option.label
-                      }
-                      getOptionSelected={(option, value) =>
-                        value === option.label
-                      }
-                      value={values.supplyName}
-                      onChange={(event, newValue) => {
-                        if (newValue !== null) {
-                          setFieldValue("supplyName", newValue.label);
-                          setFieldValue("supplyId", newValue.value);
-                          setFieldValue("supplyInputName", newValue.label);
-                        }
-                      }}
-                      inputValue={values.supplyInputName}
-                      onInputChange={(event, newInputValue, reason) => {
-                        setFieldValue("supplyInputName", newInputValue);
+                {payload ? null : (
+                  <React.Fragment>
+                    <Grid item xs={12} md={3}>
+                      <FormControl fullWidth={true}>
+                        <Autocomplete
+                          id="supplyInputName"
+                          name="supplyInputName"
+                          options={suppliesSelect}
+                          getOptionLabel={(option) =>
+                            typeof option === "string" ? option : option.label
+                          }
+                          getOptionSelected={(option, value) =>
+                            value === option.label
+                          }
+                          value={values.supplyName}
+                          onChange={(event, newValue) => {
+                            if (newValue !== null) {
+                              setFieldValue("supplyName", newValue.label);
+                              setFieldValue("supplyId", newValue.value);
+                              setFieldValue("supplyInputName", newValue.label);
+                            }
+                          }}
+                          inputValue={values.supplyInputName}
+                          onInputChange={(event, newInputValue, reason) => {
+                            setFieldValue("supplyInputName", newInputValue);
 
-                        if (event.target.value === "") {
-                          setFieldValue("supplyInputName", "");
-                          setFieldValue("supplyName", null);
-                          setFieldValue("supplyId", null);
-                        }
-                        if (reason === "clear") {
-                          setFieldValue("supplyName", null);
-                          setFieldValue("supplyId", null);
-                          setFieldValue("supplyInputName", "");
-                        }
-                      }}
-                      className={
-                        errors.supplyInputName && touched.supplyInputName
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      onBlur={handleBlur}
-                      disabled={payload ? true : false}
-                      noOptionsText="No hay opciones"
-                      clearText="Limpiar"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Insumo"
-                          variant="outlined"
-                          error={
-                            errors.supplyInputName && touched.supplyInputName
-                          }
-                        />
-                      )}
-                    />
-                    {errors.supplyInputName && touched.supplyInputName && (
-                      <div className="input-feedback">
-                        {errors.supplyInputName}
-                      </div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <ThemeProvider theme={defaultMaterialTheme}>
-                      <MuiPickersUtilsProvider
-                        libInstance={moment}
-                        utils={MomentUtils}
-                        locale={values.locale}
-                      >
-                        <KeyboardDatePicker
-                          id="expirationDate"
-                          name="expirationDate"
-                          label="Fecha de Expiración"
-                          value={values.expirationDate}
-                          onChange={(date) =>
-                            setFieldValue(
-                              "expirationDate",
-                              moment(date).format("MM/DD/YYYY")
-                            )
-                          }
-                          autoOk
-                          disablePast={true}
-                          error={
-                            errors.expirationDate && touched.expirationDate
-                          }
-                          onBlur={handleBlur}
+                            if (event.target.value === "") {
+                              setFieldValue("supplyInputName", "");
+                              setFieldValue("supplyName", null);
+                              setFieldValue("supplyId", null);
+                            }
+                            if (reason === "clear") {
+                              setFieldValue("supplyName", null);
+                              setFieldValue("supplyId", null);
+                              setFieldValue("supplyInputName", "");
+                            }
+                          }}
                           className={
-                            errors.expirationDate && touched.expirationDate
+                            errors.supplyInputName && touched.supplyInputName
                               ? "text-input error"
                               : "text-input"
                           }
-                          variant="inline"
-                          inputVariant="outlined"
-                          format="DD/MM/YYYY"
-                          InputAdornmentProps={{ position: "end" }}
-                          KeyboardButtonProps={{
-                            "aria-label": "change date",
-                          }}
-                          invalidDateMessage="Formato de fecha incorrecto"
+                          onBlur={handleBlur}
+                          disabled={payload ? true : false}
+                          noOptionsText="No hay opciones"
+                          clearText="Limpiar"
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Insumo"
+                              variant="outlined"
+                              error={
+                                errors.supplyInputName &&
+                                touched.supplyInputName
+                              }
+                            />
+                          )}
+                        />
+                        {errors.supplyInputName && touched.supplyInputName && (
+                          <div className="input-feedback">
+                            {errors.supplyInputName}
+                          </div>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                      <FormControl fullWidth={true}>
+                        <ThemeProvider theme={defaultMaterialTheme}>
+                          <MuiPickersUtilsProvider
+                            libInstance={moment}
+                            utils={MomentUtils}
+                            locale={values.locale}
+                          >
+                            <KeyboardDatePicker
+                              id="expirationDate"
+                              name="expirationDate"
+                              label="Fecha de Expiración"
+                              value={values.expirationDate}
+                              onChange={(date) =>
+                                setFieldValue(
+                                  "expirationDate",
+                                  moment(date).format("MM/DD/YYYY")
+                                )
+                              }
+                              autoOk
+                              disablePast={true}
+                              error={
+                                errors.expirationDate && touched.expirationDate
+                              }
+                              onBlur={handleBlur}
+                              className={
+                                errors.expirationDate && touched.expirationDate
+                                  ? "text-input error"
+                                  : "text-input"
+                              }
+                              variant="inline"
+                              inputVariant="outlined"
+                              format="DD/MM/YYYY"
+                              InputAdornmentProps={{ position: "end" }}
+                              KeyboardButtonProps={{
+                                "aria-label": "change date",
+                              }}
+                              invalidDateMessage="Formato de fecha incorrecto"
+                              disabled={payload ? true : false}
+                            />
+                          </MuiPickersUtilsProvider>
+                          {errors.expirationDate && touched.expirationDate && (
+                            <div className="input-feedback">
+                              {errors.expirationDate}
+                            </div>
+                          )}
+                        </ThemeProvider>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <FormControl fullWidth={true}>
+                        <TextField
+                          id="quantity"
+                          name="quantity"
+                          label="Cantidad"
+                          error={errors.quantity && touched.quantity}
+                          variant="outlined"
+                          type="number"
+                          inputProps={{ min: "1", step: "1" }}
+                          value={values.quantity}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.quantity && touched.quantity
+                              ? "text-input error"
+                              : "text-input"
+                          }
                           disabled={payload ? true : false}
                         />
-                      </MuiPickersUtilsProvider>
-                      {errors.expirationDate && touched.expirationDate && (
-                        <div className="input-feedback">
-                          {errors.expirationDate}
-                        </div>
-                      )}
-                    </ThemeProvider>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="quantity"
-                      name="quantity"
-                      label="Cantidad"
-                      error={errors.quantity && touched.quantity}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.quantity}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.quantity && touched.quantity
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      disabled={payload ? true : false}
-                    />
-                    {errors.quantity && touched.quantity && (
-                      <div className="input-feedback">{errors.quantity}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="unitPrice"
-                      name="unitPrice"
-                      label="Precio Unitario"
-                      error={errors.unitPrice && touched.unitPrice}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.unitPrice}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.unitPrice && touched.unitPrice
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      disabled={payload ? true : false}
-                    />
-                    {errors.unitPrice && touched.unitPrice && (
-                      <div className="input-feedback">{errors.unitPrice}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={2}
-                  className="text-center"
-                  style={{ marginTop: "5px" }}
-                >
-                  <AddButton
-                    disabled={
-                      !values.supplyName ||
-                      values.quantity <= 0 ||
-                      values.unitPrice <= 0
-                    }
-                    variant="contained"
-                    onClick={(e) => {
-                      onSubmitSupply(e);
-                    }}
-                  >
-                    Agregar Insumo
-                  </AddButton>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
+                        {errors.quantity && touched.quantity && (
+                          <div className="input-feedback">
+                            {errors.quantity}
+                          </div>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <FormControl fullWidth={true}>
+                        <TextField
+                          id="unitPrice"
+                          name="unitPrice"
+                          label="Precio Unitario"
+                          error={errors.unitPrice && touched.unitPrice}
+                          variant="outlined"
+                          type="number"
+                          inputProps={{ min: "1", step: "1" }}
+                          value={values.unitPrice}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={
+                            errors.unitPrice && touched.unitPrice
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                          disabled={payload ? true : false}
+                        />
+                        {errors.unitPrice && touched.unitPrice && (
+                          <div className="input-feedback">
+                            {errors.unitPrice}
+                          </div>
+                        )}
+                      </FormControl>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={2}
+                      className="text-center"
+                      style={{ marginTop: "5px" }}
+                    >
+                      <AddButton
+                        disabled={
+                          !values.supplyName ||
+                          values.quantity <= 0 ||
+                          values.unitPrice <= 0
+                        }
+                        variant="contained"
+                        onClick={(e) => {
+                          onSubmitSupply(e);
+                        }}
+                      >
+                        Agregar Insumo
+                      </AddButton>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider />
+                    </Grid>
+                  </React.Fragment>
+                )}
+
                 <Grid item xs={12}>
                   <TablePurchaseDetails
                     payload={values.purchaseDetails}
