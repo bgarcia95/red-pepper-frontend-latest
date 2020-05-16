@@ -25,11 +25,31 @@ const TablePurchaseDetails = (props) => {
     invoiceSubtotal,
     invoiceTaxes,
     invoiceTotal,
+    purchaseDetails,
+    supplies,
   } = props;
 
   const ccyFormat = (num) => {
     return `${num.toFixed(2)}`;
   };
+
+  const details = purchaseDetails.details;
+
+  // if (!details) return "";
+  const filterSupply = (id) =>
+    supplies
+      .filter((supply) => supply.id === id)
+      .map((filtered) => filtered.name);
+
+  const subtotal = (items) => {
+    return (
+      items && items.map(({ total }) => total).reduce((sum, i) => sum + i, 0)
+    );
+  };
+
+  const fetchedInvoiceSubtotal = subtotal(details);
+  const fetchedInvoiceTaxes = TAX_RATE * fetchedInvoiceSubtotal;
+  const fetchedInvoiceTotal = fetchedInvoiceTaxes + fetchedInvoiceSubtotal;
 
   return (
     <TableContainer component={Paper}>
@@ -53,38 +73,63 @@ const TablePurchaseDetails = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {payload.map((item) => (
-            <TableRow key={item.desc}>
-              <TableCell>{item.desc}</TableCell>
-              <TableCell align="right">{item.qty}</TableCell>
-              <TableCell align="right">$ {item.unit}</TableCell>
-              <TableCell align="right">$ {ccyFormat(item.total)}</TableCell>
-              {item ? (
-                <TableCell align="center">
-                  <DeleteButton onClick={() => onDeleteItem(item.supplyId)}>
-                    <FaTrash size="18" />
-                  </DeleteButton>
-                </TableCell>
-              ) : null}
-            </TableRow>
-          ))}
+          {payload &&
+            payload.map((item) => (
+              <TableRow key={item.desc}>
+                <TableCell>{item.desc}</TableCell>
+                <TableCell align="right">{item.qty}</TableCell>
+                <TableCell align="right">$ {item.unit}</TableCell>
+                <TableCell align="right">$ {ccyFormat(item.total)}</TableCell>
+                {item ? (
+                  <TableCell align="center">
+                    <DeleteButton onClick={() => onDeleteItem(item.supplyId)}>
+                      <FaTrash size="18" />
+                    </DeleteButton>
+                  </TableCell>
+                ) : null}
+              </TableRow>
+            ))}
+          {details &&
+            details.map((item) => (
+              <TableRow key={item.supplyId}>
+                <TableCell>{filterSupply(item.supplyId)}</TableCell>
+                <TableCell align="right">{item.quantity}</TableCell>
+                <TableCell align="right">$ {item.unitPrice}</TableCell>
+                <TableCell align="right">$ {ccyFormat(item.total)}</TableCell>
+              </TableRow>
+            ))}
 
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">$ {ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell align="right">
+              ${" "}
+              {details
+                ? ccyFormat(fetchedInvoiceSubtotal)
+                : ccyFormat(invoiceSubtotal)}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>IVA</TableCell>
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
               0
             )} %`}</TableCell>
-            <TableCell align="right">$ {ccyFormat(invoiceTaxes)}</TableCell>
+            <TableCell align="right">
+              ${" "}
+              {details
+                ? ccyFormat(fetchedInvoiceTaxes)
+                : ccyFormat(invoiceTaxes)}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
             <TableCell align="right">
-              <b>$ {ccyFormat(invoiceTotal)}</b>
+              <b>
+                ${" "}
+                {details
+                  ? ccyFormat(fetchedInvoiceTotal)
+                  : ccyFormat(invoiceTotal)}
+              </b>
             </TableCell>
           </TableRow>
         </TableBody>
