@@ -2,6 +2,9 @@ import {
   GET_PURCHASES_START,
   GET_PURCHASES_SUCCESS,
   GET_PURCHASES_ERROR,
+  ADD_PURCHASE_START,
+  ADD_PURCHASE_SUCCESS,
+  ADD_PURCHASE_ERROR,
 } from "../../utils/actions";
 
 // Default state
@@ -36,7 +39,26 @@ export default (state = purchasesDefaultState, action) => {
         isFetching: false,
         error: true,
       };
+    case ADD_PURCHASE_START:
+      return {
+        ...state,
+        error: null,
+        isProcessing: true,
+      };
+    case ADD_PURCHASE_SUCCESS:
+      return {
+        ...state,
+        purchases: [...state.purchases, action.purchase],
+        error: null,
+        isProcessing: false,
+      };
 
+    case ADD_PURCHASE_ERROR:
+      return {
+        ...state,
+        error: true,
+        isProcessing: false,
+      };
     default:
       return state;
   }
