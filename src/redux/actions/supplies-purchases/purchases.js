@@ -6,6 +6,10 @@ import {
   ADD_PURCHASE_START,
   ADD_PURCHASE_SUCCESS,
   ADD_PURCHASE_ERROR,
+  GET_PURCHASE_DETAILS_START,
+  GET_PURCHASE_DETAILS_ERROR,
+  GET_PURCHASE_DETAILS_SUCCESS,
+  CLEAR_PURCHASE_DETAILS,
 } from "../../utils/actions";
 
 // All GET Methods
@@ -73,3 +77,38 @@ export const addPurchaseAction = (purchase) => {
       });
   };
 };
+
+// All GET Methods
+export const getPurchaseDetailsStart = () => ({
+  type: GET_PURCHASE_DETAILS_START,
+});
+
+export const getPurchaseDetailsSuccess = (purchaseDetails) => ({
+  type: GET_PURCHASE_DETAILS_SUCCESS,
+  purchaseDetails,
+});
+
+export const getPurchaseDetailsError = (error) => ({
+  type: GET_PURCHASE_DETAILS_ERROR,
+  error,
+});
+
+export const getPurchaseDetailsAction = (id) => {
+  return (dispatch) => {
+    dispatch(getPurchaseDetailsStart());
+
+    // Retrieve data from API
+    http
+      .get(`/InvoiceSupply/GetInvoiceById/${id}`)
+      .then((response) => {
+        dispatch(getPurchaseDetailsSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getPurchaseDetailsError(error));
+      });
+  };
+};
+
+export const clearPurchaseDetails = () => ({
+  type: CLEAR_PURCHASE_DETAILS,
+});

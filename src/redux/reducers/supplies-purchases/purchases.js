@@ -5,11 +5,16 @@ import {
   ADD_PURCHASE_START,
   ADD_PURCHASE_SUCCESS,
   ADD_PURCHASE_ERROR,
+  GET_PURCHASE_DETAILS_START,
+  GET_PURCHASE_DETAILS_SUCCESS,
+  GET_PURCHASE_DETAILS_ERROR,
+  CLEAR_PURCHASE_DETAILS,
 } from "../../utils/actions";
 
 // Default state
 const purchasesDefaultState = {
   purchases: [],
+  purchaseDetails: [],
   isLoading: true,
   error: null,
   isProcessing: false,
@@ -58,6 +63,27 @@ export default (state = purchasesDefaultState, action) => {
         ...state,
         error: true,
         isProcessing: false,
+      };
+    case GET_PURCHASE_DETAILS_START:
+      return {
+        ...state,
+        error: false,
+      };
+    case GET_PURCHASE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        purchaseDetails: action.purchaseDetails,
+        error: false,
+      };
+    case GET_PURCHASE_DETAILS_ERROR:
+      return {
+        ...state,
+        error: true,
+      };
+    case CLEAR_PURCHASE_DETAILS:
+      return {
+        ...state,
+        purchaseDetails: [],
       };
     default:
       return state;
