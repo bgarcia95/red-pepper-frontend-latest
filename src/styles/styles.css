@@ -70,3 +70,7 @@ input.error {
 }
 
 /* . For Forms */
+
+.swal2-container {
+  z-index: 1400 !important;
+}
