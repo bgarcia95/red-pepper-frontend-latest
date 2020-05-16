@@ -16,7 +16,11 @@ import MomentUtils from "@date-io/moment";
 import "moment/locale/es";
 import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
 import TablePurchaseDetails from "../Table/TablePurchaseDetails";
-import { addPurchaseAction } from "../../redux/actions/supplies-purchases/purchases";
+import {
+  addPurchaseAction,
+  getPurchaseDetailsAction,
+  clearPurchaseDetails,
+} from "../../redux/actions/supplies-purchases/purchases";
 import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
@@ -65,13 +69,23 @@ const PurchasesFormik = (props) => {
   const { toggle, payload } = props;
   const suppliers = useSelector((state) => state.suppliers.suppliers);
   const supplies = useSelector((state) => state.supplies.supplies);
+  const purchaseDetails = useSelector(
+    (state) => state.purchases.purchaseDetails
+  );
+
   const dispatch = useDispatch();
   useEffect(() => {
     const getSuppliers = () => dispatch(getSuppliersAction());
     getSuppliers();
     const getSupplies = () => dispatch(getSuppliesAction());
     getSupplies();
-  }, [dispatch]);
+
+    if (payload) {
+      const getPurchaseDetails = () =>
+        dispatch(getPurchaseDetailsAction(payload.id));
+      getPurchaseDetails();
+    }
+  }, [dispatch, payload]);
 
   const suppliesSelect = supplies.map(({ name, id }) => ({
     label: name,
@@ -551,33 +565,50 @@ const PurchasesFormik = (props) => {
                 <Grid item xs={12}>
                   <TablePurchaseDetails
                     payload={values.purchaseDetails}
+                    purchaseDetails={purchaseDetails}
                     onDeleteItem={onDeleteItem}
                     invoiceTotal={invoiceTotal}
                     TAX_RATE={TAX_RATE}
-                    subtotal={subtotal}
                     invoiceSubtotal={invoiceSubtotal}
                     invoiceTaxes={invoiceTaxes}
+                    supplies={supplies}
                   />
                 </Grid>
               </Grid>
               <DialogActions>
                 <div className="center-content">
-                  <CancelButton onClick={toggle} variant="contained">
-                    Cancelar
-                  </CancelButton>
-                  <AddButton
-                    type="submit"
-                    variant="contained"
-                    disabled={
-                      !values.invoiceNumber ||
-                      !values.providerName ||
-                      !values.emissionDate ||
-                      values.purchaseDetails.length === 0
-                    }
-                    onClick={(e) => onSubmit(e)}
-                  >
-                    Confirmar
-                  </AddButton>
+                  {payload ? (
+                    <React.Fragment>
+                      <CancelButton
+                        onClick={() => {
+                          toggle();
+                          dispatch(clearPurchaseDetails());
+                        }}
+                        variant="contained"
+                      >
+                        Cerrar
+                      </CancelButton>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <CancelButton onClick={toggle} variant="contained">
+                        Cancelar
+                      </CancelButton>
+                      <AddButton
+                        type="submit"
+                        variant="contained"
+                        disabled={
+                          !values.invoiceNumber ||
+                          !values.providerName ||
+                          !values.emissionDate ||
+                          values.purchaseDetails.length === 0
+                        }
+                        onClick={(e) => onSubmit(e)}
+                      >
+                        Confirmar
+                      </AddButton>
+                    </React.Fragment>
+                  )}
                 </div>
               </DialogActions>
             </form>
