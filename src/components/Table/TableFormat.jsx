@@ -135,7 +135,7 @@ const TableFormat = (props) => {
                   <TableRow key={uuid()}>
                     {tableHeaders.map(({ field }) => (
                       <TableCell key={uuid()} align="center">
-                        {item[field]}
+                        {field === "total" ? `$ ${item[field]}` : item[field]}
                       </TableCell>
                     ))}
                     <TableCell key={uuid()} style={{ width: "200px" }}>
