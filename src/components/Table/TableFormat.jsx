@@ -23,6 +23,7 @@ const useStyles2 = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       flexDirection: "column",
+      alignItems: "center",
     },
     display: "flex",
     flexDirection: "row",
@@ -36,8 +37,8 @@ const useStyles2 = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       marginTop: "10px",
       marginLeft: 0,
+      width: "64px",
     },
-    marginLeft: "5px",
     marginTop: 0,
   },
 }));
