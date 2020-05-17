@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 const TablePurchaseDetails = (props) => {
   const classes = useStyles();
   const {
-    payload,
+    purchaseDetails,
     onDeleteItem,
     TAX_RATE,
     invoiceSubtotal,
@@ -65,14 +65,14 @@ const TablePurchaseDetails = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {payload.length === 0 ? (
+          {purchaseDetails.length === 0 ? (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 Ingrese detalles a la factura
               </TableCell>
             </TableRow>
           ) : null}
-          {payload.map((item) => (
+          {purchaseDetails.map((item) => (
             <TableRow key={uuid()}>
               <TableCell key={item.supplyId}>
                 {item.desc || filterSupply(item.supplyId)}
