@@ -65,6 +65,13 @@ const TablePurchaseDetails = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
+          {payload.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                Ingrese detalles a la factura
+              </TableCell>
+            </TableRow>
+          ) : null}
           {payload.map((item) => (
             <TableRow key={uuid()}>
               <TableCell key={item.supplyId}>
