@@ -33,9 +33,9 @@ input.error {
 /* Here ends Error Message */
 
 /* For buttons within Modal */
-@media (min-width: 640px) {
+@media (min-width: 400px) {
   button + button {
-    margin-left: 5px !important;
+    margin-left: 10px !important;
   }
 }
 
