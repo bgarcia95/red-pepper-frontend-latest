@@ -16,10 +16,7 @@ import MomentUtils from "@date-io/moment";
 import "moment/locale/es";
 import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
 import TablePurchaseDetails from "../Table/TablePurchaseDetails";
-import {
-  addPurchaseAction,
-  clearPurchaseDetails,
-} from "../../redux/actions/supplies-purchases/purchases";
+import { addPurchaseAction } from "../../redux/actions/supplies-purchases/purchases";
 import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
@@ -594,7 +591,7 @@ const PurchasesFormik = (props) => {
 
                 <Grid item xs={12}>
                   <TablePurchaseDetails
-                    payload={values.purchaseDetails}
+                    purchaseDetails={values.purchaseDetails}
                     onDeleteItem={onDeleteItem}
                     invoiceTotal={invoiceTotal}
                     TAX_RATE={TAX_RATE}
@@ -609,13 +606,7 @@ const PurchasesFormik = (props) => {
                 <div className="center-content">
                   {payload ? (
                     <React.Fragment>
-                      <CancelButton
-                        onClick={() => {
-                          toggle();
-                          dispatch(clearPurchaseDetails());
-                        }}
-                        variant="contained"
-                      >
+                      <CancelButton onClick={toggle} variant="contained">
                         Cerrar
                       </CancelButton>
                     </React.Fragment>
