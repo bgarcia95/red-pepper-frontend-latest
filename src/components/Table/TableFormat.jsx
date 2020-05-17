@@ -117,7 +117,7 @@ const TableFormat = (props) => {
                   <TableRow key={uuid()}>
                     <TableCell
                       key={uuid()}
-                      colSpan={tableHeaders.length}
+                      colSpan={tableHeaders.length + 1}
                       rowSpan={rowsPerPage}
                       className="text-center"
                     >
@@ -135,7 +135,9 @@ const TableFormat = (props) => {
                   <TableRow key={uuid()}>
                     {tableHeaders.map(({ field }) => (
                       <TableCell key={uuid()} align="center">
-                        {field === "total" ? `$ ${item[field]}` : item[field]}
+                        {field === "total" || field === "price"
+                          ? `$ ${item[field]}`
+                          : item[field]}
                       </TableCell>
                     ))}
                     <TableCell key={uuid()} style={{ width: "200px" }}>
@@ -178,7 +180,7 @@ const TableFormat = (props) => {
               </React.Fragment>
             )}
 
-            {emptyRows > 0 && (
+            {payload.length !== 0 && emptyRows > 0 && (
               <TableRow
                 style={{
                   height: 30 * emptyRows,
