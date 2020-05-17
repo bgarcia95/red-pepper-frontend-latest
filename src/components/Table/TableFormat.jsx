@@ -26,11 +26,19 @@ const useStyles2 = makeStyles((theme) => ({
     },
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "blue",
+  },
+  deleteButton: {
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "10px",
+      marginLeft: 0,
+    },
+    marginLeft: "5px",
+    marginTop: 0,
   },
 }));
 
@@ -129,7 +137,7 @@ const TableFormat = (props) => {
                         {item[field]}
                       </TableCell>
                     ))}
-                    <TableCell key={uuid()}>
+                    <TableCell key={uuid()} style={{ width: "200px" }}>
                       {onDelete ? (
                         <div className={classes.buttonContainer}>
                           <FormDialog
@@ -149,6 +157,7 @@ const TableFormat = (props) => {
                               //   setPage(page - 1);
                               // }
                             }}
+                            className={classes.deleteButton}
                           >
                             <FaTrash />
                           </DeleteButton>
