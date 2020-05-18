@@ -76,8 +76,8 @@ export default (state = dishesDefaultState, action) => {
       return {
         ...state,
         error: null,
-        dishes: state.dishes.map(
-          (dish) => dish.id === action.dish.id && (dish = action.dish)
+        dishes: state.dishes.map((dish) =>
+          dish.id === action.dish.id ? (dish = action.dish) : dish
         ),
         isProcessing: false,
         isFetching: false,

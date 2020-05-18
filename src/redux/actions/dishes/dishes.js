@@ -13,7 +13,6 @@ import {
   DELETE_DISH_SUCCESS,
   DELETE_DISH_ERROR,
 } from "../../utils/actions";
-import Swal from "sweetalert2";
 
 // All GET methods
 export const getDishesStart = () => ({
@@ -69,14 +68,10 @@ export const addDishAction = (dish) => {
 
     // Insert into db
     http
-      .post("/provider", dish)
+      .post("/dish/CreateDish", dish)
       .then((response) => {
         dispatch(addDishSuccess(response.data));
-        Swal.fire(
-          "¡Guardado!",
-          "El platillo fue guardado satisfactoriamente",
-          "success"
-        );
+
         dispatch(getDishesAction());
       })
       .catch((error) => {
@@ -106,14 +101,9 @@ export const updateDishAction = (dish) => {
     dispatch(updateDishStart());
 
     http
-      .put("/dish", dish)
+      .put("/dish/UpdateDish", dish)
       .then((response) => {
         dispatch(updateDishSuccess(response.data));
-        Swal.fire(
-          "¡Guardado!",
-          "El platillo fue actualizado satisfactoriamente",
-          "success"
-        );
         dispatch(getDishesAction());
       })
       .catch((error) => {
