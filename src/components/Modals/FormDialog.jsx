@@ -8,6 +8,7 @@ import SuppliesFormik from "../Formik/SuppliesFormik";
 import SuppliersFormik from "../Formik/SuppliersFormik";
 import PurchasesFormik from "../Formik/PurchasesFormik";
 import CategoriesFormik from "../Formik/CategoriesFormik";
+import DishesFormik from "../Formik/DishesFormik";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
@@ -66,6 +67,11 @@ const FormDialog = (props) => {
       form = <CategoriesFormik {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Categoría";
       dialogSize = "sm";
+      break;
+    case "dish":
+      form = <DishesFormik {...props} toggle={toggleModal} modal={open} />;
+      customTitle = "Editar Platillo";
+      dialogSize = "lg";
       break;
     default:
       break;
