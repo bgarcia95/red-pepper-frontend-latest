@@ -70,25 +70,23 @@ export default (state = suppliersDefaultState, action) => {
         ...state,
         isProcessing: true,
         error: null,
-        isFetching: false,
       };
     case UPDATE_SUPPLIER_SUCCESS:
       return {
         ...state,
         error: null,
-        suppliers: state.suppliers.map(
-          (supplier) =>
-            supplier.id === action.supplier.id && (supplier = action.supplier)
+        suppliers: state.suppliers.map((supplier) =>
+          supplier.id === action.supplier.id
+            ? (supplier = action.supplier)
+            : supplier
         ),
         isProcessing: false,
-        isFetching: false,
       };
     case UPDATE_SUPPLIER_ERROR:
       return {
         ...state,
         error: true,
         isProcessing: false,
-        isFetching: false,
       };
     case DELETE_SUPPLIER_START:
       return {

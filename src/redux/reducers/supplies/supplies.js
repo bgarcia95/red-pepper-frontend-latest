@@ -71,24 +71,21 @@ export default (state = suppliesDefaultState, action) => {
         ...state,
         isProcessing: true,
         error: null,
-        isFetching: false,
       };
     case UPDATE_SUPPLY_SUCCESS:
       return {
         ...state,
         error: null,
-        supplies: state.supplies.map(
-          (supply) => supply.id === action.supply.id && (supply = action.supply)
+        supplies: state.supplies.map((supply) =>
+          supply.id === action.supply.id ? (supply = action.supply) : supply
         ),
         isProcessing: false,
-        isFetching: false,
       };
     case UPDATE_SUPPLY_ERROR:
       return {
         ...state,
         error: true,
         isProcessing: false,
-        isFetching: false,
       };
     case DELETE_SUPPLY_START:
       return {

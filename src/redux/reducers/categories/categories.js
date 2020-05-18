@@ -71,25 +71,23 @@ export default (state = categoriesDefaultState, action) => {
         ...state,
         isProcessing: true,
         error: null,
-        isFetching: false,
       };
     case UPDATE_CATEGORY_SUCCESS:
       return {
         ...state,
         error: null,
-        categories: state.categories.map(
-          (category) =>
-            category.id === action.category.id && (category = action.category)
+        categories: state.categories.map((category) =>
+          category.id === action.category.id
+            ? (category = action.category)
+            : category
         ),
         isProcessing: false,
-        isFetching: false,
       };
     case UPDATE_CATEGORY_ERROR:
       return {
         ...state,
         error: true,
         isProcessing: false,
-        isFetching: false,
       };
     case DELETE_CATEGORY_START:
       return {
