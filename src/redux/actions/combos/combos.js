@@ -33,9 +33,8 @@ export const getCombosAction = () => {
     dispatch(getCombosStart());
 
     // Retrieve data from API
-    // TODO: update API Endpoint
     http
-      .get("/dish")
+      .get("/Combo")
       .then((response) => {
         // console.log(response);
         dispatch(getCombosSuccess(response.data));
@@ -49,96 +48,96 @@ export const getCombosAction = () => {
 
 // ALL POST METHODS
 
-export const addDishStart = () => ({
-  type: ADD_DISH_START,
+export const addComboStart = () => ({
+  type: ADD_COMBO_START,
 });
 
-export const addDishSuccess = (dish) => ({
-  type: ADD_DISH_SUCCESS,
-  dish,
+export const addComboSuccess = (combo) => ({
+  type: ADD_COMBO_SUCCESS,
+  combo,
 });
 
-export const addDishError = (error) => ({
-  type: ADD_DISH_ERROR,
+export const addComboError = (error) => ({
+  type: ADD_COMBO_ERROR,
   error,
 });
 
-export const addDishAction = (dish) => {
+export const addComboAction = (combo) => {
   return (dispatch) => {
-    dispatch(addDishStart());
+    dispatch(addComboStart());
 
     // Insert into db
     http
-      .post("/dish/CreateDish", dish)
+      .post("/combo/CreateCombo", combo)
       .then((response) => {
-        dispatch(addDishSuccess(response.data));
+        dispatch(addComboSuccess(response.data));
 
         dispatch(getCombosAction());
       })
       .catch((error) => {
-        dispatch(addDishError(error));
+        dispatch(addComboError(error));
       });
   };
 };
 
 // ALL PUT (PATCH) METHODS
 
-export const updateDishStart = () => ({
-  type: UPDATE_DISH_START,
+export const updateComboStart = () => ({
+  type: UPDATE_COMBO_START,
 });
 
-export const updateDishSuccess = (dish) => ({
-  type: UPDATE_DISH_SUCCESS,
-  dish,
+export const updateComboSuccess = (combo) => ({
+  type: UPDATE_COMBO_SUCCESS,
+  combo,
 });
 
-export const updateDishError = (error) => ({
-  type: UPDATE_DISH_ERROR,
+export const updateComboError = (error) => ({
+  type: UPDATE_COMBO_ERROR,
   error,
 });
 
-export const updateDishAction = (dish) => {
+export const updateComboAction = (combo) => {
   return (dispatch) => {
-    dispatch(updateDishStart());
+    dispatch(updateComboStart());
 
     http
-      .put("/dish/UpdateDish", dish)
+      .put("/combo/UpdateCombo", combo)
       .then((response) => {
-        dispatch(updateDishSuccess(response.data));
+        dispatch(updateComboSuccess(response.data));
         dispatch(getCombosAction());
       })
       .catch((error) => {
         console.log(error);
-        dispatch(updateDishError(error));
+        dispatch(updateComboError(error));
       });
   };
 };
 
 // ALL DELETE METHODS
 
-export const deleteDishStart = () => ({
-  type: DELETE_DISH_START,
+export const deleteComboStart = () => ({
+  type: DELETE_COMBO_START,
 });
 
-export const deleteDishSuccess = (id) => ({
-  type: DELETE_DISH_SUCCESS,
+export const deleteComboSuccess = (id) => ({
+  type: DELETE_COMBO_SUCCESS,
   id,
 });
 
-export const deleteDishError = (error) => ({
-  type: DELETE_DISH_ERROR,
+export const deleteComboError = (error) => ({
+  type: DELETE_COMBO_ERROR,
   error,
 });
-export const deleteDishAction = (id) => {
+export const deleteComboAction = (id) => {
   return (dispatch) => {
     http
-      .delete(`/dish/RemoveDish/${id}`)
+      .delete(`/combo/RemoveCombo/${id}`)
       .then((response) => {
-        dispatch(deleteDishSuccess(response.data.id));
+        dispatch(deleteComboSuccess(response.data.id));
         dispatch(getCombosAction());
       })
       .catch((error) => {
-        dispatch(deleteDishError(error));
+        dispatch(deleteComboError(error));
       });
   };
 };
