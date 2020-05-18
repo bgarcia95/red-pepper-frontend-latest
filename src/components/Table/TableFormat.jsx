@@ -147,6 +147,9 @@ const TableFormat = (props) => {
                             formTarget={formTarget}
                             buttonLabel="Editar"
                             payload={item}
+                            categories={
+                              formTarget === "dish" && props.categories
+                            }
                           />
                           <DeleteButton
                             variant="contained"
