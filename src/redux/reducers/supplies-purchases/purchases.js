@@ -10,7 +10,6 @@ import {
 // Default state
 const purchasesDefaultState = {
   purchases: [],
-  purchaseDetails: [],
   isLoading: true,
   error: null,
   isProcessing: false,
