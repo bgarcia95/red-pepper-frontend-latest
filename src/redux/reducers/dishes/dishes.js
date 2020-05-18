@@ -70,7 +70,6 @@ export default (state = dishesDefaultState, action) => {
         ...state,
         isProcessing: true,
         error: null,
-        isFetching: false,
       };
     case UPDATE_DISH_SUCCESS:
       return {
@@ -80,14 +79,12 @@ export default (state = dishesDefaultState, action) => {
           dish.id === action.dish.id ? (dish = action.dish) : dish
         ),
         isProcessing: false,
-        isFetching: false,
       };
     case UPDATE_DISH_ERROR:
       return {
         ...state,
         error: true,
         isProcessing: false,
-        isFetching: false,
       };
     case DELETE_DISH_START:
       return {
