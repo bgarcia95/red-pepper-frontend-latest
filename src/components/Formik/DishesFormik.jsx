@@ -10,6 +10,7 @@ import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
 import {
   addDishAction,
   updateDishAction,
+  getDishesAction,
 } from "../../redux/actions/dishes/dishes";
 import TableDishDetails from "../../components/Table/TableDishDetails";
 import Swal from "sweetalert2";
@@ -84,6 +85,8 @@ const DishesFormik = (props) => {
           handleBlur,
           setFieldValue,
           setFieldTouched,
+          isSubmitting,
+          dirty,
         } = props;
 
         const clearDetailHandler = () => {
@@ -176,7 +179,7 @@ const DishesFormik = (props) => {
           e.preventDefault();
 
           if (payload) {
-            const updateDish = {
+            const dish = {
               name: values.name,
               dishCategoryId: values.categoryId,
               description: values.description,
@@ -193,7 +196,7 @@ const DishesFormik = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(updateDishAction({ ...updateDish, id: payload.id }));
+                dispatch(updateDishAction({ ...dish, id: payload.id }));
                 Swal.fire(
                   "¡Completado!",
                   "El platillo fué actualizado satisfactoriamente.",
@@ -202,18 +205,18 @@ const DishesFormik = (props) => {
               }
             });
           } else {
-            const postDetails = values.dishDetails.map((detail) => ({
+            const details = values.dishDetails.map((detail) => ({
               Qty: detail.qty,
               SupplyId: detail.supplyId,
               Comment: detail.comment,
             }));
 
-            const postDish = {
+            const dish = {
               Name: values.name,
               DishCategoryId: values.categoryId,
               Description: values.description,
               Price: values.price,
-              DishSupplies: postDetails,
+              DishSupplies: details,
             };
             Swal.fire({
               title: "¿Estás seguro/a?",
@@ -225,13 +228,13 @@ const DishesFormik = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(addDishAction(postDish));
+                dispatch(addDishAction(dish));
                 Swal.fire(
                   "¡Completado!",
                   "El platillo fué registrado satisfactoriamente.",
                   "success"
                 );
-                // toggle();
+                toggle();
               }
             });
           }
@@ -523,23 +526,43 @@ const DishesFormik = (props) => {
               </Grid>
               <DialogActions>
                 <div className="center-content">
-                  <CancelButton onClick={toggle} variant="contained">
+                  <CancelButton
+                    onClick={() => {
+                      toggle();
+                      if (payload) {
+                        dispatch(getDishesAction());
+                      }
+                    }}
+                    variant="contained"
+                  >
                     Cancelar
                   </CancelButton>
-                  <AddButton
-                    type="submit"
-                    variant="contained"
-                    disabled={
-                      !values.name ||
-                      !values.categoryName ||
-                      !values.description ||
-                      values.price <= 0 ||
-                      values.dishDetails.length === 0
-                    }
-                    onClick={(e) => onSubmit(e)}
-                  >
-                    Confirmar
-                  </AddButton>
+
+                  {payload ? (
+                    <AddButton
+                      type="submit"
+                      variant="contained"
+                      disabled={isSubmitting || !dirty}
+                      onClick={(e) => onSubmit(e)}
+                    >
+                      Confirmar
+                    </AddButton>
+                  ) : (
+                    <AddButton
+                      type="submit"
+                      variant="contained"
+                      disabled={
+                        !values.name ||
+                        !values.categoryName ||
+                        !values.description ||
+                        values.price <= 0 ||
+                        values.dishDetails.length === 0
+                      }
+                      onClick={(e) => onSubmit(e)}
+                    >
+                      Confirmar
+                    </AddButton>
+                  )}
                 </div>
               </DialogActions>
             </form>

@@ -9,11 +9,15 @@ import SuppliersFormik from "../Formik/SuppliersFormik";
 import PurchasesFormik from "../Formik/PurchasesFormik";
 import CategoriesFormik from "../Formik/CategoriesFormik";
 import DishesFormik from "../Formik/DishesFormik";
+import { useDispatch } from "react-redux";
+import { getDishesAction } from "../../redux/actions/dishes/dishes";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
 
   const [open, setOpen] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const { title } = props;
 
@@ -82,7 +86,12 @@ const FormDialog = (props) => {
       {button}
       <Dialog
         open={open}
-        onClose={toggleModal}
+        onClose={() => {
+          toggleModal();
+          if (props.formTarget === "dish" && props.payload) {
+            dispatch(getDishesAction());
+          }
+        }}
         aria-labelledby="form-dialog-title"
         maxWidth={dialogSize}
         fullWidth={true}
