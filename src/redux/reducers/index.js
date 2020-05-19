@@ -5,6 +5,7 @@ import purchasesReducer from "./supplies-purchases/purchases";
 import categoriesReducer from "./categories/categories";
 import dishesReducer from "./dishes/dishes";
 import combosReducer from "./combos/combos";
+import tablesReducer from "./tables/tables";
 import tokenReducer from "./auth/auth";
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   categories: categoriesReducer,
   dishes: dishesReducer,
   combos: combosReducer,
+  tables: tablesReducer,
   auth: tokenReducer,
 });
