@@ -189,7 +189,7 @@ const TableFormat = (props) => {
                   height: 30 * emptyRows,
                 }}
               >
-                <TableCell colSpan={6} />
+                <TableCell colSpan={tableHeaders.length + 1} />
               </TableRow>
             )}
           </TableBody>
