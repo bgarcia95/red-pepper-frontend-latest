@@ -529,7 +529,7 @@ const DishesFormik = (props) => {
                   <CancelButton
                     onClick={() => {
                       toggle();
-                      if (payload) {
+                      if (payload.dishSupplies !== values.dishDetails) {
                         dispatch(getDishesAction());
                       }
                     }}
