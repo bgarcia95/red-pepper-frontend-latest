@@ -11,6 +11,8 @@ import CategoriesFormik from "../Formik/CategoriesFormik";
 import DishesFormik from "../Formik/DishesFormik";
 import { useDispatch } from "react-redux";
 import { getDishesAction } from "../../redux/actions/dishes/dishes";
+import CombosFormik from "../Formik/CombosFormik";
+import { getCombosAction } from "../../redux/actions/combos/combos";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
@@ -77,6 +79,11 @@ const FormDialog = (props) => {
       customTitle = "Editar Platillo";
       dialogSize = "lg";
       break;
+    case "combo":
+      form = <CombosFormik {...props} toggle={toggleModal} modal={open} />;
+      customTitle = "Editar Combo";
+      dialogSize = "lg";
+      break;
     default:
       break;
   }
@@ -90,6 +97,9 @@ const FormDialog = (props) => {
           toggleModal();
           if (props.formTarget === "dish" && props.payload) {
             dispatch(getDishesAction());
+          }
+          if (props.formTarget === "combo" && props.payload) {
+            dispatch(getCombosAction());
           }
         }}
         aria-labelledby="form-dialog-title"
