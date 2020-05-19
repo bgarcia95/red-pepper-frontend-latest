@@ -73,7 +73,7 @@ export const addTableAction = (table) => {
         dispatch(addTableSuccess(response.data));
         Swal.fire(
           "¡Guardado!",
-          "La mesa fue guardado satisfactoriamente",
+          "La mesa fue guardada satisfactoriamente",
           "success"
         );
         dispatch(getTablesAction());
@@ -110,7 +110,7 @@ export const updateTableAction = (table) => {
         dispatch(updateTableSuccess(response.data));
         Swal.fire(
           "¡Guardado!",
-          "La tabla fue actualizada satisfactoriamente",
+          "La mesa fue actualizada satisfactoriamente",
           "success"
         );
         dispatch(getTablesAction());
