@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { grey, red } from "@material-ui/core/colors";
-import { drawerOptions } from "./utils/drawerOptions";
+import DrawerOptions from "./utils/DrawerOptions";
 import { LogOutButton } from "../UI/Buttons/Buttons";
 
 // Styles
@@ -62,7 +62,7 @@ const Navigation = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isAuthenticated } = props;
+  const { isAuthenticated, location } = props;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -72,7 +72,9 @@ const Navigation = (props) => {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List>{drawerOptions()}</List>
+      <List>
+        <DrawerOptions location={location} />
+      </List>
     </div>
   );
 
