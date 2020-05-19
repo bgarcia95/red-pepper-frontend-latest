@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { isAuthenticated } = props;
+  const {
+    isAuthenticated,
+    location: { pathname },
+  } = props;
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -30,7 +33,11 @@ const Layout = (props) => {
 
   return (
     <div className={classes.root}>
-      <Navigation isAuthenticated={isAuthenticated} onLogout={logoutHandler} />
+      <Navigation
+        isAuthenticated={isAuthenticated}
+        onLogout={logoutHandler}
+        location={pathname}
+      />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <AppRouter isAuthenticated={isAuthenticated} />
