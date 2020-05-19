@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { getDishesAction } from "../../redux/actions/dishes/dishes";
 import CombosFormik from "../Formik/CombosFormik";
 import { getCombosAction } from "../../redux/actions/combos/combos";
+import TablesFormik from "../Formik/TablesFormik";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
@@ -83,6 +84,11 @@ const FormDialog = (props) => {
       form = <CombosFormik {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Combo";
       dialogSize = "lg";
+      break;
+    case "table":
+      form = <TablesFormik {...props} toggle={toggleModal} modal={open} />;
+      customTitle = "Editar Mesa";
+      dialogSize = "sm";
       break;
     default:
       break;
