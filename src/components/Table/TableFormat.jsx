@@ -62,8 +62,8 @@ const TableFormat = (props) => {
         }}
         actions={[
           {
-            icon: "save",
-            tooltip: "Buttons",
+            icon: "",
+            tooltip: "",
             onClick: (event, rowData) => rowData,
           },
         ]}
