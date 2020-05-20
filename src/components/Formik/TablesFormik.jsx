@@ -64,7 +64,7 @@ const TablesFormik = (props) => {
           <React.Fragment>
             <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.name && touched.name}
@@ -85,7 +85,7 @@ const TablesFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.chairs && touched.chairs}
