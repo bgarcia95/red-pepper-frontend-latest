@@ -94,7 +94,6 @@ input.error {
 }
 
 /* Removing padding on Action column */
-/* .MuiTableCell-paddingCheckbox:last-child {
-  padding: 0 4px 0 12px !important; 
-   padding: 0 !important;
-} */
+.MuiTableCell-paddingCheckbox:last-child {
+  padding: 0 0px 0 20px !important;
+}
