@@ -247,7 +247,7 @@ const DishesFormik = (props) => {
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={5}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.name && touched.name}
@@ -268,7 +268,7 @@ const DishesFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
                     <React.Fragment>
                       <Autocomplete
@@ -333,7 +333,7 @@ const DishesFormik = (props) => {
                     </React.Fragment>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={3}>
                   <FormControl fullWidth={true}>
                     <TextField
                       id="price"
@@ -357,7 +357,7 @@ const DishesFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.description && touched.description}
