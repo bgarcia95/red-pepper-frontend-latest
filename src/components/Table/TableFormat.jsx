@@ -45,7 +45,7 @@ const TableFormat = (props) => {
           toolbar: { searchPlaceholder: "Buscar", searchTooltip: "Buscar" },
           body: { emptyDataSourceMessage: "No hay informacion disponible" },
           header: {
-            actions: "Acciones",
+            actions: formTarget === "purchase" ? "Acción" : "Acciones",
           },
           pagination: {
             labelDisplayedRows: `{from}-{to} de {count}`,
@@ -59,9 +59,6 @@ const TableFormat = (props) => {
         options={{
           actionsColumnIndex: -1,
           draggable: false,
-          actionsCellStyle: {
-            textAlign: "center",
-          },
         }}
         actions={[
           {
