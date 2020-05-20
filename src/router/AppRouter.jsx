@@ -14,7 +14,7 @@ const AppRouter = (props) => {
   let appRoutes = (
     <Switch>
       <Route path="/login" component={Login} />
-      {/* <Route exact path="/" component={Login} /> */}
+      {/* This one will catch anything that has no route. */}
       <Route render={() => <Redirect to={{ pathname: "/login" }} />} />
     </Switch>
   );
@@ -29,8 +29,7 @@ const AppRouter = (props) => {
         <Route path="/platos" component={Dishes} />
         <Route path="/combos" component={Combos} />
         <Route path="/mesas" component={Tables} />
-        {/* <Route path="/login" component={Login} /> */}
-        {/* <Route path="/" component={Supplies} /> */}
+        {/* This one will catch anything that has no route. */}
         <Route render={() => <Redirect to={{ pathname: "/insumos" }} />} />
       </Switch>
     );
