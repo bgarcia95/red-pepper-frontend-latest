@@ -14,8 +14,8 @@ const AppRouter = (props) => {
   let appRoutes = (
     <Switch>
       <Route path="/login" component={Login} />
-      {/* <Route path="/" component={Login} /> */}
-      <Redirect from="/" exact to="login" />
+      {/* <Route exact path="/" component={Login} /> */}
+      <Route render={() => <Redirect to={{ pathname: "/login" }} />} />
     </Switch>
   );
 
@@ -31,7 +31,7 @@ const AppRouter = (props) => {
         <Route path="/mesas" component={Tables} />
         {/* <Route path="/login" component={Login} /> */}
         {/* <Route path="/" component={Supplies} /> */}
-        <Redirect from="*" exact to="insumos" />
+        <Route render={() => <Redirect to={{ pathname: "/insumos" }} />} />
       </Switch>
     );
   }
