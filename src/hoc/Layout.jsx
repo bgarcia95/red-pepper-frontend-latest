@@ -1,9 +1,9 @@
 import React from "react";
-import Navigation from "../components/Navigation/Navigation";
+import Navigation from "components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
-import AppRouter from "../router/AppRouter";
+import AppRouter from "router/AppRouter";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction } from "../redux/actions/auth/auth";
+import { logoutAction } from "redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

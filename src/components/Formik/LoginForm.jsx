@@ -3,9 +3,9 @@ import { TextField } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { AddButton } from "../UI/Buttons/Buttons";
+import { AddButton } from "components/UI/Buttons/Buttons";
 import { useDispatch, connect } from "react-redux";
-import { loginAction } from "../../redux/actions/auth/auth";
+import { loginAction } from "redux/actions/auth/auth";
 
 const LoginForm = (props) => {
   const { history, error } = props;

@@ -1,4 +1,4 @@
-import http from "../../../services/httpService";
+import http from "services/httpService";
 import {
   GET_COMBOS_START,
   GET_COMBOS_SUCCESS,
@@ -12,7 +12,7 @@ import {
   DELETE_COMBO_START,
   DELETE_COMBO_SUCCESS,
   DELETE_COMBO_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // All GET methods
 export const getCombosStart = () => ({

@@ -11,7 +11,7 @@ import {
   DELETE_DISH_START,
   DELETE_DISH_SUCCESS,
   DELETE_DISH_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const dishesDefaultState = {

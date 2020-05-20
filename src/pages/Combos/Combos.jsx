@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from "components/PageContainer/PageContainer";
 import {
   getCombosAction,
   deleteComboStart,
   deleteComboAction,
-} from "../../redux/actions/combos/combos";
+} from "redux/actions/combos/combos";
 
 const Combos = () => {
   const dispatch = useDispatch();

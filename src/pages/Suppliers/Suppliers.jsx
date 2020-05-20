@@ -4,9 +4,9 @@ import {
   getSuppliersAction,
   deleteSupplierAction,
   deleteSupplierStart,
-} from "../../redux/actions/suppliers/suppliers";
+} from "redux/actions/suppliers/suppliers";
 import Swal from "sweetalert2";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from "components/PageContainer/PageContainer";
 
 const Suppliers = () => {
   const dispatch = useDispatch();

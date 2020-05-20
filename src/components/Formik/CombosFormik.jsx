@@ -7,14 +7,14 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import http from "../../services/httpService";
-import { getDishesAction } from "../../redux/actions/dishes/dishes";
-import TableComboDetails from "../Table/TableComboDetails";
+import http from "services/httpService";
+import TableComboDetails from "components/Table/TableComboDetails";
+import { getDishesAction } from "redux/actions/dishes/dishes";
 import {
   addComboAction,
   updateComboAction,
   getCombosAction,
-} from "../../redux/actions/combos/combos";
+} from "redux/actions/combos/combos";
 
 const CombosFormik = (props) => {
   const { toggle, payload } = props;

@@ -3,7 +3,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -12,8 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 import { grey, red } from "@material-ui/core/colors";
-import DrawerOptions from "./utils/DrawerOptions";
-import { LogOutButton } from "../UI/Buttons/Buttons";
+import DrawerOptions from "components/Navigation/utils/DrawerOptions";
+import { LogOutButton, LogOutIcon } from "components/UI/Buttons/Buttons";
+import { FaSignOutAlt } from "react-icons/fa";
+import { IconButton } from "@material-ui/core";
 
 // Styles
 const drawerWidth = 240;
@@ -101,7 +102,28 @@ const Navigation = (props) => {
             Red Pepper App
           </Typography>
           {isAuthenticated ? (
-            <LogOutButton onClick={props.onLogout}>Cerrar Sesión</LogOutButton>
+            <div>
+              <Hidden xsDown implementation="css">
+                <LogOutButton onClick={props.onLogout} size="small">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <FaSignOutAlt style={{ marginRight: "3px" }} />
+                    <span>Cerrar Sesión</span>
+                  </div>
+                </LogOutButton>
+              </Hidden>
+              <Hidden smUp implementation="css">
+                <LogOutIcon onClick={props.onLogout}>
+                  <FaSignOutAlt />
+                </LogOutIcon>
+              </Hidden>
+            </div>
           ) : null}
         </Toolbar>
       </AppBar>

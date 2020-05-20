@@ -11,7 +11,7 @@ import {
   DELETE_TABLE_START,
   DELETE_TABLE_SUCCESS,
   DELETE_TABLE_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const tablesDefaultState = {

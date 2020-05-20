@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getSuppliesAction,
   deleteSupplyStart,
-} from "../../redux/actions/supplies/supplies";
+} from "redux/actions/supplies/supplies";
 import Swal from "sweetalert2";
-import { deleteSupplyAction } from "../../redux/actions/supplies/supplies";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import { deleteSupplyAction } from "redux/actions/supplies/supplies";
+import PageContainer from "components/PageContainer/PageContainer";
 
 const Supplies = () => {
   const dispatch = useDispatch();

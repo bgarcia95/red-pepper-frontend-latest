@@ -4,9 +4,9 @@ import {
   getCategoriesAction,
   deleteCategoryAction,
   deleteCategoryStart,
-} from "../../redux/actions/categories/categories";
+} from "redux/actions/categories/categories";
 import Swal from "sweetalert2";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from "components/PageContainer/PageContainer";
 
 const Categories = () => {
   const dispatch = useDispatch();

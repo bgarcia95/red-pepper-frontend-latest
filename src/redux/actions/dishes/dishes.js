@@ -1,4 +1,4 @@
-import http from "../../../services/httpService";
+import http from "services/httpService";
 import {
   GET_DISHES_START,
   GET_DISHES_SUCCESS,
@@ -12,7 +12,7 @@ import {
   DELETE_DISH_START,
   DELETE_DISH_SUCCESS,
   DELETE_DISH_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // All GET methods
 export const getDishesStart = () => ({

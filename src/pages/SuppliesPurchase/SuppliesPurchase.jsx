@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPurchasesAction } from "../../redux/actions/supplies-purchases/purchases";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import { getPurchasesAction } from "redux/actions/supplies-purchases/purchases";
+import PageContainer from "components/PageContainer/PageContainer";
 
 const SuppliesPurchase = () => {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ import {
   DELETE_CATEGORY_START,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const categoriesDefaultState = {

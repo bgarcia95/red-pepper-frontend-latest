@@ -6,15 +6,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
+import { getSuppliesAction } from "redux/actions/supplies/supplies";
 import {
   addDishAction,
   updateDishAction,
   getDishesAction,
-} from "../../redux/actions/dishes/dishes";
-import TableDishDetails from "../../components/Table/TableDishDetails";
+} from "redux/actions/dishes/dishes";
+import TableDishDetails from "components/Table/TableDishDetails";
 import Swal from "sweetalert2";
-import http from "../../services/httpService";
+import http from "services/httpService";
 
 const DishesFormik = (props) => {
   const { toggle, payload, categories } = props;

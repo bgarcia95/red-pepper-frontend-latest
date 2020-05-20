@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
+import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { getSuppliersAction } from "../../redux/actions/suppliers/suppliers";
+import { getSuppliersAction } from "redux/actions/suppliers/suppliers";
 import moment from "moment";
 import {
   MuiPickersUtilsProvider,
@@ -14,9 +14,9 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import "moment/locale/es";
-import { getSuppliesAction } from "../../redux/actions/supplies/supplies";
+import { getSuppliesAction } from "redux/actions/supplies/supplies";
 import TablePurchaseDetails from "../Table/TablePurchaseDetails";
-import { addPurchaseAction } from "../../redux/actions/supplies-purchases/purchases";
+import { addPurchaseAction } from "redux/actions/supplies-purchases/purchases";
 import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";

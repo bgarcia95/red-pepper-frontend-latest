@@ -1,14 +1,14 @@
 import React from "react";
 import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
-import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
+import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 import {
   updateCategoryAction,
   addCategoryAction,
-} from "../../redux/actions/categories/categories";
-import { useDispatch } from "react-redux";
+} from "redux/actions/categories/categories";
 
 const CategoriesFormik = (props) => {
   const { toggle, payload } = props;

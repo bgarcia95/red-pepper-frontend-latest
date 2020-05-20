@@ -1,4 +1,4 @@
-import http from "../../../services/httpService";
+import http from "services/httpService";
 import {
   GET_PURCHASES_START,
   GET_PURCHASES_SUCCESS,
@@ -6,7 +6,7 @@ import {
   ADD_PURCHASE_START,
   ADD_PURCHASE_SUCCESS,
   ADD_PURCHASE_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // All GET Methods
 export const getPurchasesStart = () => ({

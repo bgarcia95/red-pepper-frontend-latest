@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
-import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
+import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import InputMask from "react-input-mask";
 
@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import {
   updateSupplierAction,
   addSupplierAction,
-} from "../../redux/actions/suppliers/suppliers";
+} from "redux/actions/suppliers/suppliers";
 import { useDispatch } from "react-redux";
 
 const SuppliersFormik = (props) => {

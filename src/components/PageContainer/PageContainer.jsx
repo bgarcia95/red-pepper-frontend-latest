@@ -1,8 +1,8 @@
 import React from "react";
-import TableFormat from "../../components/Table/TableFormat";
+import TableFormat from "components/Table/TableFormat";
 import { Typography, Container, Divider, Grid } from "@material-ui/core";
 
-import FormDialog from "../../components/Modals/FormDialog";
+import FormDialog from "components/Modals/FormDialog";
 
 const PageContainer = (props) => {
   const {

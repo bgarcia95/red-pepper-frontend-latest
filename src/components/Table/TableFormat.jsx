@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Backdrop, CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
-import FormDialog from "../Modals/FormDialog";
-import { DeleteButton } from "../UI/Buttons/Buttons";
+import FormDialog from "components/Modals/FormDialog";
+import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
 
 const useStyles2 = makeStyles((theme) => ({

@@ -2,18 +2,22 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { EditButton, AddButton, WatchButton } from "../UI/Buttons/Buttons";
+import {
+  EditButton,
+  AddButton,
+  WatchButton,
+} from "components/UI/Buttons/Buttons";
 import { FaEdit, FaEye } from "react-icons/fa";
-import SuppliesFormik from "../Formik/SuppliesFormik";
-import SuppliersFormik from "../Formik/SuppliersFormik";
-import PurchasesFormik from "../Formik/PurchasesFormik";
-import CategoriesFormik from "../Formik/CategoriesFormik";
-import DishesFormik from "../Formik/DishesFormik";
+import SuppliesFormik from "components/Formik/SuppliesFormik";
+import SuppliersFormik from "components/Formik/SuppliersFormik";
+import PurchasesFormik from "components/Formik/PurchasesFormik";
+import CategoriesFormik from "components/Formik/CategoriesFormik";
+import DishesFormik from "components/Formik/DishesFormik";
+import CombosFormik from "components/Formik/CombosFormik";
+import TablesFormik from "components/Formik/TablesFormik";
 import { useDispatch } from "react-redux";
-import { getDishesAction } from "../../redux/actions/dishes/dishes";
-import CombosFormik from "../Formik/CombosFormik";
-import { getCombosAction } from "../../redux/actions/combos/combos";
-import TablesFormik from "../Formik/TablesFormik";
+import { getDishesAction } from "redux/actions/dishes/dishes";
+import { getCombosAction } from "redux/actions/combos/combos";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;

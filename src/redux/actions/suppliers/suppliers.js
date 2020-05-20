@@ -1,4 +1,4 @@
-import http from "../../../services/httpService";
+import http from "services/httpService";
 import {
   GET_SUPPLIERS_START,
   GET_SUPPLIERS_SUCCESS,
@@ -12,7 +12,7 @@ import {
   DELETE_SUPPLIER_START,
   DELETE_SUPPLIER_SUCCESS,
   DELETE_SUPPLIER_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 import Swal from "sweetalert2";
 
 // All GET methods

@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Swal from "sweetalert2";
-import PageContainer from "../../components/PageContainer/PageContainer";
+import PageContainer from "components/PageContainer/PageContainer";
 import {
   deleteTableStart,
   deleteTableAction,
   getTablesAction,
-} from "../../redux/actions/tables/tables";
+} from "redux/actions/tables/tables";
 
 const Tables = () => {
   const dispatch = useDispatch();

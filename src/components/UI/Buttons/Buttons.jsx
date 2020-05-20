@@ -1,4 +1,4 @@
-import { withStyles, Button } from "@material-ui/core";
+import { withStyles, Button, IconButton } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 
 // Action Buttons
@@ -51,6 +51,17 @@ export const LogOutButton = withStyles(() => ({
     },
   },
 }))(Button);
+
+export const LogOutIcon = withStyles(() => ({
+  root: {
+    color: "black",
+    backgroundColor: "rgba(241, 250, 238, 0.7)",
+    "&:hover": {
+      backgroundColor: "rgba(241, 250, 238, 1)",
+    },
+    fontSize: "15px",
+  },
+}))(IconButton);
 
 export const WatchButton = withStyles(() => ({
   root: {

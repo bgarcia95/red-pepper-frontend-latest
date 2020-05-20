@@ -1,4 +1,4 @@
-import http from "../../../services/httpService";
+import http from "services/httpService";
 import {
   GET_CATEGORIES_START,
   GET_CATEGORIES_SUCCESS,
@@ -12,7 +12,7 @@ import {
   DELETE_CATEGORY_START,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 import Swal from "sweetalert2";
 
 // All GET methods

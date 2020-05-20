@@ -11,7 +11,7 @@ import {
   DELETE_SUPPLY_START,
   DELETE_SUPPLY_SUCCESS,
   DELETE_SUPPLY_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const suppliesDefaultState = {

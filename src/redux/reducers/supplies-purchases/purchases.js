@@ -5,7 +5,7 @@ import {
   ADD_PURCHASE_START,
   ADD_PURCHASE_SUCCESS,
   ADD_PURCHASE_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const purchasesDefaultState = {

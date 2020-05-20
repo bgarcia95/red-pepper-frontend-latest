@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { DeleteButton } from "../UI/Buttons/Buttons";
+import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
 

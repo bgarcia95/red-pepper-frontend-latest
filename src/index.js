@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "App";
 import * as serviceWorker from "./serviceWorker";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter } from "react-router-dom";
-import "./styles/styles.css";
-import configureStore from "./redux/store/configureStore";
 import { Provider } from "react-redux";
+import "styles/styles.css";
+import configureStore from "redux/store/configureStore";
 
 const store = configureStore();
 

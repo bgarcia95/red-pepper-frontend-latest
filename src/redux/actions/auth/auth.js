@@ -7,7 +7,7 @@ import {
   AUTH_LOGOUT_SUCCESS,
   // SET_MAIN_USER_TOKEN_START,
   // SET_MAIN_USER_TOKEN_SUCCESS,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 import authService from "../../../services/authService";
 import Swal from "sweetalert2";
 

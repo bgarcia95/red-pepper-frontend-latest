@@ -11,7 +11,7 @@ import {
   DELETE_SUPPLIER_START,
   DELETE_SUPPLIER_SUCCESS,
   DELETE_SUPPLIER_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const suppliersDefaultState = {

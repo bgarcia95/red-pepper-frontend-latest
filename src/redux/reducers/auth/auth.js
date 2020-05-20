@@ -5,9 +5,7 @@ import {
   AUTH_LOGOUT_START,
   AUTH_LOGOUT_ERROR,
   AUTH_LOGOUT_SUCCESS,
-  // SET_MAIN_USER_TOKEN_START,
-  // SET_MAIN_USER_TOKEN_SUCCESS,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 const tokenDefaultState = {
   token: null,

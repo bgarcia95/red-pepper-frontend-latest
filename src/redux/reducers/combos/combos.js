@@ -11,7 +11,7 @@ import {
   DELETE_COMBO_START,
   DELETE_COMBO_SUCCESS,
   DELETE_COMBO_ERROR,
-} from "../../utils/actions";
+} from "redux/utils/actions";
 
 // Default state
 const combosDefaultState = {

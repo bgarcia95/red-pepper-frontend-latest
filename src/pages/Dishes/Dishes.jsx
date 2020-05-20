@@ -4,10 +4,10 @@ import {
   getDishesAction,
   deleteDishStart,
   deleteDishAction,
-} from "../../redux/actions/dishes/dishes";
+} from "redux/actions/dishes/dishes";
 import Swal from "sweetalert2";
-import PageContainer from "../../components/PageContainer/PageContainer";
-import { getCategoriesAction } from "../../redux/actions/categories/categories";
+import PageContainer from "components/PageContainer/PageContainer";
+import { getCategoriesAction } from "redux/actions/categories/categories";
 
 const Dishes = () => {
   const dispatch = useDispatch();

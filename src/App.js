@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Layout from "./hoc/Layout";
-import { trySignUp } from "./redux/actions/auth/auth";
+import Layout from "hoc/Layout";
+import { trySignUp } from "redux/actions/auth/auth";
 import {
   makeStyles,
   Backdrop,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const useStyles2 = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "blue",
@@ -18,7 +18,7 @@ const useStyles2 = makeStyles((theme) => ({
 
 const App = () => {
   const dispatch = useDispatch();
-  const classes = useStyles2();
+  const classes = useStyles();
 
   const isLogging = useSelector((state) => state.auth.isLogging);
 
