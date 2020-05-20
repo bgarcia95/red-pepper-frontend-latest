@@ -13,9 +13,21 @@ const SuppliesPurchase = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "N° Factura", field: "invoiceNumber" },
-    { text: "Total", field: "total" },
+    {
+      title: "ID",
+      field: "id",
+    },
+    {
+      title: "N° Factura",
+      field: "invoiceNumber",
+    },
+    {
+      title: "Total",
+      field: "total",
+      type: "currency",
+      cellStyle: () => ({ textAlign: "left" }),
+      // headerStyle: { textAlign: "center" },
+    },
   ];
 
   const formTarget = "purchase";
@@ -38,6 +50,7 @@ const SuppliesPurchase = () => {
       isLoadingData={isLoadingData}
       buttonLabel="Agregar Compra"
       dialogTitle="Agregar Compra"
+      tableTitle="Compras"
     />
   );
 };

@@ -23,10 +23,15 @@ const Dishes = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Nombre", field: "name" },
-    { text: "Descripción", field: "description" },
-    { text: "Precio", field: "price" },
+    { title: "ID", field: "id" },
+    { title: "Nombre", field: "name" },
+    { title: "Descripción", field: "description" },
+    {
+      title: "Precio",
+      field: "price",
+      type: "currency",
+      cellStyle: () => ({ textAlign: "left" }),
+    },
   ];
 
   const formTarget = "dish";
@@ -74,6 +79,7 @@ const Dishes = () => {
       buttonLabel="Agregar Platillo"
       dialogTitle="Agregar Platillo"
       onDelete={onDelete}
+      tableTitle="Platillos"
     />
   );
 };

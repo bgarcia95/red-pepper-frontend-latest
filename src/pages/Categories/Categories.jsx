@@ -17,9 +17,9 @@ const Categories = () => {
 
   const categories = useSelector((state) => state.categories.categories);
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Categoría", field: "name" },
-    { text: "Descripción", field: "description" },
+    { title: "ID", field: "id" },
+    { title: "Categoría", field: "name" },
+    { title: "Descripción", field: "description" },
   ];
 
   const formTarget = "category";
@@ -66,6 +66,7 @@ const Categories = () => {
       buttonLabel="Agregar Categoría"
       dialogTitle="Agregar Categoría"
       onDelete={onDelete}
+      tableTitle="Categorías"
     />
   );
 };

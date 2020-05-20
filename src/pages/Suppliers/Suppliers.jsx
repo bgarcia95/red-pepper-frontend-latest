@@ -17,10 +17,10 @@ const Suppliers = () => {
 
   const suppliers = useSelector((state) => state.suppliers.suppliers);
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Nombre", field: "name" },
-    { text: "Dirección", field: "address" },
-    { text: "Teléfono", field: "telephone" },
+    { title: "ID", field: "id" },
+    { title: "Nombre", field: "name" },
+    { title: "Dirección", field: "address" },
+    { title: "Teléfono", field: "telephone" },
   ];
 
   const formTarget = "supplier";
@@ -67,6 +67,7 @@ const Suppliers = () => {
       buttonLabel="Agregar Proveedor"
       dialogTitle="Agregar Proveedor"
       onDelete={onDelete}
+      tableTitle="Proveedores"
     />
   );
 };

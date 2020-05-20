@@ -19,10 +19,15 @@ const Combos = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Nombre", field: "name" },
-    { text: "Descripción", field: "description" },
-    { text: "Total", field: "total" },
+    { title: "ID", field: "id" },
+    { title: "Nombre", field: "name" },
+    { title: "Descripción", field: "description" },
+    {
+      title: "Total",
+      field: "total",
+      type: "currency",
+      cellStyle: () => ({ textAlign: "left" }),
+    },
   ];
 
   const formTarget = "combo";
@@ -69,6 +74,7 @@ const Combos = () => {
       buttonLabel="Agregar Combo"
       dialogTitle="Agregar Combo"
       onDelete={onDelete}
+      tableTitle="Combos"
     />
   );
 };

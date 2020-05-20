@@ -19,10 +19,10 @@ const Tables = () => {
   const tables = useSelector((state) => state.tables.tables);
 
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Nombre", field: "name" },
-    { text: "Descripción", field: "description" },
-    { text: "N° de Sillas", field: "chairs" },
+    { title: "ID", field: "id" },
+    { title: "Nombre", field: "name" },
+    { title: "Descripción", field: "description" },
+    { title: "N° de Sillas", field: "chairs" },
   ];
 
   const formTarget = "table";
@@ -69,6 +69,7 @@ const Tables = () => {
       buttonLabel="Agregar Mesa"
       dialogTitle="Agregar Mesa"
       onDelete={onDelete}
+      tableTitle={"Mesas"}
     />
   );
 };

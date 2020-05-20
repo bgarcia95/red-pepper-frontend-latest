@@ -19,12 +19,12 @@ const Supplies = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { text: "ID", field: "id" },
-    { text: "Nombre", field: "name" },
-    { text: "Presentación", field: "presentation" },
-    { text: "Descripción", field: "description" },
-    { text: "Unidad de Medida", field: "unitOfMeasure" },
-    { text: "Cantidad Mínima", field: "minimumQty" },
+    { title: "ID", field: "id" },
+    { title: "Nombre", field: "name" },
+    { title: "Presentación", field: "presentation" },
+    { title: "Descripción", field: "description" },
+    { title: "Unidad de Medida", field: "unitOfMeasure" },
+    { title: "Cantidad Mínima", field: "minimumQty" },
   ];
 
   const formTarget = "supply";
@@ -71,6 +71,7 @@ const Supplies = () => {
       buttonLabel="Agregar Insumo"
       dialogTitle="Agregar Insumo"
       onDelete={onDelete}
+      tableTitle="Insumos"
     />
   );
 };
