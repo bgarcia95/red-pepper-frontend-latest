@@ -25,7 +25,7 @@ const SuppliesPurchase = () => {
       title: "Total",
       field: "total",
       type: "currency",
-      cellStyle: () => ({ textAlign: "left" }),
+      cellStyle: { textAlign: "left" },
       // headerStyle: { textAlign: "center" },
     },
   ];

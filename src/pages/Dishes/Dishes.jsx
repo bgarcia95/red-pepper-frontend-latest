@@ -30,7 +30,7 @@ const Dishes = () => {
       title: "Precio",
       field: "price",
       type: "currency",
-      cellStyle: () => ({ textAlign: "left" }),
+      cellStyle: { textAlign: "left" },
     },
   ];
 

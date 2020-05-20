@@ -26,7 +26,7 @@ const Combos = () => {
       title: "Total",
       field: "total",
       type: "currency",
-      cellStyle: () => ({ textAlign: "left" }),
+      cellStyle: { textAlign: "left" },
     },
   ];
 
