@@ -232,6 +232,9 @@ const PurchasesFormik = (props) => {
           <React.Fragment>
             <form className="form-control">
               <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
                 <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
                     <TextField
@@ -600,6 +603,9 @@ const PurchasesFormik = (props) => {
                     supplies={supplies}
                     fetchedDetails={payload ? payload.details : null}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
                 </Grid>
               </Grid>
               <DialogActions>

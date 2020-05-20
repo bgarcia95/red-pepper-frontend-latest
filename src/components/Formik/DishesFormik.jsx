@@ -244,6 +244,9 @@ const DishesFormik = (props) => {
           <React.Fragment>
             <form className="form-control">
               <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
                     <TextField
@@ -529,7 +532,10 @@ const DishesFormik = (props) => {
                   <CancelButton
                     onClick={() => {
                       toggle();
-                      if (payload.dishSupplies !== values.dishDetails) {
+                      if (
+                        payload &&
+                        payload.dishSupplies !== values.dishDetails
+                      ) {
                         dispatch(getDishesAction());
                       }
                     }}

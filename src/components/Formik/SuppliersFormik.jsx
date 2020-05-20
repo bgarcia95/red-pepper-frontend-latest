@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, FormControl, Grid } from "@material-ui/core";
+import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import InputMask from "react-input-mask";
@@ -64,6 +64,9 @@ const SuppliersFormik = (props) => {
             <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
                 <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.name && touched.name}
@@ -84,7 +87,7 @@ const SuppliersFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
                     <InputMask
                       value={values.telephone}
@@ -136,7 +139,12 @@ const SuppliersFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
+
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
               </Grid>
+
               <DialogActions>
                 <div className="center-content">
                   <CancelButton onClick={toggle} variant="contained">

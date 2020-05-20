@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, FormControl, Grid } from "@material-ui/core";
+import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
@@ -67,6 +67,9 @@ const SuppliesFormik = (props) => {
           <React.Fragment>
             <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
                     <TextField
@@ -179,6 +182,9 @@ const SuppliesFormik = (props) => {
                       <div className="input-feedback">{errors.description}</div>
                     )}
                   </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
                 </Grid>
               </Grid>
               <DialogActions>

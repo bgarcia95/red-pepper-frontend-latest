@@ -244,6 +244,9 @@ const CombosFormik = (props) => {
           <React.Fragment>
             <form className="form-control">
               <Grid container alignItems="flex-start" spacing={2}>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
                 <Grid item xs={12} md={5}>
                   <FormControl fullWidth={true}>
                     <TextField
@@ -462,7 +465,10 @@ const CombosFormik = (props) => {
                   <CancelButton
                     onClick={() => {
                       toggle();
-                      if (payload.comboDetails !== values.comboDetails) {
+                      if (
+                        payload &&
+                        payload.comboDetails !== values.comboDetails
+                      ) {
                         dispatch(getCombosAction());
                       }
                     }}
