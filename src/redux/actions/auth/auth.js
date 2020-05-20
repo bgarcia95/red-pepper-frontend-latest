@@ -1,11 +1,13 @@
 import {
   AUTH_START,
-  AUTH_ERROR,
   AUTH_SUCCESS,
-  AUTH_LOGOUT,
+  AUTH_ERROR,
+  AUTH_LOGOUT_START,
+  AUTH_LOGOUT_ERROR,
+  AUTH_LOGOUT_SUCCESS,
   // SET_MAIN_USER_TOKEN_START,
   // SET_MAIN_USER_TOKEN_SUCCESS,
-} from "./../../utils/actions";
+} from "../../utils/actions";
 import authService from "../../../services/authService";
 import Swal from "sweetalert2";
 
@@ -26,8 +28,16 @@ export const authError = (error) => ({
   error,
 });
 
-export const authLogout = () => ({
-  type: AUTH_LOGOUT,
+export const authLogoutStart = () => ({
+  type: AUTH_LOGOUT_START,
+});
+
+export const authLogoutSuccess = () => ({
+  type: AUTH_LOGOUT_SUCCESS,
+});
+
+export const authLogOutError = () => ({
+  type: AUTH_LOGOUT_ERROR,
 });
 
 // export const setMainUserTokenStart = () => ({
@@ -42,7 +52,8 @@ export const authLogout = () => ({
 export const logoutAction = () => {
   return (dispatch) => {
     authService.logout();
-    dispatch(authLogout());
+    dispatch(authLogoutStart());
+    dispatch(authLogoutSuccess());
   };
 };
 
