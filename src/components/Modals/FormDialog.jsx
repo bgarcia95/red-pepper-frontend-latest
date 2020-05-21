@@ -8,13 +8,13 @@ import {
   WatchButton,
 } from "components/UI/Buttons/Buttons";
 import { FaEdit, FaEye } from "react-icons/fa";
-import SuppliesFormik from "components/Formik/SuppliesFormik";
-import SuppliersFormik from "components/Formik/SuppliersFormik";
-import PurchasesFormik from "components/Formik/PurchasesFormik";
-import CategoriesFormik from "components/Formik/CategoriesFormik";
-import DishesFormik from "components/Formik/DishesFormik";
-import CombosFormik from "components/Formik/CombosFormik";
-import TablesFormik from "components/Formik/TablesFormik";
+import SuppliesForm from "components/Forms/SuppliesForm";
+import SuppliersForm from "components/Forms/SuppliersForm";
+import PurchasesForm from "components/Forms/PurchasesForm";
+import CategoriesForm from "components/Forms/CategoriesForm";
+import DishesForm from "components/Forms/DishesForm";
+import CombosForm from "components/Forms/CombosForm";
+import TablesForm from "components/Forms/TablesForm";
 import { useDispatch } from "react-redux";
 import { getDishesAction } from "redux/actions/dishes/dishes";
 import { getCombosAction } from "redux/actions/combos/combos";
@@ -60,37 +60,37 @@ const FormDialog = (props) => {
 
   switch (props.formTarget) {
     case "supply":
-      form = <SuppliesFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <SuppliesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Insumo";
       dialogSize = "md";
       break;
     case "supplier":
-      form = <SuppliersFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <SuppliersForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Proveedor";
       dialogSize = "sm";
       break;
     case "purchase":
-      form = <PurchasesFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <PurchasesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Ver Factura";
       dialogSize = "lg";
       break;
     case "category":
-      form = <CategoriesFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <CategoriesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Categoría";
       dialogSize = "sm";
       break;
     case "dish":
-      form = <DishesFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <DishesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Platillo";
       dialogSize = "lg";
       break;
     case "combo":
-      form = <CombosFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <CombosForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Combo";
       dialogSize = "lg";
       break;
     case "table":
-      form = <TablesFormik {...props} toggle={toggleModal} modal={open} />;
+      form = <TablesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Mesa";
       dialogSize = "sm";
       break;

@@ -6,63 +6,72 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
+import { getSuppliesAction } from "redux/actions/supplies/supplies";
+import {
+  addDishAction,
+  updateDishAction,
+  getDishesAction,
+} from "redux/actions/dishes/dishes";
+import TableDishDetails from "components/Table/TableDishDetails";
 import Swal from "sweetalert2";
 import http from "services/httpService";
-import TableComboDetails from "components/Table/TableComboDetails";
-import { getDishesAction } from "redux/actions/dishes/dishes";
-import {
-  addComboAction,
-  updateComboAction,
-  getCombosAction,
-} from "redux/actions/combos/combos";
 
-const CombosFormik = (props) => {
-  const { toggle, payload } = props;
-  const dishes = useSelector((state) => state.dishes.dishes);
+const DishesForm = (props) => {
+  const { toggle, payload, categories } = props;
+  const supplies = useSelector((state) => state.supplies.supplies);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getDishes = () => dispatch(getDishesAction());
-    getDishes();
+    const getSupplies = () => dispatch(getSuppliesAction());
+    getSupplies();
   }, [dispatch]);
 
-  const dishesSelect = dishes.map(({ name, id }) => ({
+  const suppliesSelect = supplies.map(({ name, id }) => ({
     label: name,
     value: id,
   }));
 
-  const filterDishPrice = (id) => {
-    const filtered = dishes
-      .filter((dish) => dish.id === id)
-      .map((filtered) => filtered.price)[0];
+  const categoriesSelect = categories.map(({ name, id }) => ({
+    label: name,
+    value: id,
+  }));
 
-    return filtered;
-  };
+  const filteredCategory = (id) =>
+    categories
+      .filter((category) => category.id === id)
+      .map((filtered) => filtered.name)[0];
 
   return (
     <Formik
       initialValues={{
         // dish header
         name: payload ? payload.name : "",
+        categoryId: payload ? payload.dishCategoryId : null,
+        categoryName: payload ? filteredCategory(payload.dishCategoryId) : null,
+        categoryInputName: payload
+          ? filteredCategory(payload.dishCategoryId)
+          : "",
         description: payload ? payload.description : "",
-        // Dish Input
-        dishId: null,
-        dishName: null,
-        dishInputName: "",
+        price: payload ? payload.price : "",
+        // Supply input
+        supplyId: null,
+        supplyName: null,
+        supplyInputName: "",
         quantity: "",
-        dishPrice: "",
-        suggestedPrice: "",
-        comboDetails: payload ? payload.comboDetails : [],
+        expirationDate: null,
+        comment: "",
+        dishDetails: payload ? payload.dishSupplies : [],
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
+        categoryInputName: Yup.string().required("Requerido"),
         description: Yup.string().required("Requerido"),
-        dishInputName: Yup.string().required("Requerido"),
-        quantity: Yup.number()
+        price: Yup.number()
           .positive("El valor ingresado debe ser mayor a 0")
           .required("Requerido"),
-        dishPrice: Yup.number()
+        supplyInputName: Yup.string().required("Requerido"),
+        quantity: Yup.number()
           .positive("El valor ingresado debe ser mayor a 0")
           .required("Requerido"),
       })}
@@ -81,48 +90,45 @@ const CombosFormik = (props) => {
         } = props;
 
         const clearDetailHandler = () => {
-          setFieldValue("dishName", null);
-          setFieldValue("dishId", null);
-          setFieldValue("dishInputName", "");
+          setFieldValue("supplyName", null);
+          setFieldValue("supplyId", null);
+          setFieldValue("supplyInputName", "");
           setFieldValue("quantity", "");
-          setFieldValue("dishPrice", "");
+          setFieldValue("comment", "");
 
-          setFieldTouched("dishInputName", false);
+          setFieldTouched("supplyInputName", false);
           setFieldTouched("quantity", false);
-          setFieldTouched("dishPrice", false);
+          setFieldTouched("comment", false);
         };
 
-        const onSubmitDish = (e) => {
+        const onSubmitSupply = (e) => {
           e.preventDefault();
 
           if (payload) {
             http
-              .post("/combo/CreateComboDetail", {
-                comboId: payload.id,
-                qty: values.quantity,
-                dishId: values.dishId,
-                price: values.dishPrice,
+              .post("/dish/CreateDishSupply", {
+                DishId: payload.id,
+                Qty: values.quantity,
+                SupplyId: values.supplyId,
+                Comment: values.comment,
               })
               .then((response) => {
                 setFieldValue(
-                  "comboDetails",
-                  (values.comboDetails = [
-                    ...values.comboDetails,
-                    response.data,
-                  ])
+                  "dishDetails",
+                  (values.dishDetails = [...values.dishDetails, response.data])
                 );
               })
               .catch((error) => {
                 console.log(error);
               });
           } else {
-            const dish = {
-              desc: values.dishName,
+            const supply = {
+              desc: values.supplyName,
               qty: values.quantity,
-              dishId: values.dishId,
-              price: values.dishPrice,
+              supplyId: values.supplyId,
+              comment: values.comment,
             };
-            values.comboDetails = [...values.comboDetails, dish];
+            values.dishDetails = [...values.dishDetails, supply];
           }
           clearDetailHandler();
         };
@@ -140,19 +146,19 @@ const CombosFormik = (props) => {
             }).then((result) => {
               if (result.value) {
                 http
-                  .delete(`/combo/RemoveComboDetail/${id}`)
+                  .delete(`/dish/RemoveDishSupply/${id}`)
                   .then((response) => {
                     setFieldValue(
-                      "comboDetails",
-                      (values.comboDetails = [
-                        ...values.comboDetails.filter(
+                      "dishDetails",
+                      (values.dishDetails = [
+                        ...values.dishDetails.filter(
                           (detail) => detail.id !== response.data.id
                         ),
                       ])
                     );
                     Swal.fire(
                       "Removido!",
-                      "El platillo fue removido con exito.",
+                      "El insumo fue removido con exito.",
                       "success"
                     );
                   })
@@ -163,8 +169,8 @@ const CombosFormik = (props) => {
             });
           } else {
             setFieldValue(
-              "comboDetails",
-              values.comboDetails.filter((item) => item.dishId !== id)
+              "dishDetails",
+              values.dishDetails.filter((item) => item.supplyId !== id)
             );
           }
         };
@@ -173,15 +179,16 @@ const CombosFormik = (props) => {
           e.preventDefault();
 
           if (payload) {
-            const combo = {
+            const dish = {
               name: values.name,
+              dishCategoryId: values.categoryId,
               description: values.description,
-              total: comboTotal,
-              comboDetails: values.comboDetails,
+              price: values.price,
+              dishSupplies: values.dishDetails,
             };
             Swal.fire({
               title: "¿Estás seguro/a?",
-              text: "Se procederá con la actualización del combo",
+              text: "Se procederá con la actualización del platillo  ",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
@@ -189,30 +196,31 @@ const CombosFormik = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(updateComboAction({ ...combo, id: payload.id }));
+                dispatch(updateDishAction({ ...dish, id: payload.id }));
                 Swal.fire(
                   "¡Completado!",
-                  "El combo fué actualizado satisfactoriamente.",
+                  "El platillo fué actualizado satisfactoriamente.",
                   "success"
                 );
               }
             });
           } else {
-            const details = values.comboDetails.map((detail) => ({
+            const details = values.dishDetails.map((detail) => ({
               Qty: detail.qty,
-              DishId: detail.dishId,
-              Price: detail.price,
+              SupplyId: detail.supplyId,
+              Comment: detail.comment,
             }));
 
-            const combo = {
+            const dish = {
               Name: values.name,
+              DishCategoryId: values.categoryId,
               Description: values.description,
-              Total: comboTotal,
-              ComboDetails: details,
+              Price: values.price,
+              DishSupplies: details,
             };
             Swal.fire({
               title: "¿Estás seguro/a?",
-              text: "Se procederá con el registro del combo  ",
+              text: "Se procederá con el registro del platillo  ",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
@@ -220,10 +228,10 @@ const CombosFormik = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(addComboAction(combo));
+                dispatch(addDishAction(dish));
                 Swal.fire(
                   "¡Completado!",
-                  "El combo fué registrado satisfactoriamente.",
+                  "El platillo fué registrado satisfactoriamente.",
                   "success"
                 );
                 toggle();
@@ -231,14 +239,6 @@ const CombosFormik = (props) => {
             });
           }
         };
-
-        const total = (items) => {
-          return items
-            .map(({ price, qty }) => price * qty)
-            .reduce((sum, i) => sum + i, 0);
-        };
-
-        const comboTotal = total(values.comboDetails);
 
         return (
           <React.Fragment>
@@ -252,7 +252,7 @@ const CombosFormik = (props) => {
                     <TextField
                       error={errors.name && touched.name}
                       id="name"
-                      label="Nombre del Combo"
+                      label="Nombre del Platillo"
                       variant="outlined"
                       value={values.name}
                       onChange={handleChange}
@@ -269,6 +269,95 @@ const CombosFormik = (props) => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={4}>
+                  <FormControl fullWidth={true}>
+                    <React.Fragment>
+                      <Autocomplete
+                        id="categoryInputName"
+                        name="categoryInputName"
+                        options={categoriesSelect}
+                        getOptionLabel={(option) =>
+                          typeof option === "string" ? option : option.label
+                        }
+                        getOptionSelected={(option, value) =>
+                          value === option.label
+                        }
+                        value={values.categoryName}
+                        onChange={(event, newValue) => {
+                          if (newValue !== null) {
+                            setFieldValue("categoryName", newValue.label);
+                            setFieldValue("categoryId", newValue.value);
+                            setFieldValue("categoryInputName", newValue.label);
+                          }
+                        }}
+                        inputValue={values.categoryInputName}
+                        onInputChange={(event, newInputValue, reason) => {
+                          setFieldValue("categoryInputName", newInputValue);
+
+                          if (event.target.value === "") {
+                            setFieldValue("categoryInputName", "");
+                            setFieldValue("categoryName", null);
+                            setFieldValue("categoryId", null);
+                          }
+                          if (reason === "clear") {
+                            setFieldValue("categoryName", null);
+                            setFieldValue("categoryId", null);
+                            setFieldValue("categoryInputName", "");
+                          }
+                        }}
+                        className={
+                          errors.categoryInputName && touched.categoryInputName
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        onBlur={handleBlur}
+                        noOptionsText="No hay opciones"
+                        clearText="Limpiar"
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Categoría"
+                            variant="outlined"
+                            error={
+                              errors.categoryInputName &&
+                              touched.categoryInputName
+                            }
+                          />
+                        )}
+                      />
+                      {errors.categoryInputName &&
+                        touched.categoryInputName && (
+                          <div className="input-feedback">
+                            {errors.categoryInputName}
+                          </div>
+                        )}
+                    </React.Fragment>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <FormControl fullWidth={true}>
+                    <TextField
+                      id="price"
+                      name="price"
+                      label="Precio"
+                      error={errors.price && touched.price}
+                      variant="outlined"
+                      type="number"
+                      inputProps={{ min: "1", step: "1" }}
+                      value={values.price}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                        errors.price && touched.price
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                    />
+                    {errors.price && touched.price && (
+                      <div className="input-feedback">{errors.price}</div>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.description && touched.description}
@@ -291,56 +380,48 @@ const CombosFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      label="Total"
-                      variant="outlined"
-                      disabled
-                      value={comboTotal}
-                    />
-                  </FormControl>
-                </Grid>
+
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
+
                 <Grid item xs={12} md={4}>
                   <FormControl fullWidth={true}>
                     <Autocomplete
-                      id="dishInputName"
-                      name="dishInputName"
-                      options={dishesSelect}
+                      id="supplyInputName"
+                      name="supplyInputName"
+                      options={suppliesSelect}
                       getOptionLabel={(option) =>
                         typeof option === "string" ? option : option.label
                       }
                       getOptionSelected={(option, value) =>
                         value === option.label
                       }
-                      value={values.dishName}
+                      value={values.supplyName}
                       onChange={(event, newValue) => {
                         if (newValue !== null) {
-                          setFieldValue("dishName", newValue.label);
-                          setFieldValue("dishId", newValue.value);
-                          setFieldValue("dishInputName", newValue.label);
+                          setFieldValue("supplyName", newValue.label);
+                          setFieldValue("supplyId", newValue.value);
+                          setFieldValue("supplyInputName", newValue.label);
                         }
                       }}
-                      inputValue={values.dishInputName}
+                      inputValue={values.supplyInputName}
                       onInputChange={(event, newInputValue, reason) => {
-                        setFieldValue("dishInputName", newInputValue);
+                        setFieldValue("supplyInputName", newInputValue);
 
                         if (event.target.value === "") {
-                          setFieldValue("dishInputName", "");
-                          setFieldValue("dishName", null);
-                          setFieldValue("dishId", null);
+                          setFieldValue("supplyInputName", "");
+                          setFieldValue("supplyName", null);
+                          setFieldValue("supplyId", null);
                         }
                         if (reason === "clear") {
-                          setFieldValue("dishName", null);
-                          setFieldValue("dishId", null);
-                          setFieldValue("dishInputName", "");
+                          setFieldValue("supplyName", null);
+                          setFieldValue("supplyId", null);
+                          setFieldValue("supplyInputName", "");
                         }
                       }}
                       className={
-                        errors.dishInputName && touched.dishInputName
+                        errors.supplyInputName && touched.supplyInputName
                           ? "text-input error"
                           : "text-input"
                       }
@@ -350,21 +431,23 @@ const CombosFormik = (props) => {
                       renderInput={(params) => (
                         <TextField
                           {...params}
-                          label="Platillo"
+                          label="Insumo"
                           variant="outlined"
-                          error={errors.dishInputName && touched.dishInputName}
+                          error={
+                            errors.supplyInputName && touched.supplyInputName
+                          }
                         />
                       )}
                     />
-                    {errors.dishInputName && touched.dishInputName && (
+                    {errors.supplyInputName && touched.supplyInputName && (
                       <div className="input-feedback">
-                        {errors.dishInputName}
+                        {errors.supplyInputName}
                       </div>
                     )}
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={3}>
                   <FormControl fullWidth={true}>
                     <TextField
                       id="quantity"
@@ -391,57 +474,41 @@ const CombosFormik = (props) => {
                 <Grid item xs={12} md={3}>
                   <FormControl fullWidth={true}>
                     <TextField
-                      id="dishPrice"
-                      name="dishPrice"
-                      label="Precio Combo"
-                      error={errors.dishPrice && touched.dishPrice}
+                      error={errors.comment && touched.comment}
+                      name="comment"
+                      label="Comentario"
                       variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.dishPrice}
+                      value={values.comment}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className={
-                        errors.dishPrice && touched.dishPrice
+                        errors.comment && touched.comment
                           ? "text-input error"
                           : "text-input"
                       }
+                      multiline
+                      rows={3}
                     />
-                    {errors.dishPrice && touched.dishPrice && (
-                      <div className="input-feedback">{errors.dishPrice}</div>
+                    {errors.comment && touched.comment && (
+                      <div className="input-feedback">{errors.comment}</div>
                     )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      label="Precio Original"
-                      variant="outlined"
-                      value={
-                        values.dishId ? filterDishPrice(values.dishId) : ""
-                      }
-                      disabled
-                    />
                   </FormControl>
                 </Grid>
                 <Grid
                   item
                   xs={12}
+                  md={2}
                   className="text-center"
                   style={{ marginTop: "5px" }}
                 >
                   <AddButton
-                    disabled={
-                      !values.dishName ||
-                      values.quantity <= 0 ||
-                      values.dishPrice <= 0
-                    }
+                    disabled={!values.supplyName || values.quantity <= 0}
                     variant="contained"
                     onClick={(e) => {
-                      onSubmitDish(e);
+                      onSubmitSupply(e);
                     }}
                   >
-                    Agregar Detalle
+                    Agregar Insumo
                   </AddButton>
                 </Grid>
                 <Grid item xs={12}>
@@ -449,11 +516,11 @@ const CombosFormik = (props) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TableComboDetails
-                    comboDetails={values.comboDetails}
+                  <TableDishDetails
+                    supplies={supplies}
                     onDeleteItem={onDeleteItem}
-                    dishes={dishes}
-                    fetchedDetails={payload ? payload.comboDetails : null}
+                    dishDetails={values.dishDetails}
+                    fetchedDetails={payload ? payload.dishSupplies : null}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -467,9 +534,9 @@ const CombosFormik = (props) => {
                       toggle();
                       if (
                         payload &&
-                        payload.comboDetails !== values.comboDetails
+                        payload.dishSupplies !== values.dishDetails
                       ) {
-                        dispatch(getCombosAction());
+                        dispatch(getDishesAction());
                       }
                     }}
                     variant="contained"
@@ -492,8 +559,10 @@ const CombosFormik = (props) => {
                       variant="contained"
                       disabled={
                         !values.name ||
+                        !values.categoryName ||
                         !values.description ||
-                        values.comboDetails.length === 0
+                        values.price <= 0 ||
+                        values.dishDetails.length === 0
                       }
                       onClick={(e) => onSubmit(e)}
                     >
@@ -510,4 +579,4 @@ const CombosFormik = (props) => {
   );
 };
 
-export default CombosFormik;
+export default DishesForm;

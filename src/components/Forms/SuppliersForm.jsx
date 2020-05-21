@@ -2,12 +2,17 @@ import React from "react";
 import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
 import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
+import InputMask from "react-input-mask";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
+import {
+  updateSupplierAction,
+  addSupplierAction,
+} from "redux/actions/suppliers/suppliers";
 import { useDispatch } from "react-redux";
-import { updateTableAction, addTableAction } from "redux/actions/tables/tables";
 
-const TablesFormik = (props) => {
+const SuppliersForm = (props) => {
   const { toggle, payload } = props;
   const dispatch = useDispatch();
 
@@ -15,16 +20,13 @@ const TablesFormik = (props) => {
     <Formik
       initialValues={{
         name: payload ? payload.name : "",
-        description: payload ? payload.description : "",
-        chairs: payload ? payload.chairs : "",
+        address: payload ? payload.address : "",
+        telephone: payload ? payload.telephone : "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
-        description: Yup.string().required("Requerido"),
-        chairs: Yup.number()
-          .typeError("Requerido")
-          .positive("El valor ingresado debe ser mayor a 0")
-          .required(),
+        address: Yup.string().required("Requerido"),
+        telephone: Yup.string().required("Requerido"),
       })}
     >
       {(props) => {
@@ -42,16 +44,16 @@ const TablesFormik = (props) => {
         const onSubmit = (e) => {
           e.preventDefault();
 
-          const table = {
+          const supplier = {
             Name: values.name,
-            Description: values.description,
-            Chairs: values.chairs,
+            Telephone: values.telephone,
+            Address: values.address,
           };
 
           if (payload) {
-            dispatch(updateTableAction({ ...table, Id: payload.id }));
+            dispatch(updateSupplierAction({ ...supplier, Id: payload.id }));
           } else {
-            dispatch(addTableAction(table));
+            dispatch(addSupplierAction(supplier));
           }
 
           toggle();
@@ -64,7 +66,7 @@ const TablesFormik = (props) => {
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
                     <TextField
                       error={errors.name && touched.name}
@@ -85,56 +87,64 @@ const TablesFormik = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.chairs && touched.chairs}
-                      id="chairs"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      label="N° de Sillas"
-                      variant="outlined"
-                      value={values.chairs}
+                    <InputMask
+                      value={values.telephone}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      className={
-                        errors.chairs && touched.chairs
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.chairs && touched.chairs && (
-                      <div className="input-feedback">{errors.chairs}</div>
+                      mask="9999-9999"
+                      maskChar=""
+                    >
+                      {() => (
+                        <TextField
+                          id="telephone"
+                          label="Teléfono"
+                          variant="outlined"
+                          error={errors.telephone && touched.telephone}
+                          className={
+                            errors.telephone && touched.telephone
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                        />
+                      )}
+                    </InputMask>
+
+                    {errors.telephone && touched.telephone && (
+                      <div className="input-feedback">{errors.telephone}</div>
                     )}
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl fullWidth={true}>
                     <TextField
-                      error={errors.description && touched.description}
-                      id="description"
-                      label="Descripción"
+                      error={errors.address && touched.address}
+                      id="address"
+                      label="Dirección"
                       variant="outlined"
-                      value={values.description}
+                      value={values.address}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className={
-                        errors.description && touched.description
+                        errors.address && touched.address
                           ? "text-input error"
                           : "text-input"
                       }
                       multiline
-                      rows={3}
+                      rows={4}
                     />
-                    {errors.description && touched.description && (
-                      <div className="input-feedback">{errors.description}</div>
+                    {errors.address && touched.address && (
+                      <div className="input-feedback">{errors.address}</div>
                     )}
                   </FormControl>
                 </Grid>
+
                 <Grid item xs={12}>
                   <Divider />
                 </Grid>
               </Grid>
+
               <DialogActions>
                 <div className="center-content">
                   <CancelButton onClick={toggle} variant="contained">
@@ -157,4 +167,4 @@ const TablesFormik = (props) => {
   );
 };
 
-export default TablesFormik;
+export default SuppliersForm;

@@ -61,7 +61,7 @@ const defaultMaterialTheme = createMuiTheme({
   },
 });
 
-const PurchasesFormik = (props) => {
+const PurchasesForm = (props) => {
   const { toggle, payload } = props;
   const suppliers = useSelector((state) => state.suppliers.suppliers);
   const supplies = useSelector((state) => state.supplies.supplies);
@@ -646,4 +646,4 @@ const PurchasesFormik = (props) => {
   );
 };
 
-export default PurchasesFormik;
+export default PurchasesForm;

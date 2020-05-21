@@ -10,7 +10,7 @@ import {
   updateSupplyAction,
 } from "redux/actions/supplies/supplies";
 
-const SuppliesFormik = (props) => {
+const SuppliesForm = (props) => {
   const dispatch = useDispatch();
   const { toggle, payload } = props;
 
@@ -209,4 +209,4 @@ const SuppliesFormik = (props) => {
   );
 };
 
-export default SuppliesFormik;
+export default SuppliesForm;
