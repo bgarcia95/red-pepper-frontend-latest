@@ -11,6 +11,7 @@ import {
   addSupplierAction,
 } from "redux/actions/suppliers/suppliers";
 import { useDispatch } from "react-redux";
+// import Swal from "sweetalert2";
 
 const SuppliersForm = (props) => {
   const { toggle, payload, onRefresh } = props;
@@ -52,8 +53,20 @@ const SuppliersForm = (props) => {
 
           if (payload) {
             dispatch(updateSupplierAction({ ...supplier, Id: payload.id }));
+            onRefresh();
+            // Swal.fire(
+            //   "¡Guardado!",
+            //   "El proveedor fue actualizado satisfactoriamente",
+            //   "success"
+            // );
           } else {
             dispatch(addSupplierAction(supplier));
+            onRefresh();
+            // Swal.fire(
+            //   "¡Guardado!",
+            //   "El proveedor fue guardado satisfactoriamente",
+            //   "success"
+            // );
           }
 
           toggle();
@@ -155,7 +168,6 @@ const SuppliersForm = (props) => {
                     disabled={!dirty || isSubmitting || !isValid}
                     onClick={(e) => {
                       onSubmit(e);
-                      onRefresh();
                     }}
                   >
                     Confirmar
