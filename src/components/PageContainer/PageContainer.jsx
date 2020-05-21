@@ -1,17 +1,9 @@
 import React from "react";
 import TableFormat from "components/Table/TableFormat";
-import { Typography, Container, Divider, Grid } from "@material-ui/core";
-
-import FormDialog from "components/Modals/FormDialog";
+import { Typography, Container, Divider } from "@material-ui/core";
 
 const PageContainer = (props) => {
-  const {
-    pageTitle,
-    formTarget,
-    isLoadingData,
-    buttonLabel,
-    dialogTitle,
-  } = props;
+  const { pageTitle, isLoadingData } = props;
 
   return (
     <React.Fragment>
@@ -21,15 +13,6 @@ const PageContainer = (props) => {
         </Typography>
         <Divider style={{ margin: "2rem 0" }} />
 
-        <Grid item xs={12} className="text-center">
-          <FormDialog
-            formTarget={formTarget}
-            buttonLabel={buttonLabel}
-            title={dialogTitle}
-            categories={props.formTarget === "dish" && props.categories}
-          />
-        </Grid>
-        <div style={{ margin: "2rem 0" }} />
         {isLoadingData && (
           <div className="error--message">
             <p>Hubo un problema cargando la informacion...</p>
