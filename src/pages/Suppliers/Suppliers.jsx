@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSuppliersAction,
-  deleteSupplierAction,
-  deleteSupplierStart,
+  // deleteSupplierAction,
+  // deleteSupplierStart,
 } from "redux/actions/suppliers/suppliers";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import PageContainer from "components/PageContainer/PageContainer";
 
 const Suppliers = () => {
@@ -26,27 +26,27 @@ const Suppliers = () => {
   const formTarget = "supplier";
 
   // Remove Supplier
-  const onDelete = (id) => {
-    dispatch(deleteSupplierStart());
-    Swal.fire({
-      title: "¿Estás seguro/a?",
-      text: "Un proveedor eliminado no puede ser restaurado.  ",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "¡Sí, remover!",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.value) {
-        dispatch(deleteSupplierAction(id));
-        Swal.fire(
-          "¡Removido!",
-          "El registro fué removido satisfactoriamente.",
-          "success"
-        );
-      }
-    });
-  };
+  // const onDelete = (id) => {
+  //   dispatch(deleteSupplierStart());
+  // Swal.fire({
+  //   title: "¿Estás seguro/a?",
+  //   text: "Un proveedor eliminado no puede ser restaurado.  ",
+  //   showCancelButton: true,
+  //   confirmButtonColor: "#3085d6",
+  //   cancelButtonColor: "#d33",
+  //   confirmButtonText: "¡Sí, remover!",
+  //   cancelButtonText: "Cancelar",
+  // }).then((result) => {
+  //   if (result.value) {
+  // dispatch(deleteSupplierAction(id));
+  //     Swal.fire(
+  //       "¡Removido!",
+  //       "El registro fué removido satisfactoriamente.",
+  //       "success"
+  //     );
+  //   }
+  // });
+  // };
 
   // Loading
   const isLoading = useSelector((state) => state.suppliers.isLoading);
@@ -66,7 +66,7 @@ const Suppliers = () => {
       isLoadingData={isLoadingData}
       buttonLabel="Agregar Proveedor"
       dialogTitle="Agregar Proveedor"
-      onDelete={onDelete}
+      swalText="Un proveedor eliminado no puede ser restaurado"
       tableTitle="Proveedores"
     />
   );
