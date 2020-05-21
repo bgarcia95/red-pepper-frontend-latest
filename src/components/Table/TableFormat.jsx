@@ -8,6 +8,12 @@ import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
 import httpService from "services/httpService";
 import { useRef } from "react";
+import {
+  deleteSupplierAction,
+  deleteSupplierStart,
+} from "redux/actions/suppliers/suppliers";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const useStyles2 = makeStyles((theme) => ({
   backdrop: {
@@ -19,6 +25,7 @@ const useStyles2 = makeStyles((theme) => ({
 const TableFormat = (props) => {
   const classes = useStyles2();
   const tableRef = useRef();
+  const dispatch = useDispatch();
   const refresh = () => {
     console.log(
       "Did refresh!",
@@ -28,8 +35,37 @@ const TableFormat = (props) => {
     return tableRef.current && tableRef.current.onQueryChange();
   };
 
-  const { tableHeaders, formTarget, onDelete, categories, tableTitle } = props;
+  const { tableHeaders, formTarget, categories, tableTitle, swalText } = props;
 
+  const onDelete = (id) => {
+    dispatch(deleteSupplierStart());
+    Swal.fire({
+      title: "¿Estás seguro/a?",
+      text: swalText,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Sí, remover!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        switch (formTarget) {
+          case "supplier":
+            dispatch(deleteSupplierAction(id));
+            break;
+
+          default:
+            break;
+        }
+        Swal.fire(
+          "¡Removido!",
+          "El registro fué removido satisfactoriamente.",
+          "success"
+        );
+        refresh();
+      }
+    });
+  };
   return (
     <React.Fragment>
       {/*{isProcessing && (
@@ -96,7 +132,7 @@ const TableFormat = (props) => {
         ]}
         components={{
           Action: (props) => {
-            return onDelete ? (
+            return formTarget !== "purchase" ? (
               <div className="buttons-container">
                 <FormDialog
                   payload={props.data}
@@ -128,13 +164,14 @@ const TableFormat = (props) => {
           },
         }}
       />
-      <button
+      {/*<button
         onClick={() => {
           refresh();
         }}
       >
         ok
       </button>
+      */}
     </React.Fragment>
   );
 };
