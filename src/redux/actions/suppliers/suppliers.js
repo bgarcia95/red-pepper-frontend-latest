@@ -77,7 +77,7 @@ export const addSupplierAction = (supplier) => {
           "El proveedor fue guardado satisfactoriamente",
           "success"
         );
-        dispatch(getSuppliersAction());
+        // dispatch(getSuppliersAction());
       })
       .catch((error) => {
         dispatch(addSupplierError(error));
@@ -114,7 +114,7 @@ export const updateSupplierAction = (supplier) => {
           "El proveedor fue actualizado satisfactoriamente",
           "success"
         );
-        dispatch(getSuppliersAction());
+        // dispatch(getSuppliersAction());
       })
       .catch((error) => {
         console.log(error);
@@ -144,7 +144,7 @@ export const deleteSupplierAction = (id) => {
       .delete(`/provider?id=${id}`)
       .then((response) => {
         dispatch(deleteSupplierSuccess(response.data.id));
-        dispatch(getSuppliersAction());
+        // dispatch(getSuppliersAction());
       })
       .catch((error) => {
         dispatch(deleteSupplierError(error));
