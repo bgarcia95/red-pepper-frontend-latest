@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Grid } from "@material-ui/core";
+import { Grid, Divider, Typography } from "@material-ui/core";
 import MaterialTable from "material-table";
 import FormDialog from "components/Modals/FormDialog";
 import { DeleteButton } from "components/UI/Buttons/Buttons";
@@ -35,7 +35,15 @@ const TableFormat = (props) => {
     return tableRef.current && tableRef.current.onQueryChange();
   };
 
-  const { tableHeaders, formTarget, categories, tableTitle, swalText } = props;
+  const {
+    tableHeaders,
+    formTarget,
+    categories,
+    tableTitle,
+    swalText,
+    isLoadingData,
+    pageTitle,
+  } = props;
 
   const onDelete = (id) => {
     dispatch(deleteSupplierStart());
@@ -73,6 +81,10 @@ const TableFormat = (props) => {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}*/}
+      <Typography variant="h5" align="center">
+        {pageTitle}
+      </Typography>
+      <Divider style={{ margin: "2rem 0" }} />
       <Grid item xs={12} className="text-center">
         <FormDialog
           formTarget={props.formTarget}
@@ -82,6 +94,12 @@ const TableFormat = (props) => {
           onRefresh={refresh}
         />
       </Grid>
+      <Divider style={{ margin: "2rem 0" }} />
+      {isLoadingData && (
+        <div className="error--message">
+          <p>Hubo un problema cargando la informacion...</p>
+        </div>
+      )}
       <div style={{ margin: "2rem 0" }} />
       <MaterialTable
         className={classes.table}
