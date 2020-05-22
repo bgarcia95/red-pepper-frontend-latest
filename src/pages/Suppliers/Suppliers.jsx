@@ -7,6 +7,7 @@ import {
 } from "redux/actions/suppliers/suppliers";
 // import Swal from "sweetalert2";
 import PageContainer from "components/PageContainer/PageContainer";
+import TableFormat from "../../components/Table/TableFormat";
 
 const Suppliers = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const Suppliers = () => {
   const isLoadingData = useSelector((state) => state.suppliers.error);
 
   return (
-    <PageContainer
+    <TableFormat
       pageTitle="Administración de Proveedores"
       payload={suppliers}
       formTarget={formTarget}
