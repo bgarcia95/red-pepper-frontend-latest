@@ -19,12 +19,7 @@ const useStyles = makeStyles({
 
 const TableDishDetails = (props) => {
   const classes = useStyles();
-  const { dishDetails, onDeleteItem, supplies, fetchedDetails } = props;
-
-  const filterSupply = (id) =>
-    supplies
-      .filter((supply) => supply.id === id)
-      .map((filtered) => filtered.name);
+  const { dishDetails, onDeleteItem, filterSupply } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -45,30 +40,26 @@ const TableDishDetails = (props) => {
               </TableCell>
             </TableRow>
           ) : null}
-          {dishDetails.map((item) => (
-            <TableRow key={uuid()}>
-              <TableCell key={item.supplyId}>
-                {item.desc || filterSupply(item.supplyId)}
-              </TableCell>
-              <TableCell align="right">{item.qty}</TableCell>
-              <TableCell align="right">
-                {item.comment === "" ? "---" : item.comment}
-              </TableCell>
-              {item && (
-                <TableCell align="center" key={uuid()}>
-                  <DeleteButton
-                    onClick={() =>
-                      fetchedDetails
-                        ? onDeleteItem(item.id)
-                        : onDeleteItem(item.supplyId)
-                    }
-                  >
-                    <FaTrash size="18" />
-                  </DeleteButton>
+          {dishDetails.map((item) => {
+            return (
+              <TableRow key={uuid()}>
+                <TableCell key={item.supplyId}>
+                  {item.desc || filterSupply(item.supplyId)}
                 </TableCell>
-              )}
-            </TableRow>
-          ))}
+                <TableCell align="right">{item.qty}</TableCell>
+                <TableCell align="right">
+                  {item.comment === "" ? "---" : item.comment}
+                </TableCell>
+                {item && (
+                  <TableCell align="center" key={uuid()}>
+                    <DeleteButton onClick={() => onDeleteItem(item.supplyId)}>
+                      <FaTrash size="18" />
+                    </DeleteButton>
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
