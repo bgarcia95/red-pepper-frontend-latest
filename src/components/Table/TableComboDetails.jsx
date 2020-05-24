@@ -32,6 +32,7 @@ const TableComboDetails = (props) => {
             <TableCell>Platillo</TableCell>
             <TableCell align="right">Cantidad</TableCell>
             <TableCell align="right">Precio</TableCell>
+            <TableCell align="right">Total</TableCell>
             <TableCell align="center">Acción</TableCell>
           </TableRow>
         </TableHead>
@@ -50,6 +51,7 @@ const TableComboDetails = (props) => {
               </TableCell>
               <TableCell align="right">{item.qty}</TableCell>
               <TableCell align="right">$ {item.price}</TableCell>
+              <TableCell align="right">$ {item.price * item.qty}</TableCell>
               {item && (
                 <TableCell align="center" key={uuid()}>
                   <DeleteButton
