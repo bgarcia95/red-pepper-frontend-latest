@@ -19,10 +19,7 @@ const useStyles = makeStyles({
 
 const TableComboDetails = (props) => {
   const classes = useStyles();
-  const { comboDetails, onDeleteItem, dishes, fetchedDetails } = props;
-
-  const filterDish = (id) =>
-    dishes.filter((dish) => dish.id === id).map((filtered) => filtered.name);
+  const { comboDetails, onDeleteItem, filterDishName } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -47,7 +44,7 @@ const TableComboDetails = (props) => {
           {comboDetails.map((item) => (
             <TableRow key={uuid()}>
               <TableCell key={item.dishId}>
-                {item.desc || filterDish(item.dishId)}
+                {item.desc || filterDishName(item.dishId)}
               </TableCell>
               <TableCell align="right">{item.qty}</TableCell>
               <TableCell align="right">$ {item.price}</TableCell>
@@ -56,13 +53,7 @@ const TableComboDetails = (props) => {
               </TableCell>
               {item && (
                 <TableCell align="center" key={uuid()}>
-                  <DeleteButton
-                    onClick={() =>
-                      fetchedDetails
-                        ? onDeleteItem(item.id)
-                        : onDeleteItem(item.dishId)
-                    }
-                  >
+                  <DeleteButton onClick={() => onDeleteItem(item.dishId)}>
                     <FaTrash size="18" />
                   </DeleteButton>
                 </TableCell>
