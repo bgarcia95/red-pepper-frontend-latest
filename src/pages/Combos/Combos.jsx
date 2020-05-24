@@ -7,15 +7,18 @@ import {
   deleteComboStart,
   deleteComboAction,
 } from "redux/actions/combos/combos";
+import { getDishesAction } from "redux/actions/dishes/dishes";
 
 const Combos = () => {
   const dispatch = useDispatch();
 
   const combos = useSelector((state) => state.combos.combos);
-
+  const dishes = useSelector((state) => state.dishes.dishes);
   useEffect(() => {
     const getCombos = () => dispatch(getCombosAction());
     getCombos();
+    const getDishes = () => dispatch(getDishesAction());
+    getDishes();
   }, [dispatch]);
 
   const tableHeaders = [
@@ -65,6 +68,7 @@ const Combos = () => {
     <PageContainer
       pageTitle="Administración de Combos"
       payload={combos}
+      dishes={dishes}
       formTarget={formTarget}
       tableHeaders={tableHeaders}
       isLoading={isLoading}
