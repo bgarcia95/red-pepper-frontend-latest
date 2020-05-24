@@ -7,14 +7,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { getSuppliesAction } from "redux/actions/supplies/supplies";
-import {
-  addDishAction,
-  updateDishAction,
-  getDishesAction,
-} from "redux/actions/dishes/dishes";
+import { addDishAction, updateDishAction } from "redux/actions/dishes/dishes";
 import TableDishDetails from "components/Table/TableDishDetails";
 import Swal from "sweetalert2";
-import http from "services/httpService";
 
 const DishesForm = (props) => {
   const { toggle, payload, categories } = props;
@@ -105,22 +100,13 @@ const DishesForm = (props) => {
           e.preventDefault();
 
           if (payload) {
-            http
-              .post("/dish/CreateDishSupply", {
-                DishId: payload.id,
-                Qty: values.quantity,
-                SupplyId: values.supplyId,
-                Comment: values.comment,
-              })
-              .then((response) => {
-                setFieldValue(
-                  "dishDetails",
-                  (values.dishDetails = [...values.dishDetails, response.data])
-                );
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            const supply = {
+              dishId: payload.id,
+              qty: values.quantity,
+              supplyId: values.supplyId,
+              comment: values.comment,
+            };
+            values.dishDetails = [...values.dishDetails, supply];
           } else {
             const supply = {
               desc: values.supplyName,
@@ -134,45 +120,10 @@ const DishesForm = (props) => {
         };
 
         const onDeleteItem = (id) => {
-          if (payload) {
-            Swal.fire({
-              title: "¿Estás seguro/a?",
-              text: "Se procederá con la eliminacion del detalle",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, remover!",
-              cancelButtonText: "Cancelar",
-            }).then((result) => {
-              if (result.value) {
-                http
-                  .delete(`/dish/RemoveDishSupply/${id}`)
-                  .then((response) => {
-                    setFieldValue(
-                      "dishDetails",
-                      (values.dishDetails = [
-                        ...values.dishDetails.filter(
-                          (detail) => detail.id !== response.data.id
-                        ),
-                      ])
-                    );
-                    Swal.fire(
-                      "Removido!",
-                      "El insumo fue removido con exito.",
-                      "success"
-                    );
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            });
-          } else {
-            setFieldValue(
-              "dishDetails",
-              values.dishDetails.filter((item) => item.supplyId !== id)
-            );
-          }
+          setFieldValue(
+            "dishDetails",
+            values.dishDetails.filter((item) => item.supplyId !== id)
+          );
         };
 
         const onSubmit = (e) => {
@@ -529,18 +480,7 @@ const DishesForm = (props) => {
               </Grid>
               <DialogActions>
                 <div className="center-content">
-                  <CancelButton
-                    onClick={() => {
-                      toggle();
-                      if (
-                        payload &&
-                        payload.dishSupplies !== values.dishDetails
-                      ) {
-                        dispatch(getDishesAction());
-                      }
-                    }}
-                    variant="contained"
-                  >
+                  <CancelButton onClick={toggle} variant="contained">
                     Cancelar
                   </CancelButton>
 
@@ -548,7 +488,11 @@ const DishesForm = (props) => {
                     <AddButton
                       type="submit"
                       variant="contained"
-                      disabled={isSubmitting || !dirty}
+                      disabled={
+                        isSubmitting ||
+                        !dirty ||
+                        values.dishDetails.length === 0
+                      }
                       onClick={(e) => onSubmit(e)}
                     >
                       Confirmar

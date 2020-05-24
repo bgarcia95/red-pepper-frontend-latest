@@ -7,14 +7,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import http from "services/httpService";
 import TableComboDetails from "components/Table/TableComboDetails";
 import { getDishesAction } from "redux/actions/dishes/dishes";
-import {
-  addComboAction,
-  updateComboAction,
-  getCombosAction,
-} from "redux/actions/combos/combos";
+import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
 
 const CombosForm = (props) => {
   const { toggle, payload } = props;
@@ -96,25 +91,13 @@ const CombosForm = (props) => {
           e.preventDefault();
 
           if (payload) {
-            http
-              .post("/combo/CreateComboDetail", {
-                comboId: payload.id,
-                qty: values.quantity,
-                dishId: values.dishId,
-                price: values.dishPrice,
-              })
-              .then((response) => {
-                setFieldValue(
-                  "comboDetails",
-                  (values.comboDetails = [
-                    ...values.comboDetails,
-                    response.data,
-                  ])
-                );
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            const dish = {
+              comboId: payload.id,
+              qty: values.quantity,
+              dishId: values.dishId,
+              price: values.dishPrice,
+            };
+            values.comboDetails = [...values.comboDetails, dish];
           } else {
             const dish = {
               desc: values.dishName,
@@ -129,38 +112,10 @@ const CombosForm = (props) => {
 
         const onDeleteItem = (id) => {
           if (payload) {
-            Swal.fire({
-              title: "¿Estás seguro/a?",
-              text: "Se procederá con la eliminacion del detalle",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, remover!",
-              cancelButtonText: "Cancelar",
-            }).then((result) => {
-              if (result.value) {
-                http
-                  .delete(`/combo/RemoveComboDetail/${id}`)
-                  .then((response) => {
-                    setFieldValue(
-                      "comboDetails",
-                      (values.comboDetails = [
-                        ...values.comboDetails.filter(
-                          (detail) => detail.id !== response.data.id
-                        ),
-                      ])
-                    );
-                    Swal.fire(
-                      "Removido!",
-                      "El platillo fue removido con exito.",
-                      "success"
-                    );
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            });
+            setFieldValue(
+              "comboDetails",
+              values.comboDetails.filter((item) => item.id !== id)
+            );
           } else {
             setFieldValue(
               "comboDetails",
@@ -462,18 +417,7 @@ const CombosForm = (props) => {
               </Grid>
               <DialogActions>
                 <div className="center-content">
-                  <CancelButton
-                    onClick={() => {
-                      toggle();
-                      if (
-                        payload &&
-                        payload.comboDetails !== values.comboDetails
-                      ) {
-                        dispatch(getCombosAction());
-                      }
-                    }}
-                    variant="contained"
-                  >
+                  <CancelButton onClick={toggle} variant="contained">
                     Cancelar
                   </CancelButton>
 
@@ -481,7 +425,11 @@ const CombosForm = (props) => {
                     <AddButton
                       type="submit"
                       variant="contained"
-                      disabled={isSubmitting || !dirty}
+                      disabled={
+                        isSubmitting ||
+                        !dirty ||
+                        values.comboDetails.length === 0
+                      }
                       onClick={(e) => onSubmit(e)}
                     >
                       Confirmar
