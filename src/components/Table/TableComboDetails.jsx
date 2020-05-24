@@ -39,7 +39,7 @@ const TableComboDetails = (props) => {
         <TableBody>
           {comboDetails.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
+              <TableCell colSpan={5} className="text-center">
                 Ingrese platillos al combo
               </TableCell>
             </TableRow>

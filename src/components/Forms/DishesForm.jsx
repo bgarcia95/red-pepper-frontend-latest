@@ -120,10 +120,17 @@ const DishesForm = (props) => {
         };
 
         const onDeleteItem = (id) => {
-          setFieldValue(
-            "dishDetails",
-            values.dishDetails.filter((item) => item.supplyId !== id)
-          );
+          if (payload) {
+            setFieldValue(
+              "dishDetails",
+              values.dishDetails.filter((item) => item.id !== id)
+            );
+          } else {
+            setFieldValue(
+              "dishDetails",
+              values.dishDetails.filter((item) => item.dishId !== id)
+            );
+          }
         };
 
         const onSubmit = (e) => {
