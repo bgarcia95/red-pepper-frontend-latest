@@ -27,6 +27,7 @@ const PageContainer = (props) => {
             buttonLabel={buttonLabel}
             title={dialogTitle}
             categories={props.formTarget === "dish" && props.categories}
+            dishes={props.formTarget === "combo" && props.dishes}
           />
         </Grid>
         <div style={{ margin: "2rem 0" }} />

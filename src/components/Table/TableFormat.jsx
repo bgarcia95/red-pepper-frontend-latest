@@ -25,6 +25,7 @@ const TableFormat = (props) => {
     isFetching,
     onDelete,
     categories,
+    dishes,
     tableTitle,
   } = props;
 
@@ -76,6 +77,7 @@ const TableFormat = (props) => {
                   formTarget={formTarget}
                   buttonLabel="Editar"
                   categories={formTarget === "dish" && categories}
+                  dishes={formTarget === "combo" && dishes}
                 />
 
                 <DeleteButton
