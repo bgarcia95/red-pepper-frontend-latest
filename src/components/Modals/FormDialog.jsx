@@ -15,16 +15,11 @@ import CategoriesForm from "components/Forms/CategoriesForm";
 import DishesForm from "components/Forms/DishesForm";
 import CombosForm from "components/Forms/CombosForm";
 import TablesForm from "components/Forms/TablesForm";
-import { useDispatch } from "react-redux";
-import { getDishesAction } from "redux/actions/dishes/dishes";
-import { getCombosAction } from "redux/actions/combos/combos";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
 
   const [open, setOpen] = React.useState(false);
-
-  const dispatch = useDispatch();
 
   const { title } = props;
 
@@ -103,15 +98,7 @@ const FormDialog = (props) => {
       {button}
       <Dialog
         open={open}
-        onClose={() => {
-          toggleModal();
-          if (props.formTarget === "dish" && props.payload) {
-            dispatch(getDishesAction());
-          }
-          if (props.formTarget === "combo" && props.payload) {
-            dispatch(getCombosAction());
-          }
-        }}
+        onClose={toggleModal}
         aria-labelledby="form-dialog-title"
         maxWidth={dialogSize}
         fullWidth={true}
