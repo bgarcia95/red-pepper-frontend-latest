@@ -37,14 +37,14 @@ const DishesForm = (props) => {
       .filter((category) => category.id === id)
       .map((filtered) => filtered.name)[0];
 
-  const filterSupply = (id) =>
+  const filterSupplyName = (id) =>
     supplies
       .filter((supply) => supply.id === id)
       .map((filtered) => filtered.name)[0];
 
   const detailsArray = payload
     ? payload.dishSupplies.map((detail) => ({
-        label: filterSupply(detail.supplyId),
+        label: filterSupplyName(detail.supplyId),
         value: detail.supplyId,
       }))
     : [];
@@ -161,7 +161,7 @@ const DishesForm = (props) => {
 
           const newOption = {
             value: deletedValue.supplyId,
-            label: filterSupply(deletedValue.supplyId),
+            label: filterSupplyName(deletedValue.supplyId),
           };
 
           setFieldValue(
@@ -515,7 +515,7 @@ const DishesForm = (props) => {
                     supplies={supplies}
                     onDeleteItem={onDeleteItem}
                     dishDetails={values.dishDetails}
-                    filterSupply={filterSupply}
+                    filterSupplyName={filterSupplyName}
                   />
                 </Grid>
                 <Grid item xs={12}>
