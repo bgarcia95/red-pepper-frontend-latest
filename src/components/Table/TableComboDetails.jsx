@@ -51,7 +51,9 @@ const TableComboDetails = (props) => {
               </TableCell>
               <TableCell align="right">{item.qty}</TableCell>
               <TableCell align="right">$ {item.price}</TableCell>
-              <TableCell align="right">$ {item.price * item.qty}</TableCell>
+              <TableCell align="right">
+                $ {(item.price * item.qty).toFixed(2)}
+              </TableCell>
               {item && (
                 <TableCell align="center" key={uuid()}>
                   <DeleteButton
