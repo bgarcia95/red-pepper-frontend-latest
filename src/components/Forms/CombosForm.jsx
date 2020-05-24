@@ -1,26 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import TableComboDetails from "components/Table/TableComboDetails";
-import { getDishesAction } from "redux/actions/dishes/dishes";
 import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
 
 const CombosForm = (props) => {
-  const { toggle, payload } = props;
-  const dishes = useSelector((state) => state.dishes.dishes);
+  const { toggle, payload, dishes } = props;
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getDishes = () => dispatch(getDishesAction());
-    getDishes();
-  }, [dispatch]);
 
   const dishesSelect = dishes.map(({ name, id }) => ({
     label: name,
@@ -34,6 +27,19 @@ const CombosForm = (props) => {
 
     return filtered;
   };
+
+  const filterDishName = (id) =>
+    dishes.filter((dish) => dish.id === id).map((filtered) => filtered.name)[0];
+
+  const detailsArray = payload
+    ? payload.comboDetails.map((detail) => ({
+        label: filterDishName(detail.dishId),
+        value: detail.dishId,
+      }))
+    : [];
+  const filteredOptions = dishesSelect.filter(
+    ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
+  );
 
   return (
     <Formik
@@ -49,6 +55,7 @@ const CombosForm = (props) => {
         dishPrice: "",
         suggestedPrice: "",
         comboDetails: payload ? payload.comboDetails : [],
+        dishesSelect: payload ? filteredOptions : dishesSelect,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -98,6 +105,12 @@ const CombosForm = (props) => {
               price: values.dishPrice,
             };
             values.comboDetails = [...values.comboDetails, dish];
+            setFieldValue(
+              "dishesSelect",
+              values.dishesSelect
+                .map((dish) => dish)
+                .filter((dish) => dish.value !== values.dishId)
+            );
           } else {
             const dish = {
               desc: values.dishName,
@@ -106,22 +119,35 @@ const CombosForm = (props) => {
               price: values.dishPrice,
             };
             values.comboDetails = [...values.comboDetails, dish];
+            setFieldValue(
+              "dishesSelect",
+              values.dishesSelect
+                .map((dish) => dish)
+                .filter((dish) => dish.value !== values.dishId)
+            );
           }
           clearDetailHandler();
         };
 
         const onDeleteItem = (id) => {
-          if (payload) {
-            setFieldValue(
-              "comboDetails",
-              values.comboDetails.filter((item) => item.id !== id)
-            );
-          } else {
-            setFieldValue(
-              "comboDetails",
-              values.comboDetails.filter((item) => item.dishId !== id)
-            );
-          }
+          setFieldValue(
+            "comboDetails",
+            values.comboDetails.filter((item) => item.dishId !== id)
+          );
+
+          const deletedValue = values.comboDetails.filter(
+            (item) => item.dishId === id
+          )[0];
+
+          const newOption = {
+            value: deletedValue.dishId,
+            label: filterDishName(deletedValue.dishId),
+          };
+
+          setFieldValue(
+            "dishesSelect",
+            (values.dishesSelect = [...values.dishesSelect, newOption])
+          );
         };
 
         const onSubmit = (e) => {
@@ -264,7 +290,7 @@ const CombosForm = (props) => {
                     <Autocomplete
                       id="dishInputName"
                       name="dishInputName"
-                      options={dishesSelect}
+                      options={values.dishesSelect}
                       getOptionLabel={(option) =>
                         typeof option === "string" ? option : option.label
                       }
@@ -409,6 +435,7 @@ const CombosForm = (props) => {
                     onDeleteItem={onDeleteItem}
                     dishes={dishes}
                     fetchedDetails={payload ? payload.comboDetails : null}
+                    filterDishName={filterDishName}
                   />
                 </Grid>
                 <Grid item xs={12}>
