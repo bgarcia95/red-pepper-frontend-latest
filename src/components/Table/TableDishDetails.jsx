@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 
 const TableDishDetails = (props) => {
   const classes = useStyles();
-  const { dishDetails, onDeleteItem, filterSupply } = props;
+  const { dishDetails, onDeleteItem, filterSupplyName } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -44,7 +44,7 @@ const TableDishDetails = (props) => {
             return (
               <TableRow key={uuid()}>
                 <TableCell key={item.supplyId}>
-                  {item.desc || filterSupply(item.supplyId)}
+                  {item.desc || filterSupplyName(item.supplyId)}
                 </TableCell>
                 <TableCell align="right">{item.qty}</TableCell>
                 <TableCell align="right">
