@@ -37,6 +37,22 @@ const DishesForm = (props) => {
       .filter((category) => category.id === id)
       .map((filtered) => filtered.name)[0];
 
+  const filterSupply = (id) =>
+    supplies
+      .filter((supply) => supply.id === id)
+      .map((filtered) => filtered.name)[0];
+
+  const detailsArray = payload
+    ? payload.dishSupplies.map((detail) => ({
+        label: filterSupply(detail.supplyId),
+        value: detail.supplyId,
+      }))
+    : [];
+
+  const filteredOptions = suppliesSelect.filter(
+    ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
+  );
+
   return (
     <Formik
       initialValues={{
@@ -57,6 +73,7 @@ const DishesForm = (props) => {
         expirationDate: null,
         comment: "",
         dishDetails: payload ? payload.dishSupplies : [],
+        suppliesSelect: payload ? filteredOptions : suppliesSelect,
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -107,6 +124,12 @@ const DishesForm = (props) => {
               comment: values.comment,
             };
             values.dishDetails = [...values.dishDetails, supply];
+            setFieldValue(
+              "suppliesSelect",
+              values.suppliesSelect
+                .map((supply) => supply)
+                .filter((supply) => supply.value !== values.supplyId)
+            );
           } else {
             const supply = {
               desc: values.supplyName,
@@ -115,22 +138,36 @@ const DishesForm = (props) => {
               comment: values.comment,
             };
             values.dishDetails = [...values.dishDetails, supply];
+            setFieldValue(
+              "suppliesSelect",
+              values.suppliesSelect
+                .map((supply) => supply)
+                .filter((supply) => supply.value !== values.supplyId)
+            );
           }
+
           clearDetailHandler();
         };
 
         const onDeleteItem = (id) => {
-          if (payload) {
-            setFieldValue(
-              "dishDetails",
-              values.dishDetails.filter((item) => item.id !== id)
-            );
-          } else {
-            setFieldValue(
-              "dishDetails",
-              values.dishDetails.filter((item) => item.dishId !== id)
-            );
-          }
+          setFieldValue(
+            "dishDetails",
+            values.dishDetails.filter((item) => item.supplyId !== id)
+          );
+
+          const deletedValue = values.dishDetails.filter(
+            (item) => item.supplyId === id
+          )[0];
+
+          const newOption = {
+            value: deletedValue.supplyId,
+            label: filterSupply(deletedValue.supplyId),
+          };
+
+          setFieldValue(
+            "suppliesSelect",
+            (values.suppliesSelect = [...values.suppliesSelect, newOption])
+          );
         };
 
         const onSubmit = (e) => {
@@ -348,7 +385,7 @@ const DishesForm = (props) => {
                     <Autocomplete
                       id="supplyInputName"
                       name="supplyInputName"
-                      options={suppliesSelect}
+                      options={values.suppliesSelect}
                       getOptionLabel={(option) =>
                         typeof option === "string" ? option : option.label
                       }
@@ -478,7 +515,7 @@ const DishesForm = (props) => {
                     supplies={supplies}
                     onDeleteItem={onDeleteItem}
                     dishDetails={values.dishDetails}
-                    fetchedDetails={payload ? payload.dishSupplies : null}
+                    filterSupply={filterSupply}
                   />
                 </Grid>
                 <Grid item xs={12}>
