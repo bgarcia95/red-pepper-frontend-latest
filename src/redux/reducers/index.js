@@ -6,6 +6,7 @@ import categoriesReducer from "redux/reducers/categories/categories";
 import dishesReducer from "redux/reducers/dishes/dishes";
 import combosReducer from "redux/reducers/combos/combos";
 import tablesReducer from "redux/reducers/tables/tables";
+import employeesReducer from "redux/reducers/employees/employees";
 import tokenReducer from "redux/reducers/auth/auth";
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   dishes: dishesReducer,
   combos: combosReducer,
   tables: tablesReducer,
+  employees: employeesReducer,
   auth: tokenReducer,
 });
