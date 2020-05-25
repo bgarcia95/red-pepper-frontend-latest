@@ -16,11 +16,11 @@ const PageContainer = (props) => {
   return (
     <React.Fragment>
       <Container>
+        <Divider style={{ margin: "2rem 0" }} />
         <Typography variant="h5" align="center">
           {pageTitle}
         </Typography>
         <Divider style={{ margin: "2rem 0" }} />
-
         <Grid item xs={12} className="text-center">
           <FormDialog
             formTarget={formTarget}
@@ -30,7 +30,6 @@ const PageContainer = (props) => {
             dishes={props.formTarget === "combo" && props.dishes}
           />
         </Grid>
-        <Divider style={{ margin: "2rem 0" }} />
         <Grid item xs={12} style={{ margin: "2rem 0 1rem 0" }}>
           {isLoadingData && (
             <div className="error--message">
