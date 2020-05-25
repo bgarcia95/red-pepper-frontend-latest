@@ -55,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  logoutButtonContent: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
 }));
 
 // Main Component
@@ -105,14 +111,7 @@ const Navigation = (props) => {
             <div>
               <Hidden xsDown implementation="css">
                 <LogOutButton onClick={props.onLogout} size="small">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-around",
-                    }}
-                  >
+                  <div className={classes.logoutButtonContent}>
                     <FaSignOutAlt style={{ marginRight: "5px" }} />
                     <span>Cerrar Sesión</span>
                   </div>
