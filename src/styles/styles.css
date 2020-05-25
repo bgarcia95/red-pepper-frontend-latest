@@ -99,5 +99,18 @@ input.error {
 
 /* Removing padding on Action column */
 .MuiTableCell-paddingCheckbox:last-child {
-  padding: 0 0px 0 20px !important;
+  padding: 0 0px 0 12px !important;
+}
+
+/* backdrop */
+.backdrop {
+  z-index: 1202 !important;
+}
+
+.backdrop--login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 }
