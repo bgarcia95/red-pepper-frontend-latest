@@ -19,7 +19,7 @@ const App = () => {
       {isLogging ? (
         <Backdrop id="myBackdrop" className="backdrop" open={true}>
           <div className="backdrop--login">
-            <CircularProgress />
+            <CircularProgress style={{ color: "#fff" }} />
             <Typography variant="h5">Iniciando Sesión..</Typography>
           </div>
         </Backdrop>
