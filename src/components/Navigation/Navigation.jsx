@@ -113,7 +113,7 @@ const Navigation = (props) => {
                       justifyContent: "space-around",
                     }}
                   >
-                    <FaSignOutAlt style={{ marginRight: "3px" }} />
+                    <FaSignOutAlt style={{ marginRight: "5px" }} />
                     <span>Cerrar Sesión</span>
                   </div>
                 </LogOutButton>
