@@ -2,23 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "hoc/Layout";
 import { trySignUp } from "redux/actions/auth/auth";
-import {
-  makeStyles,
-  Backdrop,
-  CircularProgress,
-  Typography,
-} from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "blue",
-  },
-}));
+import { Backdrop, CircularProgress, Typography } from "@material-ui/core";
 
 const App = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
 
   const isLogging = useSelector((state) => state.auth.isLogging);
 
@@ -30,19 +17,10 @@ const App = () => {
   return (
     <React.Fragment>
       {isLogging ? (
-        <Backdrop id="myBackdrop" className={classes.backdrop} open={true}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CircularProgress style={{ color: "white" }} />
-            <Typography style={{ color: "#fff" }} variant="h5">
-              Iniciando Sesión..
-            </Typography>
+        <Backdrop id="myBackdrop" className="backdrop" open={true}>
+          <div className="backdrop--login">
+            <CircularProgress />
+            <Typography variant="h5">Iniciando Sesión..</Typography>
           </div>
         </Backdrop>
       ) : null}
