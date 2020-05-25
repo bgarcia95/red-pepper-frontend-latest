@@ -243,6 +243,8 @@ const CombosForm = (props) => {
                           ? "text-input error"
                           : "text-input"
                       }
+                      multiline
+                      rows={3}
                     />
                     {errors.name && touched.name && (
                       <div className="input-feedback">{errors.name}</div>
