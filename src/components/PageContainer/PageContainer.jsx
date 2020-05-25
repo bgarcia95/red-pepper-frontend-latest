@@ -16,7 +16,7 @@ const PageContainer = (props) => {
   return (
     <React.Fragment>
       <Container>
-        <Divider style={{ margin: "2rem 0" }} />
+        <Divider style={{ margin: "1rem 0 2rem 0" }} />
         <Typography variant="h5" align="center">
           {pageTitle}
         </Typography>
