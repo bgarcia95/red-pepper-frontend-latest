@@ -60,6 +60,11 @@ const TableFormat = (props) => {
         options={{
           actionsColumnIndex: -1,
           draggable: false,
+          rowStyle: (x, idx) => {
+            if (idx % 2) {
+              return { backgroundColor: "#f2f2f2" };
+            }
+          },
         }}
         actions={[
           {
