@@ -26,7 +26,9 @@ const SuppliersForm = (props) => {
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
         address: Yup.string().required("Requerido"),
-        telephone: Yup.string().required("Requerido"),
+        telephone: Yup.string()
+          .min(9, "El campo debe contener 8 digitos")
+          .required("Requerido"),
       })}
     >
       {(props) => {
