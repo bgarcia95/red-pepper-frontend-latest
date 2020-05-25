@@ -30,12 +30,14 @@ const PageContainer = (props) => {
             dishes={props.formTarget === "combo" && props.dishes}
           />
         </Grid>
-        <div style={{ margin: "2rem 0" }} />
-        {isLoadingData && (
-          <div className="error--message">
-            <p>Hubo un problema cargando la informacion...</p>
-          </div>
-        )}
+        <Divider style={{ margin: "2rem 0" }} />
+        <Grid item xs={12} style={{ margin: "2rem 0 1rem 0" }}>
+          {isLoadingData && (
+            <div className="error--message">
+              <p>Hubo un problema cargando la informacion...</p>
+            </div>
+          )}
+        </Grid>
         <TableFormat {...props} />
       </Container>
     </React.Fragment>
