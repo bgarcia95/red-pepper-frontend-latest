@@ -17,9 +17,11 @@ function Copyright() {
 }
 
 const Login = (props) => {
+  const error = (state) => state.auth.error;
+
   return (
     <Container component="main" maxWidth="xs">
-      <LoginForm {...props} />
+      <LoginForm {...props} error={error} />
       <Box mt={8}>
         <Copyright />
       </Box>
