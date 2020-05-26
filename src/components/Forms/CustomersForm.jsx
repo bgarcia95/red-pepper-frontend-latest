@@ -60,7 +60,7 @@ const CustomersForm = (props) => {
                 dispatch(updateCustomerAction({ ...customer, id: payload.id }));
                 Swal.fire(
                   "¡Completado!",
-                  "El empleado fue actualizado satisfactoriamente.",
+                  "El cliente fue actualizado satisfactoriamente.",
                   "success"
                 );
               }
