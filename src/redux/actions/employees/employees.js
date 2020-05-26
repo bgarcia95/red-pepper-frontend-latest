@@ -13,7 +13,6 @@ import {
   DELETE_EMPLOYEE_SUCCESS,
   DELETE_EMPLOYEE_ERROR,
 } from "redux/utils/actions";
-import Swal from "sweetalert2";
 
 // All GET methods
 export const getEmployeesStart = () => ({
@@ -52,9 +51,9 @@ export const addEmployeeStart = () => ({
   type: ADD_EMPLOYEE_START,
 });
 
-export const addEmployeeSuccess = (category) => ({
+export const addEmployeeSuccess = (employee) => ({
   type: ADD_EMPLOYEE_SUCCESS,
-  category,
+  employee,
 });
 
 export const addEmployeeError = (error) => ({
@@ -71,11 +70,6 @@ export const addEmployeeAction = (employee) => {
       .post("/employees", employee)
       .then((response) => {
         dispatch(addEmployeeSuccess(response.data));
-        Swal.fire(
-          "¡Guardado!",
-          "El empleado fue guardado satisfactoriamente",
-          "success"
-        );
         dispatch(getEmployeesAction());
       })
       .catch((error) => {
@@ -108,11 +102,6 @@ export const updateEmployeeAction = (employee) => {
       .put("/employees", employee)
       .then((response) => {
         dispatch(updateEmployeeSuccess(response.data));
-        Swal.fire(
-          "¡Guardado!",
-          "El empleado fue actualizado satisfactoriamente",
-          "success"
-        );
         dispatch(getEmployeesAction());
       })
       .catch((error) => {
