@@ -15,7 +15,7 @@ export const login = async (user) => {
   return credentials;
 };
 
-export const trySignUp = () => {
+export const tryAutoSignIn = () => {
   let credentials;
   try {
     // Obtener el token
@@ -50,7 +50,7 @@ export const getDecodedToken = () => {
   }
 };
 
-// For trySignUp (triggered when refreshing the page and checking if token exists)
+// For tryAutoSignIn (triggered when refreshing the page and checking if token exists)
 // export const getCurrentUserToken = () => {
 //   try {
 //     return getLocalStorageItem(userToken);
@@ -71,7 +71,7 @@ export const logout = () => {
 export default {
   getJwt,
   getDecodedToken,
-  trySignUp,
+  tryAutoSignIn,
   login,
   logout,
   // setCurrentUserToken,
