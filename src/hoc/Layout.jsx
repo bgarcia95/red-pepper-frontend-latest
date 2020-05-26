@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navigation from "components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "router/AppRouter";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logoutAction } from "redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
-import { tryAutoSignIn } from "redux/actions/auth/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,16 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.token);
   const {
     location: { pathname },
   } = props;
-
-  useEffect(() => {
-    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
-    onTryAutoSignIn();
-    props.history.push(pathname);
-  }, [dispatch, pathname, props.history]);
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -41,13 +33,17 @@ const Layout = (props) => {
   return (
     <div className={classes.root}>
       <Navigation
-        isAuthenticated={isAuthenticated}
+        isAuthenticated={props.isAuthenticated}
         onLogout={logoutHandler}
         location={pathname}
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <AppRouter isAuthenticated={isAuthenticated} />
+        <AppRouter
+          isAuthenticated={props.isAuthenticated}
+          location={pathname}
+          history={props.history}
+        />
       </main>
     </div>
   );
