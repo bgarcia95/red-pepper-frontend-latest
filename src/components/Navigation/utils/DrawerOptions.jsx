@@ -6,7 +6,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import TabletIcon from "@material-ui/icons/Tablet";
-import { FaPepperHot, FaUserFriends, FaUserCheck } from "react-icons/fa";
+import {
+  FaPepperHot,
+  FaUserFriends,
+  FaUserCheck,
+  FaReceipt,
+} from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { FaList } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
@@ -62,6 +67,11 @@ export const DrawerOptions = (props) => {
       text: "Clientes",
       icon: <FaUserCheck size="1.2rem" />,
       to: "/clientes",
+    },
+    {
+      text: "Ordenes",
+      icon: <FaReceipt size="1.2rem" />,
+      to: "/ordenes",
     },
   ];
 
