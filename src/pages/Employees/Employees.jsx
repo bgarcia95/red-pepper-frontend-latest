@@ -7,6 +7,7 @@ import {
   deleteEmployeeStart,
   deleteEmployeeAction,
 } from "redux/actions/employees/employees";
+import moment from "moment";
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -20,9 +21,17 @@ const Employees = () => {
 
   const tableHeaders = [
     { title: "ID", field: "id" },
-    { title: "Nombre Completo", field: "name" },
+    {
+      title: "Nombre Completo",
+      field: "name",
+      render: (rowData) => `${rowData.name} ${rowData.lastname}`,
+    },
     { title: "Sexo", field: "sex" },
-    { title: "Fecha Nac.", field: "birthdate" },
+    {
+      title: "Fecha Nac.",
+      field: "birthdate",
+      render: (rowData) => moment(rowData.birthdate).format("DD-MM-YYYY"),
+    },
     { title: "Dirección", field: "address" },
     { title: "Teléfono", field: "telephone" },
   ];
@@ -60,7 +69,7 @@ const Employees = () => {
 
   return (
     <PageContainer
-      pageTitle="Administración de Insumos"
+      pageTitle="Administración de Empleados"
       payload={employees}
       formTarget={formTarget}
       tableHeaders={tableHeaders}
