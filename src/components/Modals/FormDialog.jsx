@@ -15,6 +15,7 @@ import DishesForm from "components/Forms/DishesForm";
 import CombosForm from "components/Forms/CombosForm";
 import TablesForm from "components/Forms/TablesForm";
 import EmployeesForm from "components/Forms/EmployeesForm";
+import CustomersForm from "components/Forms/CustomersForm";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
@@ -92,6 +93,11 @@ const FormDialog = (props) => {
     case "employee":
       form = <EmployeesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Usuario";
+      dialogSize = "sm";
+      break;
+    case "customer":
+      form = <CustomersForm {...props} toggle={toggleModal} modal={open} />;
+      customTitle = "Editar Cliente";
       dialogSize = "sm";
       break;
     default:
