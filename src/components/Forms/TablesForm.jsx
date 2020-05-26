@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
+import { TextField, FormControl, Grid, DialogContent } from "@material-ui/core";
 import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
@@ -59,11 +59,11 @@ const TablesForm = (props) => {
 
         return (
           <React.Fragment>
+            <DialogContent dividers>
+
             <form className="form-control" onSubmit={onSubmit}>
               <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
+               
                 <Grid item xs={6}>
                   <FormControl fullWidth={true}>
                     <TextField
@@ -131,25 +131,25 @@ const TablesForm = (props) => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
+               
               </Grid>
-              <DialogActions>
-                <div className="center-content">
-                  <CancelButton onClick={toggle} variant="contained">
-                    Cancelar
+              
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <div className="center-content">
+                <CancelButton onClick={toggle} variant="contained">
+                  Cancelar
                   </CancelButton>
-                  <AddButton
-                    type="submit"
-                    variant="contained"
-                    disabled={!dirty || isSubmitting || !isValid}
-                  >
-                    Confirmar
+                <AddButton
+                  type="submit"
+                  variant="contained"
+                  disabled={!dirty || isSubmitting || !isValid}
+                >
+                  Confirmar
                   </AddButton>
-                </div>
-              </DialogActions>
-            </form>
+              </div>
+            </DialogActions>
           </React.Fragment>
         );
       }}

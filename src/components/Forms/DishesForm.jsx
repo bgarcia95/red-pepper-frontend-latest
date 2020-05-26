@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
+import {
+  TextField,
+  FormControl,
+  Grid,
+  Divider,
+  DialogContent,
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -237,70 +243,190 @@ const DishesForm = (props) => {
 
         return (
           <React.Fragment>
-            <form className="form-control">
-              <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12} md={5}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.name && touched.name}
-                      id="name"
-                      label="Nombre del Platillo"
-                      variant="outlined"
-                      value={values.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.name && touched.name
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.name && touched.name && (
-                      <div className="input-feedback">{errors.name}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    <React.Fragment>
+            <DialogContent dividers>
+              <form className="form-control">
+                <Grid container alignItems="flex-start" spacing={2}>
+                  <Grid item xs={12} md={5}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.name && touched.name}
+                        id="name"
+                        label="Nombre del Platillo"
+                        variant="outlined"
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.name && touched.name && (
+                        <div className="input-feedback">{errors.name}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <FormControl fullWidth={true}>
+                      <React.Fragment>
+                        <Autocomplete
+                          id="categoryInputName"
+                          name="categoryInputName"
+                          options={categoriesSelect}
+                          getOptionLabel={(option) =>
+                            typeof option === "string" ? option : option.label
+                          }
+                          getOptionSelected={(option, value) =>
+                            value === option.label
+                          }
+                          value={values.categoryName}
+                          onChange={(event, newValue) => {
+                            if (newValue !== null) {
+                              setFieldValue("categoryName", newValue.label);
+                              setFieldValue("categoryId", newValue.value);
+                              setFieldValue(
+                                "categoryInputName",
+                                newValue.label
+                              );
+                            }
+                          }}
+                          inputValue={values.categoryInputName}
+                          onInputChange={(event, newInputValue, reason) => {
+                            setFieldValue("categoryInputName", newInputValue);
+
+                            if (event.target.value === "") {
+                              setFieldValue("categoryInputName", "");
+                              setFieldValue("categoryName", null);
+                              setFieldValue("categoryId", null);
+                            }
+                            if (reason === "clear") {
+                              setFieldValue("categoryName", null);
+                              setFieldValue("categoryId", null);
+                              setFieldValue("categoryInputName", "");
+                            }
+                          }}
+                          className={
+                            errors.categoryInputName &&
+                            touched.categoryInputName
+                              ? "text-input error"
+                              : "text-input"
+                          }
+                          onBlur={handleBlur}
+                          noOptionsText="No hay opciones"
+                          clearText="Limpiar"
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Categoría"
+                              variant="outlined"
+                              error={
+                                errors.categoryInputName &&
+                                touched.categoryInputName
+                              }
+                            />
+                          )}
+                        />
+                        {errors.categoryInputName &&
+                          touched.categoryInputName && (
+                            <div className="input-feedback">
+                              {errors.categoryInputName}
+                            </div>
+                          )}
+                      </React.Fragment>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        id="price"
+                        name="price"
+                        label="Precio"
+                        error={errors.price && touched.price}
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: "1", step: "1" }}
+                        value={values.price}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.price && touched.price
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.price && touched.price && (
+                        <div className="input-feedback">{errors.price}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.description && touched.description}
+                        name="description"
+                        label="Descripción"
+                        variant="outlined"
+                        value={values.description}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.description && touched.description
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        multiline
+                        rows={3}
+                      />
+                      {errors.description && touched.description && (
+                        <div className="input-feedback">
+                          {errors.description}
+                        </div>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <FormControl fullWidth={true}>
                       <Autocomplete
-                        id="categoryInputName"
-                        name="categoryInputName"
-                        options={categoriesSelect}
+                        id="supplyInputName"
+                        name="supplyInputName"
+                        options={values.suppliesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label
                         }
                         getOptionSelected={(option, value) =>
                           value === option.label
                         }
-                        value={values.categoryName}
+                        value={values.supplyName}
                         onChange={(event, newValue) => {
                           if (newValue !== null) {
-                            setFieldValue("categoryName", newValue.label);
-                            setFieldValue("categoryId", newValue.value);
-                            setFieldValue("categoryInputName", newValue.label);
+                            setFieldValue("supplyName", newValue.label);
+                            setFieldValue("supplyId", newValue.value);
+                            setFieldValue("supplyInputName", newValue.label);
                           }
                         }}
-                        inputValue={values.categoryInputName}
+                        inputValue={values.supplyInputName}
                         onInputChange={(event, newInputValue, reason) => {
-                          setFieldValue("categoryInputName", newInputValue);
+                          setFieldValue("supplyInputName", newInputValue);
 
                           if (event.target.value === "") {
-                            setFieldValue("categoryInputName", "");
-                            setFieldValue("categoryName", null);
-                            setFieldValue("categoryId", null);
+                            setFieldValue("supplyInputName", "");
+                            setFieldValue("supplyName", null);
+                            setFieldValue("supplyId", null);
                           }
                           if (reason === "clear") {
-                            setFieldValue("categoryName", null);
-                            setFieldValue("categoryId", null);
-                            setFieldValue("categoryInputName", "");
+                            setFieldValue("supplyName", null);
+                            setFieldValue("supplyId", null);
+                            setFieldValue("supplyInputName", "");
                           }
                         }}
                         className={
-                          errors.categoryInputName && touched.categoryInputName
+                          errors.supplyInputName && touched.supplyInputName
                             ? "text-input error"
                             : "text-input"
                         }
@@ -310,256 +436,136 @@ const DishesForm = (props) => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Categoría"
+                            label="Insumo"
                             variant="outlined"
                             error={
-                              errors.categoryInputName &&
-                              touched.categoryInputName
+                              errors.supplyInputName && touched.supplyInputName
                             }
                           />
                         )}
                       />
-                      {errors.categoryInputName &&
-                        touched.categoryInputName && (
-                          <div className="input-feedback">
-                            {errors.categoryInputName}
-                          </div>
-                        )}
-                    </React.Fragment>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="price"
-                      name="price"
-                      label="Precio"
-                      error={errors.price && touched.price}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.price}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.price && touched.price
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.price && touched.price && (
-                      <div className="input-feedback">{errors.price}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.description && touched.description}
-                      name="description"
-                      label="Descripción"
-                      variant="outlined"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.description && touched.description
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      multiline
-                      rows={3}
-                    />
-                    {errors.description && touched.description && (
-                      <div className="input-feedback">{errors.description}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    <Autocomplete
-                      id="supplyInputName"
-                      name="supplyInputName"
-                      options={values.suppliesSelect}
-                      getOptionLabel={(option) =>
-                        typeof option === "string" ? option : option.label
-                      }
-                      getOptionSelected={(option, value) =>
-                        value === option.label
-                      }
-                      value={values.supplyName}
-                      onChange={(event, newValue) => {
-                        if (newValue !== null) {
-                          setFieldValue("supplyName", newValue.label);
-                          setFieldValue("supplyId", newValue.value);
-                          setFieldValue("supplyInputName", newValue.label);
-                        }
-                      }}
-                      inputValue={values.supplyInputName}
-                      onInputChange={(event, newInputValue, reason) => {
-                        setFieldValue("supplyInputName", newInputValue);
-
-                        if (event.target.value === "") {
-                          setFieldValue("supplyInputName", "");
-                          setFieldValue("supplyName", null);
-                          setFieldValue("supplyId", null);
-                        }
-                        if (reason === "clear") {
-                          setFieldValue("supplyName", null);
-                          setFieldValue("supplyId", null);
-                          setFieldValue("supplyInputName", "");
-                        }
-                      }}
-                      className={
-                        errors.supplyInputName && touched.supplyInputName
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      onBlur={handleBlur}
-                      noOptionsText="No hay opciones"
-                      clearText="Limpiar"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Insumo"
-                          variant="outlined"
-                          error={
-                            errors.supplyInputName && touched.supplyInputName
-                          }
-                        />
+                      {errors.supplyInputName && touched.supplyInputName && (
+                        <div className="input-feedback">
+                          {errors.supplyInputName}
+                        </div>
                       )}
-                    />
-                    {errors.supplyInputName && touched.supplyInputName && (
-                      <div className="input-feedback">
-                        {errors.supplyInputName}
-                      </div>
-                    )}
-                  </FormControl>
-                </Grid>
+                    </FormControl>
+                  </Grid>
 
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="quantity"
-                      name="quantity"
-                      label="Cantidad"
-                      error={errors.quantity && touched.quantity}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.quantity}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.quantity && touched.quantity
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.quantity && touched.quantity && (
-                      <div className="input-feedback">{errors.quantity}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.comment && touched.comment}
-                      name="comment"
-                      label="Comentario"
-                      variant="outlined"
-                      value={values.comment}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.comment && touched.comment
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      multiline
-                      rows={3}
-                    />
-                    {errors.comment && touched.comment && (
-                      <div className="input-feedback">{errors.comment}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={2}
-                  className="text-center"
-                  style={{ marginTop: "5px" }}
-                >
-                  <AddButton
-                    disabled={!values.supplyName || values.quantity <= 0}
-                    variant="contained"
-                    onClick={(e) => {
-                      onSubmitSupply(e);
-                    }}
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        id="quantity"
+                        name="quantity"
+                        label="Cantidad"
+                        error={errors.quantity && touched.quantity}
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: "1", step: "1" }}
+                        value={values.quantity}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.quantity && touched.quantity
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.quantity && touched.quantity && (
+                        <div className="input-feedback">{errors.quantity}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.comment && touched.comment}
+                        name="comment"
+                        label="Comentario"
+                        variant="outlined"
+                        value={values.comment}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.comment && touched.comment
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        multiline
+                        rows={3}
+                      />
+                      {errors.comment && touched.comment && (
+                        <div className="input-feedback">{errors.comment}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={2}
+                    className="text-center"
+                    style={{ marginTop: "5px" }}
                   >
-                    Agregar Insumo
+                    <AddButton
+                      disabled={!values.supplyName || values.quantity <= 0}
+                      variant="contained"
+                      onClick={(e) => {
+                        onSubmitSupply(e);
+                      }}
+                    >
+                      Agregar Insumo
+                    </AddButton>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TableDishDetails
+                      supplies={supplies}
+                      onDeleteItem={onDeleteItem}
+                      dishDetails={values.dishDetails}
+                      filterSupplyName={filterSupplyName}
+                    />
+                  </Grid>
+                </Grid>
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <div className="center-content">
+                <CancelButton onClick={toggle} variant="contained">
+                  Cancelar
+                </CancelButton>
+
+                {payload ? (
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={
+                      isSubmitting || !dirty || values.dishDetails.length === 0
+                    }
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Confirmar
                   </AddButton>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TableDishDetails
-                    supplies={supplies}
-                    onDeleteItem={onDeleteItem}
-                    dishDetails={values.dishDetails}
-                    filterSupplyName={filterSupplyName}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-              </Grid>
-              <DialogActions>
-                <div className="center-content">
-                  <CancelButton onClick={toggle} variant="contained">
-                    Cancelar
-                  </CancelButton>
-
-                  {payload ? (
-                    <AddButton
-                      type="submit"
-                      variant="contained"
-                      disabled={
-                        isSubmitting ||
-                        !dirty ||
-                        values.dishDetails.length === 0
-                      }
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Confirmar
-                    </AddButton>
-                  ) : (
-                    <AddButton
-                      type="submit"
-                      variant="contained"
-                      disabled={
-                        !values.name ||
-                        !values.categoryName ||
-                        !values.description ||
-                        values.price <= 0 ||
-                        values.dishDetails.length === 0
-                      }
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Confirmar
-                    </AddButton>
-                  )}
-                </div>
-              </DialogActions>
-            </form>
+                ) : (
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={
+                      !values.name ||
+                      !values.categoryName ||
+                      !values.description ||
+                      values.price <= 0 ||
+                      values.dishDetails.length === 0
+                    }
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Confirmar
+                  </AddButton>
+                )}
+              </div>
+            </DialogActions>
           </React.Fragment>
         );
       }}

@@ -1,5 +1,11 @@
 import React from "react";
-import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
+import {
+  TextField,
+  FormControl,
+  Grid,
+  Divider,
+  DialogContent,
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -223,263 +229,261 @@ const CombosForm = (props) => {
 
         return (
           <React.Fragment>
-            <form className="form-control">
-              <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12} md={5}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.name && touched.name}
-                      id="name"
-                      label="Nombre del Combo"
-                      variant="outlined"
-                      value={values.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.name && touched.name
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      multiline
-                      rows={3}
-                    />
-                    {errors.name && touched.name && (
-                      <div className="input-feedback">{errors.name}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.description && touched.description}
-                      name="description"
-                      label="Descripción"
-                      variant="outlined"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.description && touched.description
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      multiline
-                      rows={3}
-                    />
-                    {errors.description && touched.description && (
-                      <div className="input-feedback">{errors.description}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      label="Total"
-                      variant="outlined"
-                      disabled
-                      value={comboTotal}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    <Autocomplete
-                      id="dishInputName"
-                      name="dishInputName"
-                      options={values.dishesSelect}
-                      getOptionLabel={(option) =>
-                        typeof option === "string" ? option : option.label
-                      }
-                      getOptionSelected={(option, value) =>
-                        value === option.label
-                      }
-                      value={values.dishName}
-                      onChange={(event, newValue) => {
-                        if (newValue !== null) {
-                          setFieldValue("dishName", newValue.label);
-                          setFieldValue("dishId", newValue.value);
-                          setFieldValue("dishInputName", newValue.label);
+            <DialogContent dividers>
+              <form className="form-control">
+                <Grid container alignItems="flex-start" spacing={2}>
+                  <Grid item xs={12} md={5}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.name && touched.name}
+                        id="name"
+                        label="Nombre del Combo"
+                        variant="outlined"
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
                         }
-                      }}
-                      inputValue={values.dishInputName}
-                      onInputChange={(event, newInputValue, reason) => {
-                        setFieldValue("dishInputName", newInputValue);
-
-                        if (event.target.value === "") {
-                          setFieldValue("dishInputName", "");
-                          setFieldValue("dishName", null);
-                          setFieldValue("dishId", null);
-                        }
-                        if (reason === "clear") {
-                          setFieldValue("dishName", null);
-                          setFieldValue("dishId", null);
-                          setFieldValue("dishInputName", "");
-                        }
-                      }}
-                      className={
-                        errors.dishInputName && touched.dishInputName
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      onBlur={handleBlur}
-                      noOptionsText="No hay opciones"
-                      clearText="Limpiar"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="Platillo"
-                          variant="outlined"
-                          error={errors.dishInputName && touched.dishInputName}
-                        />
+                        multiline
+                        rows={3}
+                      />
+                      {errors.name && touched.name && (
+                        <div className="input-feedback">{errors.name}</div>
                       )}
-                    />
-                    {errors.dishInputName && touched.dishInputName && (
-                      <div className="input-feedback">
-                        {errors.dishInputName}
-                      </div>
-                    )}
-                  </FormControl>
-                </Grid>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.description && touched.description}
+                        name="description"
+                        label="Descripción"
+                        variant="outlined"
+                        value={values.description}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.description && touched.description
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        multiline
+                        rows={3}
+                      />
+                      {errors.description && touched.description && (
+                        <div className="input-feedback">
+                          {errors.description}
+                        </div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        label="Total"
+                        variant="outlined"
+                        disabled
+                        value={comboTotal}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <FormControl fullWidth={true}>
+                      <Autocomplete
+                        id="dishInputName"
+                        name="dishInputName"
+                        options={values.dishesSelect}
+                        getOptionLabel={(option) =>
+                          typeof option === "string" ? option : option.label
+                        }
+                        getOptionSelected={(option, value) =>
+                          value === option.label
+                        }
+                        value={values.dishName}
+                        onChange={(event, newValue) => {
+                          if (newValue !== null) {
+                            setFieldValue("dishName", newValue.label);
+                            setFieldValue("dishId", newValue.value);
+                            setFieldValue("dishInputName", newValue.label);
+                          }
+                        }}
+                        inputValue={values.dishInputName}
+                        onInputChange={(event, newInputValue, reason) => {
+                          setFieldValue("dishInputName", newInputValue);
 
-                <Grid item xs={12} md={2}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="quantity"
-                      name="quantity"
-                      label="Cantidad"
-                      error={errors.quantity && touched.quantity}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.quantity}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.quantity && touched.quantity
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.quantity && touched.quantity && (
-                      <div className="input-feedback">{errors.quantity}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      id="dishPrice"
-                      name="dishPrice"
-                      label="Precio Combo"
-                      error={errors.dishPrice && touched.dishPrice}
-                      variant="outlined"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      value={values.dishPrice}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.dishPrice && touched.dishPrice
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.dishPrice && touched.dishPrice && (
-                      <div className="input-feedback">{errors.dishPrice}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      label="Precio Original"
-                      variant="outlined"
-                      value={
-                        values.dishId ? filterDishPrice(values.dishId) : ""
-                      }
-                      disabled
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  className="text-center"
-                  style={{ marginTop: "5px" }}
-                >
-                  <AddButton
-                    disabled={
-                      !values.dishName ||
-                      values.quantity <= 0 ||
-                      values.dishPrice <= 0
-                    }
-                    variant="contained"
-                    onClick={(e) => {
-                      onSubmitDish(e);
-                    }}
+                          if (event.target.value === "") {
+                            setFieldValue("dishInputName", "");
+                            setFieldValue("dishName", null);
+                            setFieldValue("dishId", null);
+                          }
+                          if (reason === "clear") {
+                            setFieldValue("dishName", null);
+                            setFieldValue("dishId", null);
+                            setFieldValue("dishInputName", "");
+                          }
+                        }}
+                        className={
+                          errors.dishInputName && touched.dishInputName
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        onBlur={handleBlur}
+                        noOptionsText="No hay opciones"
+                        clearText="Limpiar"
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Platillo"
+                            variant="outlined"
+                            error={
+                              errors.dishInputName && touched.dishInputName
+                            }
+                          />
+                        )}
+                      />
+                      {errors.dishInputName && touched.dishInputName && (
+                        <div className="input-feedback">
+                          {errors.dishInputName}
+                        </div>
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} md={2}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        id="quantity"
+                        name="quantity"
+                        label="Cantidad"
+                        error={errors.quantity && touched.quantity}
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: "1", step: "1" }}
+                        value={values.quantity}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.quantity && touched.quantity
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.quantity && touched.quantity && (
+                        <div className="input-feedback">{errors.quantity}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        id="dishPrice"
+                        name="dishPrice"
+                        label="Precio Combo"
+                        error={errors.dishPrice && touched.dishPrice}
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: "1", step: "1" }}
+                        value={values.dishPrice}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.dishPrice && touched.dishPrice
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.dishPrice && touched.dishPrice && (
+                        <div className="input-feedback">{errors.dishPrice}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        label="Precio Original"
+                        variant="outlined"
+                        value={
+                          values.dishId ? filterDishPrice(values.dishId) : ""
+                        }
+                        disabled
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    className="text-center"
+                    style={{ marginTop: "5px" }}
                   >
-                    Agregar Detalle
+                    <AddButton
+                      disabled={
+                        !values.dishName ||
+                        values.quantity <= 0 ||
+                        values.dishPrice <= 0
+                      }
+                      variant="contained"
+                      onClick={(e) => {
+                        onSubmitDish(e);
+                      }}
+                    >
+                      Agregar Detalle
+                    </AddButton>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Divider />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TableComboDetails
+                      comboDetails={values.comboDetails}
+                      onDeleteItem={onDeleteItem}
+                      dishes={dishes}
+                      fetchedDetails={payload ? payload.comboDetails : null}
+                      filterDishName={filterDishName}
+                    />
+                  </Grid>
+                </Grid>
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <div className="center-content">
+                <CancelButton onClick={toggle} variant="contained">
+                  Cancelar
+                </CancelButton>
+
+                {payload ? (
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={
+                      isSubmitting || !dirty || values.comboDetails.length === 0
+                    }
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Confirmar
                   </AddButton>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TableComboDetails
-                    comboDetails={values.comboDetails}
-                    onDeleteItem={onDeleteItem}
-                    dishes={dishes}
-                    fetchedDetails={payload ? payload.comboDetails : null}
-                    filterDishName={filterDishName}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-              </Grid>
-              <DialogActions>
-                <div className="center-content">
-                  <CancelButton onClick={toggle} variant="contained">
-                    Cancelar
-                  </CancelButton>
-
-                  {payload ? (
-                    <AddButton
-                      type="submit"
-                      variant="contained"
-                      disabled={
-                        isSubmitting ||
-                        !dirty ||
-                        values.comboDetails.length === 0
-                      }
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Confirmar
-                    </AddButton>
-                  ) : (
-                    <AddButton
-                      type="submit"
-                      variant="contained"
-                      disabled={
-                        !values.name ||
-                        !values.description ||
-                        values.comboDetails.length === 0
-                      }
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      Confirmar
-                    </AddButton>
-                  )}
-                </div>
-              </DialogActions>
-            </form>
+                ) : (
+                  <AddButton
+                    type="submit"
+                    variant="contained"
+                    disabled={
+                      !values.name ||
+                      !values.description ||
+                      values.comboDetails.length === 0
+                    }
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Confirmar
+                  </AddButton>
+                )}
+              </div>
+            </DialogActions>
           </React.Fragment>
         );
       }}
