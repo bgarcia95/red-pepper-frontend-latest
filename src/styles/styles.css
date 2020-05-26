@@ -115,3 +115,9 @@ input.error {
   align-items: center;
   color: #fff;
 }
+
+.form--fieldset {
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  padding: 7px !important;
+}
