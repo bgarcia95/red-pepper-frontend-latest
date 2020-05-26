@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { AddButton } from "components/UI/Buttons/Buttons";
-import { useDispatch, connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginAction } from "redux/actions/auth/auth";
 
 const LoginForm = (props) => {
@@ -40,7 +40,7 @@ const LoginForm = (props) => {
           };
 
           dispatch(loginAction(user)).then(() => {
-            if (!error && error !== null) {
+            if (!error) {
               history.push("/supplies");
             }
           });
@@ -98,10 +98,4 @@ const LoginForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    error: state.auth.error,
-  };
-};
-
-export default connect(mapStateToProps)(LoginForm);
+export default LoginForm;
