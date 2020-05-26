@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
-import { TextField, FormControl, Grid, Divider } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import React from "react";
+import {
+  TextField,
+  FormControl,
+  Grid,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  withStyles,
+  DialogContent,
+} from "@material-ui/core";
 import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import moment from "moment";
 import {
   MuiPickersUtilsProvider,
@@ -13,11 +22,15 @@ import {
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import "moment/locale/es";
-import TablePurchaseDetails from "../Table/TablePurchaseDetails";
 import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { ThemeProvider } from "@material-ui/styles";
+import {
+  addEmployeeAction,
+  updateEmployeeAction,
+} from "redux/actions/employees/employees";
+import InputMask from "react-input-mask";
 
 moment.locale("es");
 
@@ -55,19 +68,39 @@ const defaultMaterialTheme = createMuiTheme({
         },
       },
     },
+    MuiPickersMonth: {
+      monthSelected: {
+        color: green[700],
+      },
+      root: {
+        "&:focus": {
+          color: green[700],
+        },
+      },
+    },
   },
 });
 
+const GenderRadio = withStyles({
+  root: {
+    color: green[400],
+    "&$checked": {
+      color: green[600],
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
+
 const EmployeesForm = (props) => {
   const { toggle, payload } = props;
-
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
         name: payload ? payload.name : "",
         lastName: payload ? payload.lastname : "",
-        sex: payload ? payload.sex : "",
-        birthDate: payload ? payload.birthDate : null,
+        gender: payload ? payload.sex : "",
+        birthDate: payload ? payload.birthdate : null,
         dui: payload ? payload.dui : "",
         nit: payload ? payload.nit : "",
         address: payload ? payload.address : "",
@@ -76,18 +109,20 @@ const EmployeesForm = (props) => {
         locale: "es",
       }}
       validationSchema={Yup.object().shape({
-        invoiceNumber: Yup.number()
-          .typeError("El valor ingresado debe ser numérico")
-          .positive("El valor debe ingresado debe ser positivo")
-          .required("Requerido"),
         name: Yup.string().required("Requerido"),
         lastName: Yup.string().required("Requerido"),
-        sex: Yup.string().required("Requerido"),
+        gender: Yup.string().required("Requerido"),
         birthDate: Yup.date().typeError("Requerido").required(),
-        dui: Yup.string().required("Requerido"),
-        nit: Yup.string().required("Requerido"),
+        dui: Yup.string()
+          .min(10, "El campo debe contener 9 digitos")
+          .required("Requerido"),
+        nit: Yup.string()
+          .min(17, "El campo debe contener 14 digitos")
+          .required("Requerido"),
         address: Yup.string().required("Requerido"),
-        telephone: Yup.string().required("Requerido"),
+        telephone: Yup.string()
+          .min(9, "El campo debe contener 8 digitos")
+          .required("Requerido"),
         email: Yup.string()
           .email("Ingrese un correo válido")
           .required("Requerido"),
@@ -101,226 +136,154 @@ const EmployeesForm = (props) => {
           handleChange,
           handleBlur,
           setFieldValue,
-          setFieldTouched,
+          isValid,
+          dirty,
+          isSubmitting,
         } = props;
-
-        const clearDetailHandler = () => {
-          setFieldValue("supplyName", null);
-          setFieldValue("supplyId", null);
-          setFieldValue("supplyInputName", "");
-          setFieldValue("expirationDate", null);
-          setFieldValue("quantity", "");
-          setFieldValue("unitPrice", "");
-
-          setFieldTouched("supplyInputName", false);
-          setFieldTouched("quantity", false);
-          setFieldTouched("unitPrice", false);
-          setFieldTouched("expirationDate", false);
-        };
-
-        const onSubmitSupply = (e) => {
-          e.preventDefault();
-          const price = values.quantity * values.unitPrice;
-          const supply = {
-            supplyId: values.supplyId,
-            expirationDate: values.expirationDate,
-            desc: values.supplyName,
-            quantity: values.quantity,
-            unitPrice: values.unitPrice,
-            total: price,
-          };
-
-          values.purchaseDetails = [...values.purchaseDetails, supply];
-
-          clearDetailHandler();
-        };
-
-        const onDeleteItem = (id) => {
-          setFieldValue(
-            "purchaseDetails",
-            values.purchaseDetails.filter((item) => item.supplyId !== id)
-          );
-        };
-
-        // To handle invoice total and pass following variables and functions as props for table details
-
-        const TAX_RATE = 0.13;
-
-        const subtotal = (items) => {
-          return items.map(({ total }) => total).reduce((sum, i) => sum + i, 0);
-        };
-
-        const invoiceSubtotal = subtotal(values.purchaseDetails);
-        const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-        const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
         const onSubmit = (e) => {
           e.preventDefault();
 
-          const purchaseDetails = values.purchaseDetails.map((detail) => ({
-            SupplyId: detail.supplyId,
-            ExpirationDate:
-              detail.expDate === null ? "0001-01-01 00:00:00" : detail.expDate,
-            Quantity: detail.quantity,
-            UnitPrice: detail.unitPrice,
-            Total: detail.total,
-          }));
-
-          const purchase = {
-            InvoiceNumber: values.invoiceNumber,
-            EmissionDate: values.emissionDate,
-            ProviderId: values.providerId,
-            Total: invoiceTotal,
-            Details: purchaseDetails,
+          const employee = {
+            name: values.name,
+            lastname: values.lastName,
+            sex: values.gender,
+            birthdate: values.birthDate,
+            dui: values.dui,
+            nit: values.nit,
+            address: values.address,
+            telephone: values.telephone,
+            email: values.email,
           };
 
-          Swal.fire({
-            title: "¿Estás seguro/a?",
-            text: "Se procederá con el registro de la factura  ",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "¡Sí, guardar!",
-            cancelButtonText: "Cancelar",
-          }).then((result) => {
-            if (result.value) {
-              dispatch(addPurchaseAction(purchase));
-              Swal.fire(
-                "¡Completado!",
-                "La factura fué registrada satisfactoriamente.",
-                "success"
-              );
+          if (payload) {
+            Swal.fire({
+              title: "¿Estás seguro/a?",
+              text: "Se procederá con la actualización del empleado",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "¡Sí, actualizar!",
+              cancelButtonText: "Cancelar",
+            }).then((result) => {
+              if (result.value) {
+                dispatch(updateEmployeeAction({ ...employee, id: payload.id }));
+                Swal.fire(
+                  "¡Completado!",
+                  "El empleado fue actualizado satisfactoriamente.",
+                  "success"
+                );
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "¿Estás seguro/a?",
+              text: "Se procederá con el registro del empleado",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "¡Sí, guardar!",
+              cancelButtonText: "Cancelar",
+            }).then((result) => {
+              if (result.value) {
+                dispatch(addEmployeeAction(employee));
+                Swal.fire(
+                  "¡Completado!",
+                  "El empleado fue guardado satisfactoriamente.",
+                  "success"
+                );
 
-              toggle();
-            }
-          });
+                toggle();
+              }
+            });
+          }
         };
-
-        const filteredProvider = (id) =>
-          suppliers
-            .filter((supplier) => supplier.id === id)
-            .map((filtered) => filtered.name);
 
         return (
           <React.Fragment>
-            <form className="form-control">
-              <Grid container alignItems="flex-start" spacing={2}>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.invoiceNumber && touched.invoiceNumber}
-                      id="invoiceNumber"
-                      label="N° de Factura"
-                      variant="outlined"
-                      value={values.invoiceNumber}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.invoiceNumber && touched.invoiceNumber
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      disabled={payload ? true : false}
-                    />
-                    {errors.invoiceNumber && touched.invoiceNumber && (
-                      <div className="input-feedback">
-                        {errors.invoiceNumber}
-                      </div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    {payload ? (
+            <DialogContent dividers>
+              <form className="form-control">
+                <Grid container alignItems="flex-start" spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
                       <TextField
-                        label="Proveedor"
+                        error={errors.name && touched.name}
+                        id="name"
+                        label="Nombres"
                         variant="outlined"
-                        value={filteredProvider(payload.providerId)}
-                        disabled={payload ? true : false}
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
+                        }
                       />
-                    ) : (
-                      <React.Fragment>
-                        <Autocomplete
-                          id="providerInputName"
-                          name="providerInputName"
-                          options={suppliersSelect}
-                          getOptionLabel={(option) =>
-                            typeof option === "string" ? option : option.label
-                          }
-                          getOptionSelected={(option, value) =>
-                            value === option.label
-                          }
-                          value={values.providerName}
-                          onChange={(event, newValue) => {
-                            if (newValue !== null) {
-                              setFieldValue("providerName", newValue.label);
-                              setFieldValue("providerId", newValue.value);
-                              setFieldValue(
-                                "providerInputName",
-                                newValue.label
-                              );
-                            }
-                          }}
-                          inputValue={values.providerInputName}
-                          onInputChange={(event, newInputValue, reason) => {
-                            setFieldValue("providerInputName", newInputValue);
+                      {errors.name && touched.name && (
+                        <div className="input-feedback">{errors.name}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.lastName && touched.lastName}
+                        id="lastName"
+                        label="Apellidos"
+                        variant="outlined"
+                        value={values.lastName}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.lastName && touched.lastName
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.lastName && touched.lastName && (
+                        <div className="input-feedback">{errors.lastName}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
 
-                            if (event.target.value === "") {
-                              setFieldValue("providerInputName", "");
-                              setFieldValue("providerName", null);
-                              setFieldValue("providerId", null);
-                            }
-                            if (reason === "clear") {
-                              setFieldValue("providerName", null);
-                              setFieldValue("providerId", null);
-                              setFieldValue("providerInputName", "");
-                            }
-                          }}
-                          className={
-                            errors.providerInputName &&
-                            touched.providerInputName
-                              ? "text-input error"
-                              : "text-input"
-                          }
-                          onBlur={handleBlur}
-                          disabled={payload ? true : false}
-                          noOptionsText="No hay opciones"
-                          clearText="Limpiar"
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Proveedor"
-                              variant="outlined"
-                              error={
-                                errors.providerInputName &&
-                                touched.providerInputName
-                              }
-                            />
-                          )}
+                  <Grid item xs={12}>
+                    <FormControl
+                      fullWidth={true}
+                      className="form--fieldset"
+                      component="fieldset"
+                    >
+                      <FormLabel focused={false} component="legend">
+                        <span style={{ margin: "0 5px", fontSize: "13px" }}>
+                          Género
+                        </span>
+                      </FormLabel>
+                      <RadioGroup
+                        row
+                        aria-label="gender"
+                        name="gender"
+                        value={values.gender}
+                        onChange={handleChange}
+                        style={{ justifyContent: "center" }}
+                      >
+                        <FormControlLabel
+                          value="F"
+                          control={<GenderRadio />}
+                          label="Femenino"
+                          labelPlacement="start"
                         />
-                        {errors.providerInputName &&
-                          touched.providerInputName && (
-                            <div className="input-feedback">
-                              {errors.providerInputName}
-                            </div>
-                          )}
-                      </React.Fragment>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <FormControl fullWidth={true}>
-                    {payload ? (
-                      <TextField
-                        label="Fecha de Emisión"
-                        variant="outlined"
-                        value={moment(values.emissionDate).format("DD/MM/YYYY")}
-                        disabled={payload ? true : false}
-                      />
-                    ) : (
+                        <FormControlLabel
+                          value="M"
+                          control={<GenderRadio />}
+                          label="Masculino"
+                          labelPlacement="start"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <FormControl fullWidth={true}>
                       <ThemeProvider theme={defaultMaterialTheme}>
                         <MuiPickersUtilsProvider
                           libInstance={moment}
@@ -328,22 +291,26 @@ const EmployeesForm = (props) => {
                           locale={values.locale}
                         >
                           <KeyboardDatePicker
-                            id="emissionDate"
-                            name="emissionDate"
-                            label="Fecha de Emision"
-                            value={values.emissionDate}
+                            id="birthDate"
+                            name="birthDate"
+                            label="Fecha de Nacimiento"
+                            value={values.birthDate}
                             onChange={(date) =>
                               setFieldValue(
-                                "emissionDate",
-                                moment(date).format("MM/DD/YYYY")
+                                "birthDate",
+                                moment(date, "YYYY-MM-DDThh:mm:ss").format(
+                                  "YYYY-MM-DD"
+                                )
                               )
                             }
                             autoOk
+                            openTo="year"
+                            views={["year", "month", "date"]}
                             disableFuture={true}
-                            error={errors.emissionDate && touched.emissionDate}
+                            error={errors.birthDate && touched.birthDate}
                             onBlur={handleBlur}
                             className={
-                              errors.emissionDate && touched.emissionDate
+                              errors.birthDate && touched.birthDate
                                 ? "text-input error"
                                 : "text-input"
                             }
@@ -355,263 +322,166 @@ const EmployeesForm = (props) => {
                               "aria-label": "change date",
                             }}
                             invalidDateMessage="Formato de fecha incorrecto"
-                            disabled={payload ? true : false}
                           />
                         </MuiPickersUtilsProvider>
-                        {errors.emissionDate && touched.emissionDate && (
+                        {errors.birthDate && touched.birthDate && (
                           <div className="input-feedback">
-                            {errors.emissionDate}
+                            {errors.birthDate}
                           </div>
                         )}
                       </ThemeProvider>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                {payload ? null : (
-                  <React.Fragment>
-                    <Grid item xs={12} md={3}>
-                      <FormControl fullWidth={true}>
-                        <Autocomplete
-                          id="supplyInputName"
-                          name="supplyInputName"
-                          options={suppliesSelect}
-                          getOptionLabel={(option) =>
-                            typeof option === "string" ? option : option.label
-                          }
-                          getOptionSelected={(option, value) =>
-                            value === option.label
-                          }
-                          value={values.supplyName}
-                          onChange={(event, newValue) => {
-                            if (newValue !== null) {
-                              setFieldValue("supplyName", newValue.label);
-                              setFieldValue("supplyId", newValue.value);
-                              setFieldValue("supplyInputName", newValue.label);
-                            }
-                          }}
-                          inputValue={values.supplyInputName}
-                          onInputChange={(event, newInputValue, reason) => {
-                            setFieldValue("supplyInputName", newInputValue);
-
-                            if (event.target.value === "") {
-                              setFieldValue("supplyInputName", "");
-                              setFieldValue("supplyName", null);
-                              setFieldValue("supplyId", null);
-                            }
-                            if (reason === "clear") {
-                              setFieldValue("supplyName", null);
-                              setFieldValue("supplyId", null);
-                              setFieldValue("supplyInputName", "");
-                            }
-                          }}
-                          className={
-                            errors.supplyInputName && touched.supplyInputName
-                              ? "text-input error"
-                              : "text-input"
-                          }
-                          onBlur={handleBlur}
-                          disabled={payload ? true : false}
-                          noOptionsText="No hay opciones"
-                          clearText="Limpiar"
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Insumo"
-                              variant="outlined"
-                              error={
-                                errors.supplyInputName &&
-                                touched.supplyInputName
-                              }
-                            />
-                          )}
-                        />
-                        {errors.supplyInputName && touched.supplyInputName && (
-                          <div className="input-feedback">
-                            {errors.supplyInputName}
-                          </div>
-                        )}
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                      <FormControl fullWidth={true}>
-                        <ThemeProvider theme={defaultMaterialTheme}>
-                          <MuiPickersUtilsProvider
-                            libInstance={moment}
-                            utils={MomentUtils}
-                            locale={values.locale}
-                          >
-                            <KeyboardDatePicker
-                              id="expirationDate"
-                              name="expirationDate"
-                              label="Fecha de Expiración"
-                              value={values.expirationDate}
-                              onChange={(date) =>
-                                setFieldValue(
-                                  "expirationDate",
-                                  moment(date).format("MM/DD/YYYY")
-                                )
-                              }
-                              autoOk
-                              disablePast={true}
-                              error={
-                                errors.expirationDate && touched.expirationDate
-                              }
-                              onBlur={handleBlur}
-                              className={
-                                errors.expirationDate && touched.expirationDate
-                                  ? "text-input error"
-                                  : "text-input"
-                              }
-                              variant="inline"
-                              inputVariant="outlined"
-                              format="DD/MM/YYYY"
-                              InputAdornmentProps={{ position: "end" }}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                              invalidDateMessage="Formato de fecha incorrecto"
-                              disabled={payload ? true : false}
-                            />
-                          </MuiPickersUtilsProvider>
-                          {errors.expirationDate && touched.expirationDate && (
-                            <div className="input-feedback">
-                              {errors.expirationDate}
-                            </div>
-                          )}
-                        </ThemeProvider>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                      <FormControl fullWidth={true}>
-                        <TextField
-                          id="quantity"
-                          name="quantity"
-                          label="Cantidad"
-                          error={errors.quantity && touched.quantity}
-                          variant="outlined"
-                          type="number"
-                          inputProps={{ min: "1", step: "1" }}
-                          value={values.quantity}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className={
-                            errors.quantity && touched.quantity
-                              ? "text-input error"
-                              : "text-input"
-                          }
-                          disabled={payload ? true : false}
-                        />
-                        {errors.quantity && touched.quantity && (
-                          <div className="input-feedback">
-                            {errors.quantity}
-                          </div>
-                        )}
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                      <FormControl fullWidth={true}>
-                        <TextField
-                          id="unitPrice"
-                          name="unitPrice"
-                          label="Precio Unitario"
-                          error={errors.unitPrice && touched.unitPrice}
-                          variant="outlined"
-                          type="number"
-                          inputProps={{ min: "1", step: "1" }}
-                          value={values.unitPrice}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          className={
-                            errors.unitPrice && touched.unitPrice
-                              ? "text-input error"
-                              : "text-input"
-                          }
-                          disabled={payload ? true : false}
-                        />
-                        {errors.unitPrice && touched.unitPrice && (
-                          <div className="input-feedback">
-                            {errors.unitPrice}
-                          </div>
-                        )}
-                      </FormControl>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      md={2}
-                      className="text-center"
-                      style={{ marginTop: "5px" }}
-                    >
-                      <AddButton
-                        disabled={
-                          !values.supplyName ||
-                          values.quantity <= 0 ||
-                          values.unitPrice <= 0
-                        }
-                        variant="contained"
-                        onClick={(e) => {
-                          onSubmitSupply(e);
-                        }}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
+                      <InputMask
+                        value={values.dui}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        mask="99999999-9"
+                        maskChar=""
                       >
-                        Agregar Insumo
-                      </AddButton>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Divider />
-                    </Grid>
-                  </React.Fragment>
-                )}
+                        {() => (
+                          <TextField
+                            id="dui"
+                            label="DUI"
+                            variant="outlined"
+                            error={errors.dui && touched.dui}
+                            className={
+                              errors.dui && touched.dui
+                                ? "text-input error"
+                                : "text-input"
+                            }
+                          />
+                        )}
+                      </InputMask>
 
-                <Grid item xs={12}>
-                  <TablePurchaseDetails
-                    purchaseDetails={values.purchaseDetails}
-                    onDeleteItem={onDeleteItem}
-                    invoiceTotal={invoiceTotal}
-                    TAX_RATE={TAX_RATE}
-                    invoiceSubtotal={invoiceSubtotal}
-                    invoiceTaxes={invoiceTaxes}
-                    supplies={supplies}
-                    fetchedDetails={payload ? payload.details : null}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-              </Grid>
-              <DialogActions>
-                <div className="center-content">
-                  {payload ? (
-                    <React.Fragment>
-                      <CancelButton onClick={toggle} variant="contained">
-                        Cerrar
-                      </CancelButton>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      <CancelButton onClick={toggle} variant="contained">
-                        Cancelar
-                      </CancelButton>
-                      <AddButton
-                        type="submit"
-                        variant="contained"
-                        disabled={
-                          !values.invoiceNumber ||
-                          !values.providerName ||
-                          !values.emissionDate ||
-                          values.purchaseDetails.length === 0
-                        }
-                        onClick={(e) => onSubmit(e)}
+                      {errors.dui && touched.dui && (
+                        <div className="input-feedback">{errors.dui}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
+                      <InputMask
+                        value={values.nit}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        mask="9999-999999-999-9"
+                        maskChar=""
                       >
-                        Confirmar
-                      </AddButton>
-                    </React.Fragment>
-                  )}
-                </div>
-              </DialogActions>
-            </form>
+                        {() => (
+                          <TextField
+                            id="nit"
+                            label="NIT"
+                            variant="outlined"
+                            error={errors.nit && touched.nit}
+                            className={
+                              errors.nit && touched.nit
+                                ? "text-input error"
+                                : "text-input"
+                            }
+                          />
+                        )}
+                      </InputMask>
+
+                      {errors.nit && touched.nit && (
+                        <div className="input-feedback">{errors.nit}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
+                      <InputMask
+                        value={values.telephone}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        mask="9999-9999"
+                        maskChar=""
+                      >
+                        {() => (
+                          <TextField
+                            id="telephone"
+                            label="Teléfono"
+                            variant="outlined"
+                            error={errors.telephone && touched.telephone}
+                            className={
+                              errors.telephone && touched.telephone
+                                ? "text-input error"
+                                : "text-input"
+                            }
+                          />
+                        )}
+                      </InputMask>
+
+                      {errors.telephone && touched.telephone && (
+                        <div className="input-feedback">{errors.telephone}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.email && touched.email}
+                        id="email"
+                        label="Correo electrónico"
+                        variant="outlined"
+                        value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.email && touched.email
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.email && touched.email && (
+                        <div className="input-feedback">{errors.email}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.address && touched.address}
+                        id="address"
+                        label="Dirección"
+                        variant="outlined"
+                        value={values.address}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.address && touched.address
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        multiline
+                        rows={3}
+                      />
+                      {errors.address && touched.address && (
+                        <div className="input-feedback">{errors.address}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <div className="center-content">
+                <React.Fragment>
+                  <CancelButton onClick={toggle} variant="contained">
+                    Cancelar
+                  </CancelButton>
+                  <AddButton
+                    variant="contained"
+                    disabled={!dirty || isSubmitting || !isValid}
+                    onClick={(e) => onSubmit(e)}
+                  >
+                    Confirmar
+                  </AddButton>
+                </React.Fragment>
+              </div>
+            </DialogActions>
           </React.Fragment>
         );
       }}
