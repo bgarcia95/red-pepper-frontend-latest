@@ -35,7 +35,7 @@ const Layout = (props) => {
 
   const logoutHandler = () => {
     dispatch(logoutAction());
-    props.history.push("/");
+    props.history.push("/login");
   };
 
   return (
