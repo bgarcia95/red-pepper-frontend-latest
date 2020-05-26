@@ -41,7 +41,7 @@ const LoginForm = (props) => {
 
           dispatch(loginAction(user)).then(() => {
             if (!error) {
-              history.push("/supplies");
+              history.push("/insumos");
             }
           });
         };
