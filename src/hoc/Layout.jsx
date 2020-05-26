@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "router/AppRouter";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
+import { tryAutoSignIn } from "redux/actions/auth/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,12 @@ const Layout = (props) => {
   const {
     location: { pathname },
   } = props;
+
+  useEffect(() => {
+    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
+    onTryAutoSignIn();
+    props.history.push(pathname);
+  }, [dispatch, pathname, props.history]);
 
   const logoutHandler = () => {
     dispatch(logoutAction());
