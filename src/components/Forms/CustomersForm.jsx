@@ -82,11 +82,11 @@ const CustomersForm = (props) => {
                   "El empleado fue registrado satisfactoriamente.",
                   "success"
                 );
+
+                toggle();
               }
             });
           }
-
-          toggle();
         };
 
         return (
