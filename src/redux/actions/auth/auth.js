@@ -59,7 +59,6 @@ export const logoutAction = () => {
 
 export const tryAutoSignIn = () => {
   return (dispatch) => {
-    dispatch(authStart());
     const credentials = authService.tryAutoSignIn();
     if (!credentials) {
       dispatch(logoutAction());
