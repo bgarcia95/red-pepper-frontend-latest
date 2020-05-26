@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Supplies from "pages/Supplies/Supplies";
 import Supppliers from "pages/Suppliers/Suppliers";
@@ -11,14 +11,36 @@ import Login from "pages/Login/Login";
 import Employees from "pages/Employees/Employees";
 import Customers from "pages/Customers/Customers";
 import Orders from "pages/Orders/Orders";
+import { tryAutoSignIn } from "redux/actions/auth/auth";
+import { useDispatch } from "react-redux";
 
 const AppRouter = (props) => {
-  const { isAuthenticated } = props;
-  let appRoutes = (
+  const { isAuthenticated, location } = props;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
+    onTryAutoSignIn();
+
+    props.history.push(location);
+  }, [dispatch, location, props.history]);
+
+  let appRoutes = null;
+
+  appRoutes = (
     <Switch>
+      {/* <Route exact path="/" component={Login} /> */}
       <Route path="/login" component={Login} />
       {/* This one will catch anything that has no route. */}
-      <Route render={() => <Redirect to={{ pathname: "/login" }} />} />
+      <Route
+        render={() => (
+          <Redirect
+            to={{
+              pathname: "/login",
+            }}
+          />
+        )}
+      />
     </Switch>
   );
 
