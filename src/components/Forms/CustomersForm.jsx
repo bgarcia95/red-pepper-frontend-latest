@@ -9,6 +9,7 @@ import {
   updateCustomerAction,
   addCustomerAction,
 } from "redux/actions/customers/customers";
+import Swal from "sweetalert2";
 
 const CustomersForm = (props) => {
   const { toggle, payload } = props;
@@ -46,9 +47,43 @@ const CustomersForm = (props) => {
           };
 
           if (payload) {
-            dispatch(updateCustomerAction({ ...customer, id: payload.id }));
+            Swal.fire({
+              title: "¿Estás seguro/a?",
+              text: "Se procederá con la actualización del cliente",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "¡Sí, actualizar!",
+              cancelButtonText: "Cancelar",
+            }).then((result) => {
+              if (result.value) {
+                dispatch(updateCustomerAction({ ...customer, id: payload.id }));
+                Swal.fire(
+                  "¡Completado!",
+                  "El empleado fue actualizado satisfactoriamente.",
+                  "success"
+                );
+              }
+            });
           } else {
-            dispatch(addCustomerAction(customer));
+            Swal.fire({
+              title: "¿Estás seguro/a?",
+              text: "Se procederá con el registro del cliente",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "¡Sí, actualizar!",
+              cancelButtonText: "Cancelar",
+            }).then((result) => {
+              if (result.value) {
+                dispatch(addCustomerAction(customer));
+                Swal.fire(
+                  "¡Completado!",
+                  "El empleado fue registrado satisfactoriamente.",
+                  "success"
+                );
+              }
+            });
           }
 
           toggle();
