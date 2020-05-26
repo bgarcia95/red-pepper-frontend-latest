@@ -1,6 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {
   EditButton,
@@ -15,6 +14,7 @@ import CategoriesForm from "components/Forms/CategoriesForm";
 import DishesForm from "components/Forms/DishesForm";
 import CombosForm from "components/Forms/CombosForm";
 import TablesForm from "components/Forms/TablesForm";
+import EmployeesForm from "components/Forms/EmployeesForm";
 
 const FormDialog = (props) => {
   const { buttonLabel } = props;
@@ -57,7 +57,7 @@ const FormDialog = (props) => {
     case "supply":
       form = <SuppliesForm {...props} toggle={toggleModal} modal={open} />;
       customTitle = "Editar Insumo";
-      dialogSize = "md";
+      dialogSize = "sm";
       break;
     case "supplier":
       form = <SuppliersForm {...props} toggle={toggleModal} modal={open} />;
@@ -89,6 +89,11 @@ const FormDialog = (props) => {
       customTitle = "Editar Mesa";
       dialogSize = "sm";
       break;
+    case "employee":
+      form = <EmployeesForm {...props} toggle={toggleModal} modal={open} />;
+      customTitle = "Editar Usuario";
+      dialogSize = "sm";
+      break;
     default:
       break;
   }
@@ -103,10 +108,14 @@ const FormDialog = (props) => {
         maxWidth={dialogSize}
         fullWidth={true}
       >
-        <DialogTitle id="form-dialog-title" className="text-center">
+        <DialogTitle
+          id="form-dialog-title"
+          className="text-center"
+          // style={{ backgroundColor: "#f44336", color: "#fff" }}
+        >
           {title ? title : customTitle}
         </DialogTitle>
-        <DialogContent>{form}</DialogContent>
+        {form}
       </Dialog>
     </div>
   );
