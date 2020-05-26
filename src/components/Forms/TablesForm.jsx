@@ -60,94 +60,92 @@ const TablesForm = (props) => {
         return (
           <React.Fragment>
             <DialogContent dividers>
-
-            <form className="form-control" onSubmit={onSubmit}>
-              <Grid container alignItems="flex-start" spacing={2}>
-               
-                <Grid item xs={6}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.name && touched.name}
-                      id="name"
-                      label="Nombre"
-                      variant="outlined"
-                      value={values.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.name && touched.name
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.name && touched.name && (
-                      <div className="input-feedback">{errors.name}</div>
-                    )}
-                  </FormControl>
+              <form className="form-control">
+                <Grid container alignItems="flex-start" spacing={2}>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.name && touched.name}
+                        id="name"
+                        label="Nombre"
+                        variant="outlined"
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.name && touched.name && (
+                        <div className="input-feedback">{errors.name}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.chairs && touched.chairs}
+                        id="chairs"
+                        type="number"
+                        inputProps={{ min: "1", step: "1" }}
+                        label="N° de Sillas"
+                        variant="outlined"
+                        value={values.chairs}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.chairs && touched.chairs
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                      />
+                      {errors.chairs && touched.chairs && (
+                        <div className="input-feedback">{errors.chairs}</div>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth={true}>
+                      <TextField
+                        error={errors.description && touched.description}
+                        id="description"
+                        label="Descripción"
+                        variant="outlined"
+                        value={values.description}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={
+                          errors.description && touched.description
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                        multiline
+                        rows={3}
+                      />
+                      {errors.description && touched.description && (
+                        <div className="input-feedback">
+                          {errors.description}
+                        </div>
+                      )}
+                    </FormControl>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.chairs && touched.chairs}
-                      id="chairs"
-                      type="number"
-                      inputProps={{ min: "1", step: "1" }}
-                      label="N° de Sillas"
-                      variant="outlined"
-                      value={values.chairs}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.chairs && touched.chairs
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                    />
-                    {errors.chairs && touched.chairs && (
-                      <div className="input-feedback">{errors.chairs}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth={true}>
-                    <TextField
-                      error={errors.description && touched.description}
-                      id="description"
-                      label="Descripción"
-                      variant="outlined"
-                      value={values.description}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={
-                        errors.description && touched.description
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                      multiline
-                      rows={3}
-                    />
-                    {errors.description && touched.description && (
-                      <div className="input-feedback">{errors.description}</div>
-                    )}
-                  </FormControl>
-                </Grid>
-               
-              </Grid>
-              
               </form>
             </DialogContent>
             <DialogActions>
               <div className="center-content">
                 <CancelButton onClick={toggle} variant="contained">
                   Cancelar
-                  </CancelButton>
+                </CancelButton>
                 <AddButton
-                  type="submit"
                   variant="contained"
                   disabled={!dirty || isSubmitting || !isValid}
+                  onClick={(e) => onSubmit(e)}
                 >
                   Confirmar
-                  </AddButton>
+                </AddButton>
               </div>
             </DialogActions>
           </React.Fragment>

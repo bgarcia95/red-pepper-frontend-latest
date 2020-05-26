@@ -57,7 +57,7 @@ const CategoriesForm = (props) => {
         return (
           <React.Fragment>
             <DialogContent dividers>
-              <form className="form-control" onSubmit={onSubmit}>
+              <form className="form-control">
                 <Grid container alignItems="flex-start" spacing={2}>
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
@@ -115,9 +115,9 @@ const CategoriesForm = (props) => {
                   Cancelar
                 </CancelButton>
                 <AddButton
-                  type="submit"
                   variant="contained"
                   disabled={!dirty || isSubmitting || !isValid}
+                  onClick={(e) => onSubmit(e)}
                 >
                   Confirmar
                 </AddButton>
