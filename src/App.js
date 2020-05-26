@@ -5,6 +5,7 @@ import { Backdrop, CircularProgress, Typography } from "@material-ui/core";
 
 const App = () => {
   const isLogging = useSelector((state) => state.auth.isLogging);
+  const isAuthenticated = useSelector((state) => state.auth.token);
 
   return (
     <React.Fragment>
@@ -16,7 +17,7 @@ const App = () => {
           </div>
         </Backdrop>
       ) : null}
-      <Layout />
+      <Layout isAuthenticated={isAuthenticated} />
     </React.Fragment>
   );
 };
