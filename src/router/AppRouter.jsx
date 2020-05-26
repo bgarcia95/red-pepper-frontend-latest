@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Supplies from "pages/Supplies/Supplies";
 import Supppliers from "pages/Suppliers/Suppliers";
@@ -11,23 +11,11 @@ import Login from "pages/Login/Login";
 import Employees from "pages/Employees/Employees";
 import Customers from "pages/Customers/Customers";
 import Orders from "pages/Orders/Orders";
-import { tryAutoSignIn } from "redux/actions/auth/auth";
-import { useDispatch } from "react-redux";
 
 const AppRouter = (props) => {
-  const { isAuthenticated, location } = props;
-  const dispatch = useDispatch();
+  const { isAuthenticated } = props;
 
-  useEffect(() => {
-    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
-    onTryAutoSignIn();
-
-    props.history.push(location);
-  }, [dispatch, location, props.history]);
-
-  let appRoutes = null;
-
-  appRoutes = (
+  let appRoutes = (
     <Switch>
       {/* <Route exact path="/" component={Login} /> */}
       <Route path="/login" component={Login} />

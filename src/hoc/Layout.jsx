@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "router/AppRouter";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
+import { tryAutoSignIn } from "redux/actions/auth/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +24,19 @@ const Layout = (props) => {
   const dispatch = useDispatch();
   const {
     location: { pathname },
+    history,
   } = props;
+
+  useEffect(() => {
+    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
+    onTryAutoSignIn();
+
+    if (!localStorage.getItem("token")) {
+      history.replace("/login");
+    } else {
+      history.push(pathname);
+    }
+  }, [dispatch, pathname, history]);
 
   const logoutHandler = () => {
     dispatch(logoutAction());
@@ -39,11 +52,7 @@ const Layout = (props) => {
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <AppRouter
-          isAuthenticated={props.isAuthenticated}
-          location={pathname}
-          history={props.history}
-        />
+        <AppRouter isAuthenticated={props.isAuthenticated} />
       </main>
     </div>
   );
