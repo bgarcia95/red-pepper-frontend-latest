@@ -10,6 +10,7 @@ import Tables from "pages/Tables/Tables";
 import Login from "pages/Login/Login";
 import Employees from "pages/Employees/Employees";
 import Customers from "pages/Customers/Customers";
+import Orders from "pages/Orders/Orders";
 
 const AppRouter = (props) => {
   const { isAuthenticated } = props;
@@ -33,6 +34,7 @@ const AppRouter = (props) => {
         <Route path="/mesas" component={Tables} />
         <Route path="/empleados" component={Employees} />
         <Route path="/clientes" component={Customers} />
+        <Route path="/ordenes" component={Orders} />
         {/* This one will catch anything that has no route. */}
         <Route render={() => <Redirect to={{ pathname: "/insumos" }} />} />
       </Switch>
