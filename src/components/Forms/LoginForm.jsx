@@ -14,7 +14,6 @@ const LoginForm = (props) => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   return (
     <Formik
@@ -82,7 +81,6 @@ const LoginForm = (props) => {
                         <IconButton
                           aria-label="toggle password visibility"
                           onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
                         >
                           {showPassword ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
