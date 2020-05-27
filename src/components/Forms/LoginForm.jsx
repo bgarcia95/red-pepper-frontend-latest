@@ -69,7 +69,6 @@ const LoginForm = (props) => {
                   autoFocus
                   value={values.name}
                   onChange={handleChange}
-                  onBlur={handleBlur}
                 />
 
                 <TextField
@@ -80,13 +79,12 @@ const LoginForm = (props) => {
                   name="password"
                   label="Contraseña"
                   id="password"
-                  value={values.name}
+                  value={values.password}
                   onChange={handleChange}
-                  onBlur={handleBlur}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     // <-- This is where the toggle button is added.
-                    endAdornment: (
+                    endAdornment: values.password && (
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
