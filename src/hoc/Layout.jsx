@@ -33,6 +33,20 @@ const Layout = (props) => {
 
     if (!localStorage.getItem("token")) {
       history.replace("/login");
+    } else if (
+      localStorage.getItem("token") &&
+      pathname !== "/insumos" &&
+      pathname !== "/proveedores" &&
+      pathname !== "/compra-insumos" &&
+      pathname !== "/categorias" &&
+      pathname !== "/platos" &&
+      pathname !== "/combos" &&
+      pathname !== "/mesas" &&
+      pathname !== "/empleados" &&
+      pathname !== "/clientes" &&
+      pathname !== "/ordenes"
+    ) {
+      history.push("/insumos");
     } else {
       history.push(pathname);
     }
