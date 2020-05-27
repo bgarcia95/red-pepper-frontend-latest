@@ -28,14 +28,7 @@ const LoginForm = (props) => {
       })}
     >
       {(props) => {
-        const {
-          values,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          isValid,
-        } = props;
+        const { values, dirty, isSubmitting, handleChange, isValid } = props;
 
         const onSubmit = async (e) => {
           e.preventDefault();
