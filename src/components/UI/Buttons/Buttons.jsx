@@ -69,3 +69,10 @@ export const WatchButton = withStyles(() => ({
     height: "30px",
   },
 }))(Button);
+
+export const OrderButton = withStyles(() => ({
+  root: {
+    width: "256px",
+    height: "50px",
+  },
+}))(Button);
