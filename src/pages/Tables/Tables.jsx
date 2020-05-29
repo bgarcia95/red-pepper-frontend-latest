@@ -54,7 +54,7 @@ const Tables = () => {
   const isLoading = useSelector((state) => state.tables.isLoading);
   const isProcessing = useSelector((state) => state.tables.isProcessing);
   const isFetching = useSelector((state) => state.tables.isFetching);
-  const isLoadingData = useSelector((state) => state.tables.error);
+  const hasErrorLoadingData = useSelector((state) => state.tables.error);
 
   return (
     <PageContainer
@@ -65,7 +65,7 @@ const Tables = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Mesa"
       dialogTitle="Agregar Mesa"
       onDelete={onDelete}

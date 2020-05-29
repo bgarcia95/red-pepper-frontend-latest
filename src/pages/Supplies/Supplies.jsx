@@ -56,7 +56,7 @@ const Supplies = () => {
   const isLoading = useSelector((state) => state.supplies.isLoading);
   const isProcessing = useSelector((state) => state.supplies.isProcessing);
   const isFetching = useSelector((state) => state.supplies.isFetching);
-  const isLoadingData = useSelector((state) => state.supplies.error);
+  const hasErrorLoadingData = useSelector((state) => state.supplies.error);
 
   return (
     <PageContainer
@@ -67,7 +67,7 @@ const Supplies = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Insumo"
       dialogTitle="Agregar Insumo"
       onDelete={onDelete}

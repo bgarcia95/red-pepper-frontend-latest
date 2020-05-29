@@ -52,7 +52,7 @@ const Suppliers = () => {
   const isLoading = useSelector((state) => state.suppliers.isLoading);
   const isProcessing = useSelector((state) => state.suppliers.isProcessing);
   const isFetching = useSelector((state) => state.suppliers.isFetching);
-  const isLoadingData = useSelector((state) => state.suppliers.error);
+  const hasErrorLoadingData = useSelector((state) => state.suppliers.error);
 
   return (
     <PageContainer
@@ -63,7 +63,7 @@ const Suppliers = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Proveedor"
       dialogTitle="Agregar Proveedor"
       onDelete={onDelete}

@@ -65,7 +65,7 @@ const Employees = () => {
   const isLoading = useSelector((state) => state.employees.isLoading);
   const isProcessing = useSelector((state) => state.employees.isProcessing);
   const isFetching = useSelector((state) => state.employees.isFetching);
-  const isLoadingData = useSelector((state) => state.employees.error);
+  const hasErrorLoadingData = useSelector((state) => state.employees.error);
 
   return (
     <PageContainer
@@ -76,7 +76,7 @@ const Employees = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Empleado"
       dialogTitle="Agregar Empleado"
       onDelete={onDelete}

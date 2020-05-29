@@ -63,7 +63,7 @@ const Dishes = () => {
   const isLoading = useSelector((state) => state.dishes.isLoading);
   const isProcessing = useSelector((state) => state.dishes.isProcessing);
   const isFetching = useSelector((state) => state.dishes.isFetching);
-  const isLoadingData = useSelector((state) => state.dishes.error);
+  const hasErrorLoadingData = useSelector((state) => state.dishes.error);
 
   return (
     <PageContainer
@@ -75,7 +75,7 @@ const Dishes = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Platillo"
       dialogTitle="Agregar Platillo"
       onDelete={onDelete}

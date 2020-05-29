@@ -1,14 +1,14 @@
 import React from "react";
 import TableFormat from "components/Table/TableFormat";
 import { Typography, Container, Divider, Grid } from "@material-ui/core";
-
 import FormDialog from "components/Modals/FormDialog";
+import PropTypes from "prop-types";
 
 const PageContainer = (props) => {
   const {
     pageTitle,
     formTarget,
-    isLoadingData,
+    hasErrorLoadingData,
     buttonLabel,
     dialogTitle,
   } = props;
@@ -31,7 +31,7 @@ const PageContainer = (props) => {
           />
         </Grid>
         <Grid item xs={12} style={{ margin: "2rem 0 1rem 0" }}>
-          {isLoadingData && (
+          {hasErrorLoadingData && (
             <div className="error--message">
               <p>Hubo un problema cargando la informacion...</p>
             </div>
@@ -41,6 +41,14 @@ const PageContainer = (props) => {
       </Container>
     </React.Fragment>
   );
+};
+
+PageContainer.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+  formTarget: PropTypes.string.isRequired,
+  hasErrorLoadingData: PropTypes.bool.isRequired,
+  buttonLabel: PropTypes.string.isRequired,
+  dialogTitle: PropTypes.string.isRequired,
 };
 
 export default PageContainer;

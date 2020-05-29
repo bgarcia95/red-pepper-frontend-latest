@@ -56,7 +56,7 @@ const Customers = () => {
   const isLoading = useSelector((state) => state.customers.isLoading);
   const isProcessing = useSelector((state) => state.customers.isProcessing);
   const isFetching = useSelector((state) => state.customers.isFetching);
-  const isLoadingData = useSelector((state) => state.customers.error);
+  const hasErrorLoadingData = useSelector((state) => state.customers.error);
 
   return (
     <PageContainer
@@ -67,7 +67,7 @@ const Customers = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Cliente"
       dialogTitle="Agregar Cliente"
       onDelete={onDelete}

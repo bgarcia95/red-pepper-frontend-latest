@@ -62,7 +62,7 @@ const Combos = () => {
   const isLoading = useSelector((state) => state.combos.isLoading);
   const isProcessing = useSelector((state) => state.combos.isProcessing);
   const isFetching = useSelector((state) => state.combos.isFetching);
-  const isLoadingData = useSelector((state) => state.combos.error);
+  const hasErrorLoadingData = useSelector((state) => state.combos.error);
 
   return (
     <PageContainer
@@ -74,7 +74,7 @@ const Combos = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Combo"
       dialogTitle="Agregar Combo"
       onDelete={onDelete}

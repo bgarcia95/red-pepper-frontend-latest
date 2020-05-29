@@ -36,7 +36,7 @@ const SuppliesPurchase = () => {
   const isLoading = useSelector((state) => state.purchases.isLoading);
   const isProcessing = useSelector((state) => state.purchases.isProcessing);
   const isFetching = useSelector((state) => state.purchases.isFetching);
-  const isLoadingData = useSelector((state) => state.purchases.error);
+  const hasErrorLoadingData = useSelector((state) => state.purchases.error);
 
   return (
     <PageContainer
@@ -47,7 +47,7 @@ const SuppliesPurchase = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Compra"
       dialogTitle="Agregar Compra"
       tableTitle="Compras"

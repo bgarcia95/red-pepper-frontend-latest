@@ -51,7 +51,7 @@ const Categories = () => {
   const isLoading = useSelector((state) => state.categories.isLoading);
   const isProcessing = useSelector((state) => state.categories.isProcessing);
   const isFetching = useSelector((state) => state.categories.isFetching);
-  const isLoadingData = useSelector((state) => state.categories.error);
+  const hasErrorLoadingData = useSelector((state) => state.categories.error);
 
   return (
     <PageContainer
@@ -62,7 +62,7 @@ const Categories = () => {
       isLoading={isLoading}
       isProcessing={isProcessing}
       isFetching={isFetching}
-      isLoadingData={isLoadingData}
+      hasErrorLoadingData={hasErrorLoadingData}
       buttonLabel="Agregar Categoría"
       dialogTitle="Agregar Categoría"
       onDelete={onDelete}
