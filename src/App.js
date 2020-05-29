@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Layout from "hoc/Layout";
+import Layout from "components/Layout/Layout";
 import { Backdrop, CircularProgress, Typography } from "@material-ui/core";
 
 const App = () => {
