@@ -9,6 +9,7 @@ import {
   addSupplyAction,
   updateSupplyAction,
 } from "redux/actions/supplies/supplies";
+import PropTypes from "prop-types";
 
 const SuppliesForm = (props) => {
   const dispatch = useDispatch();
