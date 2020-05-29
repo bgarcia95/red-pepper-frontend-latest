@@ -72,7 +72,7 @@ const CustomersForm = (props) => {
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
               cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, actualizar!",
+              confirmButtonText: "¡Sí, guardar!",
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
