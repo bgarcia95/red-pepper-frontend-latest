@@ -16,6 +16,7 @@ import { getSuppliesAction } from "redux/actions/supplies/supplies";
 import { addDishAction, updateDishAction } from "redux/actions/dishes/dishes";
 import TableDishDetails from "components/Table/TableDishDetails";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 
 const DishesForm = (props) => {
   const { toggle, payload, categories } = props;
@@ -571,6 +572,12 @@ const DishesForm = (props) => {
       }}
     </Formik>
   );
+};
+
+DishesForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default DishesForm;

@@ -210,4 +210,8 @@ const SuppliesForm = (props) => {
   );
 };
 
+SuppliesForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
+};
 export default SuppliesForm;

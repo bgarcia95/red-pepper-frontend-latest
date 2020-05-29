@@ -16,13 +16,12 @@ import CombosForm from "components/Forms/CombosForm";
 import TablesForm from "components/Forms/TablesForm";
 import EmployeesForm from "components/Forms/EmployeesForm";
 import CustomersForm from "components/Forms/CustomersForm";
+import PropTypes from "prop-types";
 
 const FormDialog = (props) => {
-  const { buttonLabel } = props;
+  const { buttonLabel, title } = props;
 
   const [open, setOpen] = React.useState(false);
-
-  const { title } = props;
 
   const toggleModal = () => {
     setOpen(!open);
@@ -125,6 +124,11 @@ const FormDialog = (props) => {
       </Dialog>
     </div>
   );
+};
+
+FormDialog.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default FormDialog;

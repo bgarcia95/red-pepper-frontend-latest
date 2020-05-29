@@ -11,6 +11,7 @@ import Login from "pages/Login/Login";
 import Employees from "pages/Employees/Employees";
 import Customers from "pages/Customers/Customers";
 import Orders from "pages/Orders/Orders";
+import Proptypes from "prop-types";
 
 const AppRouter = (props) => {
   const { isAuthenticated } = props;
@@ -52,6 +53,10 @@ const AppRouter = (props) => {
   }
 
   return appRoutes;
+};
+
+AppRouter.propTypes = {
+  isAuthenticated: Proptypes.string,
 };
 
 export default AppRouter;

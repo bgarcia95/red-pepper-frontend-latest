@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { loginAction } from "redux/actions/auth/auth";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import PropTypes from "prop-types";
 
 const LoginForm = (props) => {
   const { history, error } = props;
@@ -104,6 +105,11 @@ const LoginForm = (props) => {
       }}
     </Formik>
   );
+};
+
+LoginForm.propTypes = {
+  history: PropTypes.object.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 export default LoginForm;

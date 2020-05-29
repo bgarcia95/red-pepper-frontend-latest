@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   table: {
@@ -112,6 +113,17 @@ const TablePurchaseDetails = (props) => {
       </Table>
     </TableContainer>
   );
+};
+
+TablePurchaseDetails.propTypes = {
+  purchaseDetails: PropTypes.array.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
+  TAX_RATE: PropTypes.number.isRequired,
+  invoiceSubtotal: PropTypes.number.isRequired,
+  invoiceTaxes: PropTypes.number.isRequired,
+  invoiceTotal: PropTypes.number.isRequired,
+  supplies: PropTypes.array.isRequired,
+  fetchedDetails: PropTypes.array.isRequired,
 };
 
 export default TablePurchaseDetails;

@@ -11,6 +11,7 @@ import {
   addSupplierAction,
 } from "redux/actions/suppliers/suppliers";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 
 const SuppliersForm = (props) => {
   const { toggle, payload } = props;
@@ -161,6 +162,11 @@ const SuppliersForm = (props) => {
       }}
     </Formik>
   );
+};
+
+SuppliersForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default SuppliersForm;

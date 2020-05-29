@@ -15,6 +15,7 @@ import DrawerOptions from "components/Navigation/utils/DrawerOptions";
 import { LogOutButton, LogOutIcon } from "components/UI/Buttons/Buttons";
 import { FaSignOutAlt } from "react-icons/fa";
 import { IconButton } from "@material-ui/core";
+import Proptypes from "prop-types";
 
 // Styles
 const drawerWidth = 240;
@@ -65,11 +66,10 @@ const useStyles = makeStyles((theme) => ({
 
 // Main Component
 const Navigation = (props) => {
-  const { window } = props;
+  const { window, isAuthenticated, location } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isAuthenticated, location } = props;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -164,6 +164,12 @@ const Navigation = (props) => {
       ) : null}
     </div>
   );
+};
+
+Navigation.propTypes = {
+  window: Proptypes.object,
+  isAuthenticated: Proptypes.string,
+  location: Proptypes.string.isRequired,
 };
 
 export default Navigation;

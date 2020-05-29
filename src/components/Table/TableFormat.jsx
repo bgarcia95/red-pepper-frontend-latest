@@ -1,13 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { Backdrop, CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
 import FormDialog from "components/Modals/FormDialog";
 import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
+import PropTypes from "prop-types";
 
-const useStyles2 = makeStyles((theme) => ({
+const useStyles1 = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "blue",
@@ -15,7 +15,7 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const TableFormat = (props) => {
-  const classes = useStyles2();
+  const classes = useStyles1();
   const {
     payload,
     tableHeaders,
@@ -108,6 +108,19 @@ const TableFormat = (props) => {
       />
     </React.Fragment>
   );
+};
+
+TableFormat.propTypes = {
+  payload: PropTypes.array.isRequired,
+  tableHeaders: PropTypes.array.isRequired,
+  formTarget: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isProcessing: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  categories: PropTypes.array,
+  dishes: PropTypes.array,
+  tableTitle: PropTypes.string.isRequired,
 };
 
 export default TableFormat;

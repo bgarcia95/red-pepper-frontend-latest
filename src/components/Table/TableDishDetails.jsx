@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { DeleteButton } from "components/UI/Buttons/Buttons";
 import { FaTrash } from "react-icons/fa";
 import { v4 as uuid } from "uuid";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   table: {
@@ -64,6 +65,12 @@ const TableDishDetails = (props) => {
       </Table>
     </TableContainer>
   );
+};
+
+TableDishDetails.propTypes = {
+  dishDetails: PropTypes.array.isRequired,
+  onDeleteItem: PropTypes.func.isRequired,
+  filterSupplyName: PropTypes.func.isRequired,
 };
 
 export default TableDishDetails;

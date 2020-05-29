@@ -31,6 +31,7 @@ import {
   updateEmployeeAction,
 } from "redux/actions/employees/employees";
 import InputMask from "react-input-mask";
+import PropTypes from "prop-types";
 
 moment.locale("es");
 
@@ -487,6 +488,11 @@ const EmployeesForm = (props) => {
       }}
     </Formik>
   );
+};
+
+EmployeesForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default EmployeesForm;

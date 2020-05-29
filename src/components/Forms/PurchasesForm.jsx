@@ -27,6 +27,7 @@ import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { ThemeProvider } from "@material-ui/styles";
+import PropTypes from "prop-types";
 
 moment.locale("es");
 
@@ -661,6 +662,11 @@ const PurchasesForm = (props) => {
       }}
     </Formik>
   );
+};
+
+PurchasesForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default PurchasesForm;

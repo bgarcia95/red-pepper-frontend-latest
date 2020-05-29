@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { updateTableAction, addTableAction } from "redux/actions/tables/tables";
+import PropTypes from "prop-types";
 
 const TablesForm = (props) => {
   const { toggle, payload } = props;
@@ -153,6 +154,11 @@ const TablesForm = (props) => {
       }}
     </Formik>
   );
+};
+
+TablesForm.propTypes = {
+  toggle: PropTypes.func.isRequired,
+  payload: PropTypes.array.isRequired,
 };
 
 export default TablesForm;

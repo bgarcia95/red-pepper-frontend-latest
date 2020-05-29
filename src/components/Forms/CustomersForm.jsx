@@ -10,6 +10,7 @@ import {
   addCustomerAction,
 } from "redux/actions/customers/customers";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 
 const CustomersForm = (props) => {
   const { toggle, payload } = props;
@@ -159,6 +160,11 @@ const CustomersForm = (props) => {
       }}
     </Formik>
   );
+};
+
+CustomersForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default CustomersForm;

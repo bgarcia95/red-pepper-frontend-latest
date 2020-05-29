@@ -9,6 +9,7 @@ import {
   updateCategoryAction,
   addCategoryAction,
 } from "redux/actions/categories/categories";
+import PropTypes from "prop-types";
 
 const CategoriesForm = (props) => {
   const { toggle, payload } = props;
@@ -128,6 +129,11 @@ const CategoriesForm = (props) => {
       }}
     </Formik>
   );
+};
+
+CategoriesForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default CategoriesForm;

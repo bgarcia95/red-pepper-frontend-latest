@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import TableComboDetails from "components/Table/TableComboDetails";
 import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
+import PropTypes from "prop-types";
 
 const CombosForm = (props) => {
   const { toggle, payload, dishes } = props;
@@ -489,6 +490,12 @@ const CombosForm = (props) => {
       }}
     </Formik>
   );
+};
+
+CombosForm.propTypes = {
+  payload: PropTypes.array.isRequired,
+  dishes: PropTypes.array.isRequired,
+  toggle: PropTypes.func.isRequired,
 };
 
 export default CombosForm;
