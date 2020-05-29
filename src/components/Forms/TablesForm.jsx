@@ -158,7 +158,7 @@ const TablesForm = (props) => {
 
 TablesForm.propTypes = {
   toggle: PropTypes.func.isRequired,
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
 };
 
 export default TablesForm;

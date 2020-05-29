@@ -46,7 +46,7 @@ const PageContainer = (props) => {
 PageContainer.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   formTarget: PropTypes.string.isRequired,
-  hasErrorLoadingData: PropTypes.bool.isRequired,
+  hasErrorLoadingData: PropTypes.bool,
   buttonLabel: PropTypes.string.isRequired,
   dialogTitle: PropTypes.string.isRequired,
 };

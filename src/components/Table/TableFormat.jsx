@@ -117,7 +117,7 @@ TableFormat.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isProcessing: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   categories: PropTypes.array,
   dishes: PropTypes.array,
   tableTitle: PropTypes.string.isRequired,

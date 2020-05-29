@@ -165,7 +165,7 @@ const SuppliersForm = (props) => {
 };
 
 SuppliersForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 

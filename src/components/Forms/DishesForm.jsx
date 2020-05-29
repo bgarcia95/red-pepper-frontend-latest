@@ -575,7 +575,7 @@ const DishesForm = (props) => {
 };
 
 DishesForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   categories: PropTypes.array.isRequired,
   toggle: PropTypes.func.isRequired,
 };

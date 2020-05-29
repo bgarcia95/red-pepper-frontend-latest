@@ -493,7 +493,7 @@ const CombosForm = (props) => {
 };
 
 CombosForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   dishes: PropTypes.array.isRequired,
   toggle: PropTypes.func.isRequired,
 };

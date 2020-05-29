@@ -665,7 +665,7 @@ const PurchasesForm = (props) => {
 };
 
 PurchasesForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 

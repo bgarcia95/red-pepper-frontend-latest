@@ -212,7 +212,7 @@ const SuppliesForm = (props) => {
 };
 
 SuppliesForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 export default SuppliesForm;

@@ -74,7 +74,7 @@ const Layout = (props) => {
 };
 
 Layout.propTypes = {
-  pathname: PropTypes.string.isRequired,
+  pathname: PropTypes.string,
   history: PropTypes.object.isRequired,
 };
 

@@ -163,7 +163,7 @@ const CustomersForm = (props) => {
 };
 
 CustomersForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 

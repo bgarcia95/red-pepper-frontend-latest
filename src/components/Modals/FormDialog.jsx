@@ -128,7 +128,7 @@ const FormDialog = (props) => {
 
 FormDialog.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default FormDialog;

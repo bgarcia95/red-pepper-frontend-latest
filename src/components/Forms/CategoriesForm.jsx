@@ -132,7 +132,7 @@ const CategoriesForm = (props) => {
 };
 
 CategoriesForm.propTypes = {
-  payload: PropTypes.array.isRequired,
+  payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 
