@@ -1,34 +1,37 @@
 import React from "react";
-import { Container, Grid, Button } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
+import { OrderButton } from "components/UI/Buttons/Buttons";
 
 const Orders = () => {
   return (
     <Container>
-      <Grid container direction="row" spacing={2}>
-        <Grid md={4}></Grid>
-        <Grid container direction="column" spacing={2} md={4}>
-          <Grid item>
-            <Button variant="contained" fullWidth>
-              Boton 1
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" fullWidth>
-              Boton 2
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" fullWidth>
-              Boton 3
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" fullWidth>
-              Boton 4
-            </Button>
-          </Grid>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        spacing={2}
+        style={{ marginTop: "10vh" }}
+      >
+        <Grid item>
+          <OrderButton variant="contained" fullWidth>
+            Tomar orden
+          </OrderButton>
         </Grid>
-        <Grid md={4}></Grid>
+        <Grid item>
+          <OrderButton variant="contained" fullWidth>
+            Cola de Pedidos
+          </OrderButton>
+        </Grid>
+        <Grid item>
+          <OrderButton variant="contained" fullWidth>
+            Dividir ordenes
+          </OrderButton>
+        </Grid>
+        <Grid item>
+          <OrderButton variant="contained" fullWidth>
+            Cobrar
+          </OrderButton>
+        </Grid>
       </Grid>
     </Container>
   );
