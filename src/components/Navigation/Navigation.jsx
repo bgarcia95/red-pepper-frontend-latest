@@ -169,7 +169,7 @@ const Navigation = (props) => {
 Navigation.propTypes = {
   window: Proptypes.object,
   isAuthenticated: Proptypes.string,
-  location: Proptypes.string.isRequired,
+  location: Proptypes.string,
 };
 
 export default Navigation;
