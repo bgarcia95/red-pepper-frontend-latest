@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
 import { OrderButton } from "components/UI/Buttons/Buttons";
+import { NavLink } from "react-router-dom";
 
 const Orders = () => {
   return (
@@ -13,7 +14,12 @@ const Orders = () => {
         style={{ marginTop: "10vh" }}
       >
         <Grid item>
-          <OrderButton variant="contained" fullWidth>
+          <OrderButton
+            variant="contained"
+            fullWidth
+            component={NavLink}
+            to="/ordenes/elegir-mesa"
+          >
             Tomar orden
           </OrderButton>
         </Grid>
