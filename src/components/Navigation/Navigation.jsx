@@ -58,9 +58,8 @@ const useStyles = makeStyles((theme) => ({
   },
   logoutButtonContent: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
 }));
 
@@ -110,10 +109,12 @@ const Navigation = (props) => {
           {isAuthenticated ? (
             <div>
               <Hidden xsDown implementation="css">
-                <LogOutButton onClick={props.onLogout} size="small">
+                <LogOutButton onClick={props.onLogout}>
                   <div className={classes.logoutButtonContent}>
-                    <FaSignOutAlt style={{ marginRight: "5px" }} />
-                    <span>Cerrar Sesión</span>
+                    <FaSignOutAlt style={{ marginBottom: "2px" }} />
+                    <Typography variant="body2" style={{ marginLeft: "5px" }}>
+                      Cerrar Sesión
+                    </Typography>
                   </div>
                 </LogOutButton>
               </Hidden>
