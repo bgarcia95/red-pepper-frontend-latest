@@ -49,10 +49,10 @@ const useStyles = makeStyles({
   cardContent: {
     borderTop: "1px solid #ccc",
     borderBottom: "1px solid #ccc",
-    "&:hover": {
-      borderTop: "1px solid #fff",
-      borderBottom: "1px solid #fff",
-    },
+    // "&:hover": {
+    //   borderTop: "1px solid #fff",
+    //   borderBottom: "1px solid #fff",
+    // },
   },
   content: {
     display: "flex",
@@ -64,10 +64,10 @@ const useStyles = makeStyles({
   root: {
     width: "300px",
     "&:hover": {
-      backgroundColor: "transparent",
+      // backgroundColor: "transparent",
       transform: "scale(1)",
       transition: ".2s ease-in-out",
-      color: "white",
+      color: "black",
     },
   },
 });
@@ -101,15 +101,21 @@ const PickTable = (props) => {
       <IconButton onClick={() => history.push("/ordenes")}>
         <FaArrowLeft size="1.2rem" />
       </IconButton>
-      <div style={{ margin: "1rem 0" }} />
-      <Typography variant="h5" className={classes.centerTitle}>
-        Selección de Mesa
-      </Typography>
-      <div style={{ margin: "1rem 0" }} />
-      <Divider />
-      <div style={{ margin: "2rem 0" }} />
       <Container>
-        <Grid container alignItems="center" justify="space-around" spacing={2}>
+        <div style={{ margin: "1rem 0" }} />
+        <Typography variant="h5" className={classes.centerTitle}>
+          Selección de Mesa
+        </Typography>
+        <div style={{ margin: "1rem 0" }} />
+        <Divider />
+        <div style={{ margin: "2rem 0" }} />
+
+        <Grid
+          container
+          justify="center"
+          spacing={2}
+          style={{ textAlign: "center" }}
+        >
           {tables.map((table) => (
             <React.Fragment key={uuid()}>
               <Grid item md={4}>
