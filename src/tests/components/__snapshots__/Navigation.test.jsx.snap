@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render header correctly 1`] = `
+<div
+  className="makeStyles-root-1"
+>
+  <ForwardRef(WithStyles)
+    className="makeStyles-appBar-3"
+    position="fixed"
+  >
+    <ForwardRef(WithStyles)>
+      <ForwardRef(WithStyles)
+        className="makeStyles-title-9"
+        noWrap={true}
+        variant="h6"
+      >
+        Red Pepper App
+      </ForwardRef(WithStyles)>
+    </ForwardRef(WithStyles)>
+  </ForwardRef(WithStyles)>
+</div>
+`;
