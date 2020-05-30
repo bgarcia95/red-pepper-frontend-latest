@@ -121,7 +121,7 @@ const PickTable = (props) => {
 
         <Grid
           container
-          justify="center"
+          justify="flex-start"
           spacing={2}
           style={{ textAlign: "center" }}
         >
