@@ -100,7 +100,7 @@ const PickTable = (props) => {
     <div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <IconButton onClick={() => history.push("/ordenes")}>
-          <FaArrowLeft size="1.2rem" />{" "}
+          <FaArrowLeft size="1.2rem" />
         </IconButton>
         <Typography>Regresar</Typography>
       </div>
