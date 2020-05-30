@@ -45,17 +45,14 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 14,
-    // color: "white",
+    backgroundColor: "white",
+    borderTopLeftRadius: "4px",
+    borderTopRightRadius: "4px",
   },
   cardContent: {
     borderTop: "1px solid #ccc",
     borderBottom: "1px solid #ccc",
-    // color: "white",
-
-    // "&:hover": {
-    //   borderTop: "1px solid #fff",
-    //   borderBottom: "1px solid #fff",
-    // },
+    backgroundColor: "white",
   },
   content: {
     display: "flex",
@@ -64,7 +61,7 @@ const useStyles = makeStyles({
 
   root: {
     width: "300px",
-    // backgroundColor: "transparent",
+    backgroundColor: "transparent",
     borderColor: "rgba(0,0,0,0.02)",
     overflow: "visible",
   },
