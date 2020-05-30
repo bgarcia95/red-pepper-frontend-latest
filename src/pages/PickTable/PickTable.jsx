@@ -98,9 +98,13 @@ const PickTable = (props) => {
 
   return (
     <div>
-      <IconButton onClick={() => history.push("/ordenes")}>
-        <FaArrowLeft size="1.2rem" />
-      </IconButton>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <IconButton onClick={() => history.push("/ordenes")}>
+          <FaArrowLeft size="1.2rem" />{" "}
+        </IconButton>
+        <Typography>Regresar</Typography>
+      </div>
+
       <Container>
         <div style={{ margin: "1rem 0" }} />
         <Typography variant="h5" className={classes.centerTitle}>
@@ -133,22 +137,37 @@ const PickTable = (props) => {
                   <Card className={classes.root} elevation={0}>
                     <CardHeader title={table.name} />
                     <CardContent className={classes.cardContent}>
-                      <div className={classes.content}>
-                        <Typography variant="body2" component="p">
-                          Ubicación:
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          {table.description}
-                        </Typography>
-                      </div>
-                      <div className={classes.content}>
-                        <Typography variant="body2" component="p">
-                          Sillas:
-                        </Typography>
-                        <Typography variant="body2" component="p">
-                          {table.chairs}
-                        </Typography>
-                      </div>
+                      <Grid container spacing={2}>
+                        <Grid item md={4} style={{ textAlign: "right" }}>
+                          <Typography
+                            variant="body2"
+                            component="p"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            Ubicación:
+                          </Typography>
+                        </Grid>
+                        <Grid item md={8} style={{ textAlign: "left" }}>
+                          <Typography variant="body2" component="p">
+                            {table.description}
+                          </Typography>
+                        </Grid>
+
+                        <Grid item md={4} style={{ textAlign: "right" }}>
+                          <Typography
+                            variant="body2"
+                            component="p"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            Sillas:
+                          </Typography>
+                        </Grid>
+                        <Grid item md={8} style={{ textAlign: "left" }}>
+                          <Typography variant="body2" component="p">
+                            {table.chairs}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </CardContent>
                     <CardActions className={classes.footer}>
                       {table.isAvailable === false
