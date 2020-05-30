@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     backgroundColor: green[500],
     "&:hover": {
       backgroundColor: green[500],
-      transform: "scale(1.05)",
+      transform: "scale(1.1)",
       transition: ".2s ease-in-out",
     },
     width: "300px",
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     backgroundColor: red[500],
     "&:hover": {
       backgroundColor: red[500],
-      transform: "scale(1.05)",
+      transform: "scale(1.1)",
       transition: ".2s ease-in-out",
     },
     width: "300px",
@@ -45,10 +45,13 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 14,
+    // color: "white",
   },
   cardContent: {
     borderTop: "1px solid #ccc",
     borderBottom: "1px solid #ccc",
+    // color: "white",
+
     // "&:hover": {
     //   borderTop: "1px solid #fff",
     //   borderBottom: "1px solid #fff",
@@ -58,17 +61,22 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-around",
   },
-  footer: {
-    justifyContent: "center",
-  },
+
   root: {
     width: "300px",
-    "&:hover": {
-      // backgroundColor: "transparent",
-      transform: "scale(1)",
-      transition: ".2s ease-in-out",
-      color: "black",
-    },
+    // backgroundColor: "transparent",
+    borderColor: "rgba(0,0,0,0.02)",
+    overflow: "visible",
+  },
+  footerAvailable: {
+    backgroundColor: green[500],
+    color: "white",
+    justifyContent: "center",
+  },
+  footerUnavailable: {
+    backgroundColor: red[500],
+    color: "white",
+    justifyContent: "center",
   },
 });
 
@@ -107,7 +115,7 @@ const PickTable = (props) => {
 
       <Container>
         <div style={{ margin: "1rem 0" }} />
-        <Typography variant="h5" className={classes.centerTitle}>
+        <Typography variant="h4" className={classes.centerTitle}>
           Selección de Mesa
         </Typography>
         <div style={{ margin: "1rem 0" }} />
@@ -135,7 +143,7 @@ const PickTable = (props) => {
                   }
                 >
                   <Card className={classes.root} elevation={0}>
-                    <CardHeader title={table.name} />
+                    <CardHeader title={table.name} className={classes.title} />
                     <CardContent className={classes.cardContent}>
                       <Grid container spacing={2}>
                         <Grid item md={4} style={{ textAlign: "right" }}>
@@ -169,7 +177,13 @@ const PickTable = (props) => {
                         </Grid>
                       </Grid>
                     </CardContent>
-                    <CardActions className={classes.footer}>
+                    <CardActions
+                      className={
+                        table.isAvailable === false
+                          ? classes.footerUnavailable
+                          : classes.footerAvailable
+                      }
+                    >
                       {table.isAvailable === false
                         ? "NO DISPONIBLE"
                         : "DISPONIBLE"}
