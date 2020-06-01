@@ -39,13 +39,15 @@ const PickTable = (props) => {
     setTables(tablesStore);
   }, [tablesStore]);
 
-  // const handleAvailability = (id) => {
-  //   setTables(
-  //     tables.map((table) =>
-  //       table.id === id ? (table = { ...table, isAvailable: false }) : table
-  //     )
-  //   );
-  // };
+  const handleSubmit = (id, customer) => {
+    setTables(
+      tables.map((table) =>
+        table.id === id
+          ? (table = { ...table, isAvailable: false, customer })
+          : table
+      )
+    );
+  };
 
   return (
     <div>
@@ -93,7 +95,7 @@ const PickTable = (props) => {
           {tables.map((table) => (
             <React.Fragment key={uuid()}>
               <Grid item md={4}>
-                <PickTableDialog table={table} />
+                <PickTableDialog table={table} handleSubmit={handleSubmit} />
               </Grid>
             </React.Fragment>
           ))}
