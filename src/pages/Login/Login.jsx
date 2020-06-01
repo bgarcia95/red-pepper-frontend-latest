@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { withRouter } from "react-router-dom";
 
-import LoginForm from "components/Forms/LoginForm";
+import LoginForm from "components/Forms/Login/LoginForm";
 
 function Copyright() {
   return (

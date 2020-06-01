@@ -7,15 +7,15 @@ import {
   WatchButton,
 } from "components/UI/Buttons/Buttons";
 import { FaEdit, FaEye } from "react-icons/fa";
-import SuppliesForm from "components/Forms/SuppliesForm";
-import SuppliersForm from "components/Forms/SuppliersForm";
-import PurchasesForm from "components/Forms/PurchasesForm";
-import CategoriesForm from "components/Forms/CategoriesForm";
-import DishesForm from "components/Forms/DishesForm";
-import CombosForm from "components/Forms/CombosForm";
-import TablesForm from "components/Forms/TablesForm";
-import EmployeesForm from "components/Forms/EmployeesForm";
-import CustomersForm from "components/Forms/CustomersForm";
+import SuppliesForm from "components/Forms/Supplies/SuppliesForm";
+import SuppliersForm from "components/Forms/Suppliers/SuppliersForm";
+import PurchasesForm from "components/Forms/Purchases/PurchasesForm";
+import CategoriesForm from "components/Forms/Categories/CategoriesForm";
+import DishesForm from "components/Forms/Dishes/DishesForm";
+import CombosForm from "components/Forms/Combos/CombosForm";
+import TablesForm from "components/Forms/Tables/TablesForm";
+import EmployeesForm from "components/Forms/Employees/EmployeesForm";
+import CustomersForm from "components/Forms/Customers/CustomersForm";
 import PropTypes from "prop-types";
 
 const FormDialog = (props) => {
