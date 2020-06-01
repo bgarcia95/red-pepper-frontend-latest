@@ -13,7 +13,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import CustomersFormTables from "components/Forms/CustomerFormTables";
+import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
 
 const useStyles = makeStyles({
   available: {
