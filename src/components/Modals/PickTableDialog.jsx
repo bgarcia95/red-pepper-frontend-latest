@@ -6,7 +6,6 @@ import { green, red } from "@material-ui/core/colors";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CustomersForm from "components/Forms/CustomersForm";
 import {
   makeStyles,
   Button,
@@ -14,6 +13,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+import CustomersFormTables from "components/Forms/CustomerFormTables";
 
 const useStyles = makeStyles({
   available: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles({
 });
 
 const PickTableDialog = (props) => {
-  const { table } = props;
+  const { table, handleSubmit } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -116,11 +116,32 @@ const PickTableDialog = (props) => {
                   Sillas:
                 </Typography>
               </Grid>
+
               <Grid item md={8} style={{ textAlign: "left" }}>
                 <Typography variant="body2" component="p">
                   {table.chairs}
                 </Typography>
               </Grid>
+
+              {!table.customer ? null : (
+                <React.Fragment>
+                  <Grid item md={4} style={{ textAlign: "right" }}>
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      Cliente:
+                    </Typography>
+                  </Grid>
+
+                  <Grid item md={8} style={{ textAlign: "left" }}>
+                    <Typography variant="body2" component="p">
+                      {`${table.customer.name} ${table.customer.lastname}`}
+                    </Typography>
+                  </Grid>
+                </React.Fragment>
+              )}
             </Grid>
           </CardContent>
           <CardActions
@@ -144,7 +165,12 @@ const PickTableDialog = (props) => {
         <DialogTitle id="form-dialog-title" className="text-center">
           Cliente
         </DialogTitle>
-        <CustomersForm toggle={toggleModal} modal={open} />
+        <CustomersFormTables
+          toggle={toggleModal}
+          modal={open}
+          table={table}
+          handleSubmit={handleSubmit}
+        />
       </Dialog>
     </div>
   );
