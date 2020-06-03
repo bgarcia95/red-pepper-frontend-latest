@@ -99,7 +99,7 @@ const CustomersFormTables = (props) => {
                   "success"
                 );
 
-                toggle();
+                // toggle();
               }
             });
           }
