@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTablesAction } from "redux/actions/tables/tables";
 import { v4 as uuid } from "uuid";
 import PickTableDialog from "components/Modals/PickTableDialog";
+import NavTabs from "components/Forms/Orders/NavTabs";
 
 const useStyles = makeStyles({
   centerTitle: {
@@ -92,13 +93,14 @@ const PickTable = (props) => {
               </div>
             )}
           </Grid>
-          {tables.map((table) => (
+          {/* {tables.map((table) => (
             <React.Fragment key={uuid()}>
               <Grid item md={4}>
                 <PickTableDialog table={table} handleSubmit={handleSubmit} />
               </Grid>
             </React.Fragment>
-          ))}
+          ))} */}
+          <NavTabs />
         </Grid>
       </Container>
     </div>
