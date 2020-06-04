@@ -21,7 +21,7 @@ import {
 import MomentUtils from "@date-io/moment";
 import "moment/locale/es";
 import { getSuppliesAction } from "redux/actions/supplies/supplies";
-import TablePurchaseDetails from "../Table/TablePurchaseDetails";
+import TablePurchaseDetails from "../../Table/TablePurchaseDetails";
 import { addPurchaseAction } from "redux/actions/supplies-purchases/purchases";
 import Swal from "sweetalert2";
 import { createMuiTheme } from "@material-ui/core";

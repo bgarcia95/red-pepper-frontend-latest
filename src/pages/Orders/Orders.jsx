@@ -24,6 +24,16 @@ const Orders = () => {
           </OrderButton>
         </Grid>
         <Grid item>
+          <OrderButton
+            variant="contained"
+            fullWidth
+            component={NavLink}
+            to="/ordenes/preparar-orden"
+          >
+            Preparar Orden
+          </OrderButton>
+        </Grid>
+        <Grid item>
           <OrderButton variant="contained" fullWidth>
             Cola de Pedidos
           </OrderButton>

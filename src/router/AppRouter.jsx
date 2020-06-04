@@ -13,6 +13,7 @@ import Customers from "pages/Customers/Customers";
 import Orders from "pages/Orders/Orders";
 import Proptypes from "prop-types";
 import PickTable from "pages/PickTable/PickTable";
+import NavTabs from "components/Forms/Orders/NavTabs";
 
 const AppRouter = (props) => {
   const { isAuthenticated } = props;
@@ -48,6 +49,8 @@ const AppRouter = (props) => {
         <Route path="/clientes" component={Customers} />
         <Route exact path="/ordenes" component={Orders} />
         <Route path="/ordenes/elegir-mesa" component={PickTable} />
+        <Route path="/ordenes/preparar-orden" component={NavTabs} />
+
         {/* This one will catch anything that has no route. */}
         <Route render={() => <Redirect to={{ pathname: "/insumos" }} />} />
       </Switch>

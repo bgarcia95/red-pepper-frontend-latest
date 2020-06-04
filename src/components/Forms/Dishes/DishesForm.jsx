@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { AddButton, CancelButton } from "../UI/Buttons/Buttons";
+import { AddButton, CancelButton } from "../../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";

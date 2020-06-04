@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { IconButton, Grid, Divider, Container } from "@material-ui/core";
+import {
+  IconButton,
+  Grid,
+  Divider,
+  Container,
+  CircularProgress,
+} from "@material-ui/core";
 import { FaArrowLeft } from "react-icons/fa";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -19,6 +25,9 @@ const PickTable = (props) => {
   const { history } = props;
   const dispatch = useDispatch();
   const tablesStore = useSelector((state) => state.tables.tables);
+  const tablesError = useSelector((state) => state.tables.error);
+  const loadingTables = useSelector((state) => state.tables.isLoading);
+
   const [tables, setTables] = useState([]);
 
   useEffect(() => {
@@ -30,13 +39,15 @@ const PickTable = (props) => {
     setTables(tablesStore);
   }, [tablesStore]);
 
-  // const handleAvailability = (id) => {
-  //   setTables(
-  //     tables.map((table) =>
-  //       table.id === id ? (table = { ...table, isAvailable: false }) : table
-  //     )
-  //   );
-  // };
+  const handleSubmit = (id, customer) => {
+    setTables(
+      tables.map((table) =>
+        table.id === id
+          ? (table = { ...table, isAvailable: false, customer })
+          : table
+      )
+    );
+  };
 
   return (
     <div>
@@ -62,10 +73,29 @@ const PickTable = (props) => {
           spacing={2}
           style={{ textAlign: "center" }}
         >
+          {loadingTables && (
+            <React.Fragment key={uuid()}>
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                style={{ height: "250px" }}
+              >
+                <CircularProgress style={{ color: "red" }} />
+              </Grid>
+            </React.Fragment>
+          )}
+          <Grid item xs={12} style={{ margin: "2rem 0 1rem 0" }}>
+            {tablesError && (
+              <div className="error--message">
+                <p>Hubo un problema cargando la informacion...</p>
+              </div>
+            )}
+          </Grid>
           {tables.map((table) => (
             <React.Fragment key={uuid()}>
               <Grid item md={4}>
-                <PickTableDialog table={table} />
+                <PickTableDialog table={table} handleSubmit={handleSubmit} />
               </Grid>
             </React.Fragment>
           ))}

@@ -46,7 +46,8 @@ const Layout = (props) => {
       pathname !== "/empleados" &&
       pathname !== "/clientes" &&
       pathname !== "/ordenes" &&
-      pathname !== "/ordenes/elegir-mesa"
+      pathname !== "/ordenes/elegir-mesa" &&
+      pathname !== "/ordenes/preparar-orden"
     ) {
       history.push("/insumos");
     } else {
