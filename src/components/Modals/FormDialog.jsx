@@ -17,6 +17,11 @@ import TablesForm from "components/Forms/TablesForm";
 import EmployeesForm from "components/Forms/EmployeesForm";
 import CustomersForm from "components/Forms/CustomersForm";
 import PropTypes from "prop-types";
+import { Slide } from "@material-ui/core";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const FormDialog = (props) => {
   const { buttonLabel, title } = props;
@@ -112,6 +117,8 @@ const FormDialog = (props) => {
         aria-labelledby="form-dialog-title"
         maxWidth={dialogSize}
         fullWidth={true}
+        TransitionComponent={Transition}
+        keepMounted
       >
         <DialogTitle
           id="form-dialog-title"
