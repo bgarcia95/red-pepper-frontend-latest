@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navigation from "components/Navigation/Navigation";
 import { makeStyles } from "@material-ui/core";
 import AppRouter from "router/AppRouter";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "redux/actions/auth/auth";
 import { withRouter } from "react-router-dom";
-import { tryAutoSignIn } from "redux/actions/auth/auth";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,36 +27,9 @@ const Layout = (props) => {
     history,
   } = props;
 
-  useEffect(() => {
-    const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
-    onTryAutoSignIn();
-
-    if (!localStorage.getItem("token")) {
-      history.replace("/login");
-    } else if (
-      localStorage.getItem("token") &&
-      pathname !== "/insumos" &&
-      pathname !== "/proveedores" &&
-      pathname !== "/compra-insumos" &&
-      pathname !== "/categorias" &&
-      pathname !== "/platos" &&
-      pathname !== "/combos" &&
-      pathname !== "/mesas" &&
-      pathname !== "/empleados" &&
-      pathname !== "/clientes" &&
-      pathname !== "/ordenes" &&
-      pathname !== "/ordenes/elegir-mesa" &&
-      pathname !== "/ordenes/preparar-orden"
-    ) {
-      history.push("/insumos");
-    } else {
-      history.push(pathname);
-    }
-  }, [dispatch, pathname, history]);
-
   const logoutHandler = () => {
     dispatch(logoutAction());
-    props.history.push("/login");
+    history.push("/login");
   };
 
   return (
