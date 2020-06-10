@@ -123,7 +123,7 @@ const FormDialog = (props) => {
         <DialogTitle
           id="form-dialog-title"
           className="text-center"
-          // style={{ backgroundColor: "#f44336", color: "#fff" }}
+          style={{ backgroundColor: "#f44336", color: "#fff" }}
         >
           {title ? title : customTitle}
         </DialogTitle>
