@@ -19,6 +19,10 @@ const App = (props) => {
     const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
     onTryAutoSignIn();
 
+    console.log("Auth success");
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!localStorage.getItem("token")) {
       history.replace("/login");
     } else if (
@@ -40,7 +44,7 @@ const App = (props) => {
     } else {
       history.push(pathname);
     }
-  }, [dispatch, pathname, history]);
+  }, [pathname, history]);
 
   return (
     <React.Fragment>
