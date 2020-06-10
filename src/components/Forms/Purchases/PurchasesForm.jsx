@@ -276,7 +276,7 @@ const PurchasesForm = (props) => {
                       ) : (
                         <React.Fragment>
                           <Autocomplete
-                            name="providerInputName"
+                            id="providerInputName"
                             options={suppliersSelect}
                             getOptionLabel={(option) =>
                               typeof option === "string" ? option : option.label
@@ -411,7 +411,7 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={3}>
                         <FormControl fullWidth={true}>
                           <Autocomplete
-                            name="supplyInputName"
+                            id="supplyInputName"
                             options={suppliesSelect}
                             getOptionLabel={(option) =>
                               typeof option === "string" ? option : option.label

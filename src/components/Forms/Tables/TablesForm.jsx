@@ -67,7 +67,7 @@ const TablesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
@@ -88,7 +88,7 @@ const TablesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.chairs && touched.chairs}
-                        id="chairs"
+                        name="chairs"
                         type="number"
                         inputProps={{ min: "1", step: "1" }}
                         label="N° de Sillas"
@@ -111,7 +111,7 @@ const TablesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.description && touched.description}
-                        id="description"
+                        name="description"
                         label="Descripción"
                         variant="outlined"
                         value={values.description}

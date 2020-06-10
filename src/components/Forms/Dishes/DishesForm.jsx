@@ -265,7 +265,7 @@ const DishesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <React.Fragment>
                         <Autocomplete
-                          name="categoryInputName"
+                          id="categoryInputName"
                           options={categoriesSelect}
                           getOptionLabel={(option) =>
                             typeof option === "string" ? option : option.label
@@ -385,7 +385,7 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        name="supplyInputName"
+                        id="supplyInputName"
                         options={values.suppliesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label

@@ -209,7 +209,7 @@ const EmployeesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Nombres"
                         variant="outlined"
                         value={values.name}
@@ -230,7 +230,7 @@ const EmployeesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.lastName && touched.lastName}
-                        id="lastName"
+                        name="lastName"
                         label="Apellidos"
                         variant="outlined"
                         value={values.lastName}
@@ -292,7 +292,6 @@ const EmployeesForm = (props) => {
                           locale={values.locale}
                         >
                           <KeyboardDatePicker
-                            id="birthDate"
                             name="birthDate"
                             label="Fecha de Nacimiento"
                             value={values.birthDate}
@@ -344,7 +343,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
-                            id="dui"
+                            name="dui"
                             label="DUI"
                             variant="outlined"
                             error={errors.dui && touched.dui}
@@ -373,7 +372,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
-                            id="nit"
+                            name="nit"
                             label="NIT"
                             variant="outlined"
                             error={errors.nit && touched.nit}
@@ -402,7 +401,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
-                            id="telephone"
+                            name="telephone"
                             label="Teléfono"
                             variant="outlined"
                             error={errors.telephone && touched.telephone}
@@ -424,7 +423,7 @@ const EmployeesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.email && touched.email}
-                        id="email"
+                        name="email"
                         label="Correo electrónico"
                         variant="outlined"
                         value={values.email}
@@ -445,7 +444,7 @@ const EmployeesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.address && touched.address}
-                        id="address"
+                        name="address"
                         label="Dirección"
                         variant="outlined"
                         value={values.address}

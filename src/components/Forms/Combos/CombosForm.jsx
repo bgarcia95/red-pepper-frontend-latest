@@ -298,7 +298,7 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        name="dishInputName"
+                        id="dishInputName"
                         options={values.dishesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label
