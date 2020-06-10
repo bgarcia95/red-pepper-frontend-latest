@@ -8,18 +8,22 @@ import {
 import Swal from "sweetalert2";
 import PageContainer from "components/PageContainer/PageContainer";
 import { getCategoriesAction } from "redux/actions/categories/categories";
+import { getSuppliesAction } from "redux/actions/supplies/supplies";
 
 const Dishes = () => {
   const dispatch = useDispatch();
 
   const dishes = useSelector((state) => state.dishes.dishes);
   const categories = useSelector((state) => state.categories.categories);
+  const supplies = useSelector((state) => state.supplies.supplies);
 
   useEffect(() => {
     const getDishes = () => dispatch(getDishesAction());
     getDishes();
     const getCategories = () => dispatch(getCategoriesAction());
     getCategories();
+    const getSupplies = () => dispatch(getSuppliesAction());
+    getSupplies();
   }, [dispatch]);
 
   const tableHeaders = [
@@ -70,6 +74,7 @@ const Dishes = () => {
       pageTitle="Administración de Platillos"
       payload={dishes}
       categories={categories}
+      supplies={supplies}
       formTarget={formTarget}
       tableHeaders={tableHeaders}
       isLoading={isLoading}
