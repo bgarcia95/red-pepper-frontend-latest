@@ -22,14 +22,10 @@ const useStyles = makeStyles((theme) => ({
 const Layout = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {
-    location: { pathname },
-    history,
-  } = props;
 
   const logoutHandler = () => {
     dispatch(logoutAction());
-    history.push("/login");
+    props.history.push("/login");
   };
 
   return (
@@ -37,7 +33,7 @@ const Layout = (props) => {
       <Navigation
         isAuthenticated={props.isAuthenticated}
         onLogout={logoutHandler}
-        location={pathname}
+        location={props.pathname}
       />
       <main className={classes.content}>
         <div className={classes.toolbar} />
