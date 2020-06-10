@@ -26,6 +26,7 @@ const TableFormat = (props) => {
     onDelete,
     categories,
     dishes,
+    supplies,
     tableTitle,
   } = props;
 
@@ -83,6 +84,7 @@ const TableFormat = (props) => {
                   buttonLabel="Editar"
                   categories={formTarget === "dish" && categories}
                   dishes={formTarget === "combo" && dishes}
+                  supplies={formTarget === "dish" && supplies}
                 />
 
                 <DeleteButton
