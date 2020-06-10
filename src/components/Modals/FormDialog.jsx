@@ -118,7 +118,6 @@ const FormDialog = (props) => {
         maxWidth={dialogSize}
         fullWidth={true}
         TransitionComponent={Transition}
-        keepMounted
       >
         <DialogTitle
           id="form-dialog-title"
