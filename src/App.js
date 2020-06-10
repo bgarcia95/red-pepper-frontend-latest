@@ -52,7 +52,11 @@ const App = (props) => {
           </div>
         </Backdrop>
       ) : null}
-      <Layout isAuthenticated={isAuthenticated} />
+      <Layout
+        isAuthenticated={isAuthenticated}
+        pathname={pathname}
+        history={history}
+      />
     </React.Fragment>
   );
 };
