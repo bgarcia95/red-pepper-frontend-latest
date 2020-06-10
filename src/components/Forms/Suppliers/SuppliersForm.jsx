@@ -71,7 +71,6 @@ const SuppliersForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
@@ -99,7 +98,6 @@ const SuppliersForm = (props) => {
                       >
                         {() => (
                           <TextField
-                            id="telephone"
                             label="Teléfono"
                             variant="outlined"
                             error={errors.telephone && touched.telephone}
@@ -121,7 +119,6 @@ const SuppliersForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.address && touched.address}
-                        id="address"
                         label="Dirección"
                         variant="outlined"
                         value={values.address}

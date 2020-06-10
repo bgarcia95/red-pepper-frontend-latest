@@ -73,7 +73,6 @@ const SuppliesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
@@ -94,7 +93,6 @@ const SuppliesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.presentation && touched.presentation}
-                        id="presentation"
                         label="Presentación"
                         variant="outlined"
                         value={values.presentation}
@@ -117,7 +115,6 @@ const SuppliesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.unitOfMeasure && touched.unitOfMeasure}
-                        id="unitOfMeasure"
                         label="Unidad de Medida"
                         variant="outlined"
                         value={values.unitOfMeasure}
@@ -140,7 +137,6 @@ const SuppliesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.minimumQty && touched.minimumQty}
-                        id="minimumQty"
                         label="Cantidad Mínima"
                         variant="outlined"
                         type="number"
@@ -165,7 +161,6 @@ const SuppliesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.description && touched.description}
-                        id="description"
                         label="Descripción"
                         variant="outlined"
                         value={values.description}

@@ -114,7 +114,7 @@ const CustomersFormTables = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
@@ -136,7 +136,7 @@ const CustomersFormTables = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.lastName && touched.lastName}
-                        id="lastName"
+                        name="lastName"
                         label="Apellido"
                         variant="outlined"
                         value={values.lastName}

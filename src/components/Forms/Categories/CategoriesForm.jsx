@@ -64,7 +64,7 @@ const CategoriesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Categoría"
                         variant="outlined"
                         value={values.name}

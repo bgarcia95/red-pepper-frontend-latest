@@ -243,8 +243,8 @@ const PurchasesForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        name="invoiceNumber"
                         error={errors.invoiceNumber && touched.invoiceNumber}
-                        id="invoiceNumber"
                         label="N° de Factura"
                         variant="outlined"
                         value={values.invoiceNumber}
@@ -276,7 +276,6 @@ const PurchasesForm = (props) => {
                       ) : (
                         <React.Fragment>
                           <Autocomplete
-                            id="providerInputName"
                             name="providerInputName"
                             options={suppliersSelect}
                             getOptionLabel={(option) =>
@@ -362,7 +361,6 @@ const PurchasesForm = (props) => {
                             locale={values.locale}
                           >
                             <KeyboardDatePicker
-                              id="emissionDate"
                               name="emissionDate"
                               label="Fecha de Emision"
                               value={values.emissionDate}
@@ -413,7 +411,6 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={3}>
                         <FormControl fullWidth={true}>
                           <Autocomplete
-                            id="supplyInputName"
                             name="supplyInputName"
                             options={suppliesSelect}
                             getOptionLabel={(option) =>
@@ -486,7 +483,6 @@ const PurchasesForm = (props) => {
                               locale={values.locale}
                             >
                               <KeyboardDatePicker
-                                id="expirationDate"
                                 name="expirationDate"
                                 label="Fecha de Expiración"
                                 value={values.expirationDate}
@@ -534,7 +530,6 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={2}>
                         <FormControl fullWidth={true}>
                           <TextField
-                            id="quantity"
                             name="quantity"
                             label="Cantidad"
                             error={errors.quantity && touched.quantity}
@@ -561,7 +556,6 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={2}>
                         <FormControl fullWidth={true}>
                           <TextField
-                            id="unitPrice"
                             name="unitPrice"
                             label="Precio Unitario"
                             error={errors.unitPrice && touched.unitPrice}
@@ -666,7 +660,7 @@ const PurchasesForm = (props) => {
 
 PurchasesForm.propTypes = {
   payload: PropTypes.object,
-  toggle: PropTypes.func.isRequired,
+  toggle: PropTypes.func,
 };
 
 export default PurchasesForm;

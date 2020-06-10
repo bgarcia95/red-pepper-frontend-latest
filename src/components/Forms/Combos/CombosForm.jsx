@@ -44,6 +44,7 @@ const CombosForm = (props) => {
         value: detail.dishId,
       }))
     : [];
+
   const filteredOptions = dishesSelect.filter(
     ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
   );
@@ -237,7 +238,7 @@ const CombosForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Nombre del Combo"
                         variant="outlined"
                         value={values.name}
@@ -297,7 +298,6 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        id="dishInputName"
                         name="dishInputName"
                         options={values.dishesSelect}
                         getOptionLabel={(option) =>
@@ -359,7 +359,6 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        id="quantity"
                         name="quantity"
                         label="Cantidad"
                         error={errors.quantity && touched.quantity}
@@ -383,7 +382,6 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        id="dishPrice"
                         name="dishPrice"
                         label="Precio Combo"
                         error={errors.dishPrice && touched.dishPrice}
@@ -494,8 +492,8 @@ const CombosForm = (props) => {
 
 CombosForm.propTypes = {
   payload: PropTypes.object,
-  dishes: PropTypes.array.isRequired,
-  toggle: PropTypes.func.isRequired,
+  dishes: PropTypes.array,
+  toggle: PropTypes.func,
 };
 
 export default CombosForm;
