@@ -116,14 +116,14 @@ const TablePurchaseDetails = (props) => {
 };
 
 TablePurchaseDetails.propTypes = {
-  purchaseDetails: PropTypes.array.isRequired,
-  onDeleteItem: PropTypes.func.isRequired,
-  TAX_RATE: PropTypes.number.isRequired,
-  invoiceSubtotal: PropTypes.number.isRequired,
-  invoiceTaxes: PropTypes.number.isRequired,
-  invoiceTotal: PropTypes.number.isRequired,
-  supplies: PropTypes.array.isRequired,
-  fetchedDetails: PropTypes.array.isRequired,
+  purchaseDetails: PropTypes.array,
+  onDeleteItem: PropTypes.func,
+  TAX_RATE: PropTypes.number,
+  invoiceSubtotal: PropTypes.number,
+  invoiceTaxes: PropTypes.number,
+  invoiceTotal: PropTypes.number,
+  supplies: PropTypes.array,
+  fetchedDetails: PropTypes.array,
 };
 
 export default TablePurchaseDetails;
