@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   TextField,
   FormControl,
@@ -11,23 +11,16 @@ import { AddButton, CancelButton } from "../../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
-import { getSuppliesAction } from "redux/actions/supplies/supplies";
+import { useDispatch } from "react-redux";
 import { addDishAction, updateDishAction } from "redux/actions/dishes/dishes";
 import TableDishDetails from "components/Table/TableDishDetails";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 
 const DishesForm = (props) => {
-  const { toggle, payload, categories } = props;
-  const supplies = useSelector((state) => state.supplies.supplies);
+  const { toggle, payload, categories, supplies } = props;
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getSupplies = () => dispatch(getSuppliesAction());
-    getSupplies();
-  }, [dispatch]);
 
   const suppliesSelect = supplies.map(({ name, id }) => ({
     label: name,
@@ -251,7 +244,7 @@ const DishesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        id="name"
+                        name="name"
                         label="Nombre del Platillo"
                         variant="outlined"
                         value={values.name}
@@ -272,7 +265,6 @@ const DishesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <React.Fragment>
                         <Autocomplete
-                          id="categoryInputName"
                           name="categoryInputName"
                           options={categoriesSelect}
                           getOptionLabel={(option) =>
@@ -340,7 +332,6 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        id="price"
                         name="price"
                         label="Precio"
                         error={errors.price && touched.price}
@@ -394,7 +385,6 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        id="supplyInputName"
                         name="supplyInputName"
                         options={values.suppliesSelect}
                         getOptionLabel={(option) =>
@@ -456,7 +446,6 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        id="quantity"
                         name="quantity"
                         label="Cantidad"
                         error={errors.quantity && touched.quantity}
