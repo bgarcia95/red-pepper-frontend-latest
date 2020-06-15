@@ -5,6 +5,7 @@ import {
   Grid,
   Divider,
   DialogContent,
+  FormControlLabel,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
@@ -28,6 +29,7 @@ import { createMuiTheme } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { ThemeProvider } from "@material-ui/styles";
 import PropTypes from "prop-types";
+import { CustomSwitch } from "components/UI/Buttons/CustomSwitch";
 
 moment.locale("es");
 
@@ -109,6 +111,7 @@ const PurchasesForm = (props) => {
         unitPrice: "",
         purchaseDetails: payload ? payload.details : [],
         total: payload ? payload.total : "",
+        isIvaIncluded: false,
         locale: "es",
       }}
       validationSchema={Yup.object().shape({
@@ -186,7 +189,9 @@ const PurchasesForm = (props) => {
 
         const invoiceSubtotal = subtotal(values.purchaseDetails);
         const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-        const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+        const invoiceTotal = values.isIvaIncluded
+          ? invoiceTaxes + invoiceSubtotal
+          : invoiceSubtotal;
 
         const onSubmit = (e) => {
           e.preventDefault();
@@ -240,7 +245,7 @@ const PurchasesForm = (props) => {
             <DialogContent dividers>
               <form className="form-control">
                 <Grid container alignItems="flex-start" spacing={2}>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
                         name="invoiceNumber"
@@ -342,7 +347,7 @@ const PurchasesForm = (props) => {
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       {payload ? (
                         <TextField
@@ -402,6 +407,22 @@ const PurchasesForm = (props) => {
                         </ThemeProvider>
                       )}
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12} md={2} style={{ textAlign: "center" }}>
+                    <FormControlLabel
+                      control={
+                        <CustomSwitch
+                          checked={values.isIvaIncluded}
+                          onChange={() =>
+                            setFieldValue(
+                              "isIvaIncluded",
+                              !values.isIvaIncluded
+                            )
+                          }
+                        />
+                      }
+                      label="Incluir IVA"
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <Divider />
@@ -616,6 +637,7 @@ const PurchasesForm = (props) => {
                       invoiceTaxes={invoiceTaxes}
                       supplies={supplies}
                       fetchedDetails={payload ? payload.details : null}
+                      isIvaIncluded={values.isIvaIncluded}
                     />
                   </Grid>
                 </Grid>
