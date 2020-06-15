@@ -6,8 +6,6 @@ import {
   FormLabel,
   RadioGroup,
   FormControlLabel,
-  Radio,
-  withStyles,
   DialogContent,
 } from "@material-ui/core";
 import { AddButton, CancelButton } from "components/UI/Buttons/Buttons";
@@ -32,6 +30,7 @@ import {
 } from "redux/actions/employees/employees";
 import InputMask from "react-input-mask";
 import PropTypes from "prop-types";
+import { GenderRadio } from "components/UI/Buttons/GenderRadioButton";
 
 moment.locale("es");
 
@@ -81,16 +80,6 @@ const defaultMaterialTheme = createMuiTheme({
     },
   },
 });
-
-const GenderRadio = withStyles({
-  root: {
-    color: green[400],
-    "&$checked": {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Radio color="default" {...props} />);
 
 const EmployeesForm = (props) => {
   const { toggle, payload } = props;
