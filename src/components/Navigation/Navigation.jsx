@@ -75,7 +75,7 @@ const Navigation = (props) => {
   };
 
   const drawer = (
-    <div>
+    <div onClick={handleDrawerToggle}>
       <div className={classes.toolbar} />
       <Divider />
       <List>
