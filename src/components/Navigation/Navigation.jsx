@@ -75,7 +75,7 @@ const Navigation = (props) => {
   };
 
   const drawer = (
-    <div onClick={handleDrawerToggle}>
+    <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
@@ -144,6 +144,7 @@ const Navigation = (props) => {
               ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
               }}
+              onClick={handleDrawerToggle}
             >
               {drawer}
             </Drawer>
