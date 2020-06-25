@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   IconButton,
   Grid,
@@ -12,7 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { getTablesAction } from "redux/actions/tables/tables";
 import { v4 as uuid } from "uuid";
-import PickTableDialog from "components/Modals/PickTableDialog";
+
+import PickTableCard from "components/Modals/PickTableCard";
+import { getCustomersAction } from "redux/actions/customers/customers";
 
 const useStyles = makeStyles({
   centerTitle: {
@@ -24,30 +26,17 @@ const PickTable = (props) => {
   const classes = useStyles();
   const { history } = props;
   const dispatch = useDispatch();
-  const tablesStore = useSelector((state) => state.tables.tables);
+  const tables = useSelector((state) => state.tables.tables);
+  const customers = useSelector((state) => state.customers.customers);
   const tablesError = useSelector((state) => state.tables.error);
   const loadingTables = useSelector((state) => state.tables.isLoading);
-
-  const [tables, setTables] = useState([]);
 
   useEffect(() => {
     const getTables = () => dispatch(getTablesAction());
     getTables();
+    const getCustomers = () => dispatch(getCustomersAction());
+    getCustomers();
   }, [dispatch]);
-
-  useEffect(() => {
-    setTables(tablesStore);
-  }, [tablesStore]);
-
-  const handleSubmit = (id, customer) => {
-    setTables(
-      tables.map((table) =>
-        table.id === id
-          ? (table = { ...table, isAvailable: false, customer })
-          : table
-      )
-    );
-  };
 
   return (
     <div>
@@ -63,9 +52,9 @@ const PickTable = (props) => {
         <Typography variant="h4" className={classes.centerTitle}>
           Selección de Mesa
         </Typography>
-        <div style={{ margin: "1rem 0" }} />
-        <Divider />
-        <div style={{ margin: "2rem 0" }} />
+        <div style={{ margin: "1rem 0 2rem 0" }}>
+          <Divider />
+        </div>
 
         <Grid
           container
@@ -95,7 +84,11 @@ const PickTable = (props) => {
           {tables.map((table) => (
             <React.Fragment key={uuid()}>
               <Grid item md={4}>
-                <PickTableDialog table={table} handleSubmit={handleSubmit} />
+                <PickTableCard
+                  table={table}
+                  customers={customers}
+                  tables={tables}
+                />
               </Grid>
             </React.Fragment>
           ))}
