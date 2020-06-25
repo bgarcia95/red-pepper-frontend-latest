@@ -75,13 +75,16 @@ const Navigation = (props) => {
   };
 
   const drawer = (
-    <div>
-      <div className={classes.toolbar} />
+    <React.Fragment>
+      <div
+        className={classes.toolbar}
+        style={{ backgroundColor: "rgb(244, 67, 54)" }}
+      />
       <Divider />
       <List>
         <DrawerOptions location={location} />
       </List>
-    </div>
+    </React.Fragment>
   );
 
   const container =
