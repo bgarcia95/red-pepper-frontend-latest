@@ -18,8 +18,6 @@ const App = (props) => {
   useEffect(() => {
     const onTryAutoSignIn = () => dispatch(tryAutoSignIn());
     onTryAutoSignIn();
-
-    console.log("Auth success");
   }, [dispatch]);
 
   useEffect(() => {
