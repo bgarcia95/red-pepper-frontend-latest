@@ -3,74 +3,77 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 import { green, red } from "@material-ui/core/colors";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import {
   makeStyles,
-  Button,
   CardHeader,
   Grid,
   Typography,
   Slide,
 } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+
 import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
 
 const useStyles = makeStyles({
-  cardContainer: {
-    transition: ".6s ease",
+  buttonContainer: {
+    width: "350px",
+    transition: ".5s ease",
+    borderRadius: "5px",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
   },
 
   available: {
     backgroundColor: green[500],
-    "&:hover": {
-      backgroundColor: green[500],
-      transform: "scale(1.1)",
-    },
-    width: "300px",
     color: "white",
   },
 
   unavailable: {
     backgroundColor: red[500],
-    "&:hover": {
-      backgroundColor: red[500],
-      transform: "scale(1.1)",
-    },
-    width: "300px",
     color: "white",
   },
-  title: {
-    fontSize: 14,
-    backgroundColor: "white",
-    borderTopLeftRadius: "4px",
-    borderTopRightRadius: "4px",
-  },
-  cardContent: {
+  card: {
     borderTop: "1px solid #ccc",
     borderBottom: "1px solid #ccc",
-    backgroundColor: "white",
+    borderTopLeftRadius: "5px",
+    borderTopRightRadius: "5px",
+    color: "#000",
+    width: "100%",
+    margin: "0 auto",
+    padding: "10px",
   },
-  content: {
+  cardTitle: {
+    fontSize: 14,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: "3px",
+    borderTopRightRadius: "3px",
+  },
+  cardContent: {
     display: "flex",
     justifyContent: "space-around",
+    backgroundColor: "#fff",
+    borderTop: "1px solid #ccc",
   },
-
-  root: {
-    width: "300px",
-    backgroundColor: "transparent",
-    borderColor: "rgba(0,0,0,0.02)",
-    overflow: "visible",
-  },
-  footerAvailable: {
-    backgroundColor: green[500],
+  cardFooter: {
     color: "white",
     justifyContent: "center",
+    margin: "5px 0",
+    fontWeight: 500,
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontSize: "0.875rem",
   },
-  footerUnavailable: {
-    backgroundColor: red[500],
-    color: "white",
-    justifyContent: "center",
+  textLeft: {
+    textAlign: "left",
+  },
+  textRight: {
+    textAlign: "right",
+  },
+  boldText: {
+    fontWeight: "bold",
   },
 });
 
@@ -88,63 +91,63 @@ const PickTableCard = (props) => {
   };
 
   return (
-    <div>
-      <Button
-        onClick={toggleModal}
-        className={
-          table.state === 1
-            ? `${classes.cardContainer} ${classes.unavailable} `
-            : `${classes.cardContainer} ${classes.available}`
-        }
-      >
-        <Card className={classes.root} elevation={0}>
-          <CardHeader title={table.name} className={classes.title} />
+    <React.Fragment>
+      <CardActionArea className={classes.buttonContainer}>
+        <Card
+          elevation={0}
+          onClick={toggleModal}
+          className={
+            table.state === 1
+              ? ` ${classes.card} ${classes.unavailable} `
+              : ` ${classes.card} ${classes.available}`
+          }
+        >
+          <CardHeader title={table.name} className={classes.cardTitle} />
           <CardContent className={classes.cardContent}>
             <Grid container spacing={2}>
-              <Grid item md={4} style={{ textAlign: "right" }}>
+              <Grid item md={4} className={classes.textRight}>
                 <Typography
                   variant="body2"
                   component="p"
-                  style={{ fontWeight: "bold" }}
+                  className={classes.boldText}
                 >
                   Ubicación:
                 </Typography>
               </Grid>
-              <Grid item md={8} style={{ textAlign: "left" }}>
+              <Grid item md={8} className={classes.textLeft}>
                 <Typography variant="body2" component="p">
                   {table.description}
                 </Typography>
               </Grid>
 
-              <Grid item md={4} style={{ textAlign: "right" }}>
+              <Grid item md={4} className={classes.textRight}>
                 <Typography
                   variant="body2"
                   component="p"
-                  style={{ fontWeight: "bold" }}
+                  className={classes.boldText}
                 >
                   Sillas:
                 </Typography>
               </Grid>
 
-              <Grid item md={8} style={{ textAlign: "left" }}>
+              <Grid item md={8} className={classes.textLeft}>
                 <Typography variant="body2" component="p">
                   {table.chairs}
                 </Typography>
               </Grid>
-
               {!table.customer ? null : (
                 <React.Fragment>
-                  <Grid item md={4} style={{ textAlign: "right" }}>
+                  <Grid item md={4} className={classes.textRight}>
                     <Typography
                       variant="body2"
                       component="p"
-                      style={{ fontWeight: "bold" }}
+                      className={classes.boldText}
                     >
                       Cliente:
                     </Typography>
                   </Grid>
 
-                  <Grid item md={8} style={{ textAlign: "left" }}>
+                  <Grid item md={8} className={classes.textLeft}>
                     <Typography variant="body2" component="p">
                       {`${table.customer.name} ${table.customer.lastname}`}
                     </Typography>
@@ -153,17 +156,11 @@ const PickTableCard = (props) => {
               )}
             </Grid>
           </CardContent>
-          <CardActions
-            className={
-              table.state === 1
-                ? classes.footerUnavailable
-                : classes.footerAvailable
-            }
-          >
+          <CardActions className={classes.cardFooter}>
             {table.state === 1 ? "NO DISPONIBLE" : "DISPONIBLE"}
           </CardActions>
         </Card>
-      </Button>
+      </CardActionArea>
       {table.state === 0 && (
         <Dialog
           open={open}
@@ -188,7 +185,7 @@ const PickTableCard = (props) => {
           />
         </Dialog>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
