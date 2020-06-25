@@ -6,15 +6,29 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
+import TableCustomers from "components/Table/TableCustomers";
+import { useDispatch } from "react-redux";
+import { updateTableAction } from "redux/actions/tables/tables";
+import { withRouter } from "react-router-dom";
 
 const CustomersFormTables = (props) => {
-  const { toggle, handleSubmit, table } = props;
+  const { toggle, table, customers } = props;
+  const dispatch = useDispatch();
+  const tableHeaders = [
+    { title: "ID", field: "id" },
+    {
+      title: "Nombre Completo",
+      field: "name",
+      render: (rowData) => `${rowData.name} ${rowData.lastname}`,
+    },
+  ];
 
   return (
     <Formik
       initialValues={{
-        name: table.customer ? table.customer.name : "",
-        lastName: table.customer ? table.customer.lastname : "",
+        name: "",
+        lastName: "",
+        customerId: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("Requerido"),
@@ -26,83 +40,60 @@ const CustomersFormTables = (props) => {
           values,
           touched,
           errors,
-          dirty,
-          isSubmitting,
-          handleChange,
           handleBlur,
-          isValid,
+          setFieldValue,
+          setFieldTouched,
         } = props;
+
+        const getCustomerData = (id, name, lastName) => {
+          setFieldValue("customerId", id);
+          setFieldValue("name", name);
+          setFieldValue("lastName", lastName);
+
+          setFieldTouched("name", false);
+          setFieldTouched("lastName", false);
+        };
 
         const onSubmit = (e) => {
           e.preventDefault();
 
-          const customer = {
-            name: values.name,
-            lastname: values.lastName,
-          };
+          let tablePayload;
 
-          if (table) {
-            // Swal.fire({
-            //   title: "¿Estás seguro/a?",
-            //   text: "Se procederá con la actualización del cliente",
-            //   showCancelButton: true,
-            //   confirmButtonColor: "#3085d6",
-            //   cancelButtonColor: "#d33",
-            //   confirmButtonText: "¡Sí, actualizar!",
-            //   cancelButtonText: "Cancelar",
-            // }).then((result) => {
-            //   if (result.value) {
-            //     handleSubmit(payload.id, customer)
-            //     Swal.fire(
-            //       "¡Completado!",
-            //       "El cliente fue actualizado satisfactoriamente.",
-            //       "success"
-            //     );
-            //   }
-            // });
-            // } else {
-            //   Swal.fire({
-            //     title: "¿Estás seguro/a?",
-            //     text: "Se procederá con el registro del cliente",
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#3085d6",
-            //     cancelButtonColor: "#d33",
-            //     confirmButtonText: "¡Sí, guardar!",
-            //     cancelButtonText: "Cancelar",
-            //   }).then((result) => {
-            //     if (result.value) {
-            //       Swal.fire(
-            //         "¡Completado!",
-            //         "El empleado fue registrado satisfactoriamente.",
-            //         "success"
-            //       );
-
-            //       toggle();
-            //     }
-            //   });
-            // }
-            Swal.fire({
-              title: "¿Estás seguro/a?",
-              text: "Se procederá con el registro del cliente",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, guardar!",
-              cancelButtonText: "Cancelar",
-            }).then((result) => {
-              if (result.value) {
-                handleSubmit(table.id, customer);
-
-                Swal.fire(
-                  "¡Completado!",
-                  "La mesa fue asignada satisfactoriamente.",
-                  "success"
-                );
-
-                // toggle();
-              }
-            });
+          if (!values.customerId) {
+            tablePayload = {
+              ...table,
+              customerName: values.name,
+              customerLastName: values.lastName,
+              state: 1,
+            };
+          } else {
+            tablePayload = {
+              ...table,
+              customerId: values.customerId,
+              state: 1,
+            };
           }
+
+          Swal.fire({
+            title: "¿Estás seguro/a?",
+            text: "Se procederá con el registro del cliente",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "¡Sí, guardar!",
+            cancelButtonText: "Cancelar",
+          }).then((result) => {
+            if (result.value) {
+              debugger;
+              dispatch(updateTableAction(tablePayload));
+              Swal.fire(
+                "¡Completado!",
+                "La mesa fue asignada satisfactoriamente.",
+                "success"
+              );
+              props.history && props.history.push("/ordenes/preparar-orden");
+            }
+          });
         };
 
         return (
@@ -118,7 +109,9 @@ const CustomersFormTables = (props) => {
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
-                        onChange={handleChange}
+                        onChange={(event) =>
+                          setFieldValue("name", event.target.value)
+                        }
                         onBlur={handleBlur}
                         className={
                           errors.name && touched.name
@@ -140,7 +133,9 @@ const CustomersFormTables = (props) => {
                         label="Apellido"
                         variant="outlined"
                         value={values.lastName}
-                        onChange={handleChange}
+                        onChange={(event) =>
+                          setFieldValue("lastName", event.target.value)
+                        }
                         onBlur={handleBlur}
                         className={
                           errors.lastName && touched.lastName
@@ -153,6 +148,14 @@ const CustomersFormTables = (props) => {
                       )}
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12}>
+                    <TableCustomers
+                      payload={customers}
+                      tableHeaders={tableHeaders}
+                      tableTitle="Clientes"
+                      onGetCustomerData={getCustomerData}
+                    />
+                  </Grid>
                 </Grid>
               </form>
             </DialogContent>
@@ -163,7 +166,7 @@ const CustomersFormTables = (props) => {
                 </CancelButton>
                 <AddButton
                   variant="contained"
-                  disabled={!dirty || isSubmitting || !isValid}
+                  disabled={values.name === "" || values.lastName === ""}
                   onClick={(e) => onSubmit(e)}
                 >
                   Confirmar
@@ -182,4 +185,4 @@ CustomersFormTables.propTypes = {
   toggle: PropTypes.func.isRequired,
 };
 
-export default CustomersFormTables;
+export default withRouter(CustomersFormTables);
