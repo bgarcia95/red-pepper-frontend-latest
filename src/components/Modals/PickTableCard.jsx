@@ -19,7 +19,7 @@ import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
 
 const useStyles = makeStyles({
   buttonContainer: {
-    width: "350px",
+    width: "300px",
     transition: ".5s ease",
     borderRadius: "5px",
     "&:hover": {
