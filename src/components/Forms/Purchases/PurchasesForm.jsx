@@ -357,7 +357,7 @@ const PurchasesForm = (props) => {
                           value={moment(values.emissionDate).format(
                             "DD/MM/YYYY"
                           )}
-                          disabled={payload ? true : false}
+                          disabled={payload}
                         />
                       ) : (
                         <ThemeProvider theme={defaultMaterialTheme}>
@@ -397,7 +397,7 @@ const PurchasesForm = (props) => {
                                 "aria-label": "change date",
                               }}
                               invalidDateMessage="Formato de fecha incorrecto"
-                              disabled={payload ? true : false}
+                              disabled={payload}
                             />
                           </MuiPickersUtilsProvider>
                           {errors.emissionDate && touched.emissionDate && (
@@ -411,21 +411,43 @@ const PurchasesForm = (props) => {
                   </Grid>
 
                   <Grid item xs={12} md={2} style={{ textAlign: "center" }}>
-                    <FormControlLabel
-                      control={
-                        <CustomSwitch
-                          checked={values.isIvaIncluded}
-                          onChange={() =>
-                            setFieldValue(
-                              "isIvaIncluded",
-                              !values.isIvaIncluded
-                            )
-                          }
-                        />
-                      }
-                      label="Incluir IVA"
-                      disabled={payload}
-                    />
+                    {payload ? (
+                      <FormControlLabel
+                        control={
+                          <CustomSwitch
+                            checked={values.isIvaIncluded}
+                            onChange={() =>
+                              setFieldValue(
+                                "isIvaIncluded",
+                                !values.isIvaIncluded
+                              )
+                            }
+                          />
+                        }
+                        label={
+                          payload && payload.iva
+                            ? "Incluye IVA"
+                            : "No Incluye IVA"
+                        }
+                        disabled={payload}
+                      />
+                    ) : (
+                      <FormControlLabel
+                        control={
+                          <CustomSwitch
+                            checked={values.isIvaIncluded}
+                            onChange={() =>
+                              setFieldValue(
+                                "isIvaIncluded",
+                                !values.isIvaIncluded
+                              )
+                            }
+                          />
+                        }
+                        label="Incluir IVA"
+                        disabled={payload}
+                      />
+                    )}
                   </Grid>
 
                   <Grid item xs={12}>
