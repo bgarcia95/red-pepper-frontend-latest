@@ -111,7 +111,7 @@ const PurchasesForm = (props) => {
         unitPrice: "",
         purchaseDetails: payload ? payload.details : [],
         total: payload ? payload.total : "",
-        isIvaIncluded: false,
+        isIvaIncluded: payload ? payload.iva : false,
         locale: "es",
       }}
       validationSchema={Yup.object().shape({
@@ -211,6 +211,7 @@ const PurchasesForm = (props) => {
             ProviderId: values.providerId,
             Total: invoiceTotal,
             Details: purchaseDetails,
+            Iva: values.isIvaIncluded,
           };
 
           Swal.fire({
@@ -408,6 +409,7 @@ const PurchasesForm = (props) => {
                       )}
                     </FormControl>
                   </Grid>
+
                   <Grid item xs={12} md={2} style={{ textAlign: "center" }}>
                     <FormControlLabel
                       control={
@@ -422,8 +424,10 @@ const PurchasesForm = (props) => {
                         />
                       }
                       label="Incluir IVA"
+                      disabled={payload}
                     />
                   </Grid>
+
                   <Grid item xs={12}>
                     <Divider />
                   </Grid>
