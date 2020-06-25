@@ -2,11 +2,6 @@
   zoom: 0.9;
 } */
 
-/* For toolbar on mobile devices */
-.makeStyles-toolbar-8 {
-  background-color: rgb(244, 67, 54);
-}
-
 /* Formiiiiik */
 
 input.error {
@@ -120,8 +115,4 @@ input.error {
   border: 1px solid #ccc !important;
   border-radius: 4px !important;
   padding: 7px !important;
-}
-
-.jss8 {
-  background-color: rgb(244, 67, 54);
 }
