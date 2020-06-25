@@ -12,6 +12,7 @@ import {
   CardHeader,
   Grid,
   Typography,
+  Slide,
 } from "@material-ui/core";
 import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
 
@@ -71,6 +72,10 @@ const useStyles = makeStyles({
     color: "white",
     justifyContent: "center",
   },
+});
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const PickTableCard = (props) => {
@@ -166,6 +171,7 @@ const PickTableCard = (props) => {
           aria-labelledby="form-dialog-title"
           maxWidth="sm"
           fullWidth={true}
+          TransitionComponent={Transition}
         >
           <DialogTitle
             id="form-dialog-title"
