@@ -16,12 +16,15 @@ import {
 import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
 
 const useStyles = makeStyles({
+  cardContainer: {
+    transition: ".6s ease",
+  },
+
   available: {
     backgroundColor: green[500],
     "&:hover": {
       backgroundColor: green[500],
       transform: "scale(1.1)",
-      transition: ".2s ease-in-out",
     },
     width: "300px",
     color: "white",
@@ -32,7 +35,6 @@ const useStyles = makeStyles({
     "&:hover": {
       backgroundColor: red[500],
       transform: "scale(1.1)",
-      transition: ".2s ease-in-out",
     },
     width: "300px",
     color: "white",
@@ -71,8 +73,8 @@ const useStyles = makeStyles({
   },
 });
 
-const PickTableDialog = (props) => {
-  const { table, handleSubmit } = props;
+const PickTableCard = (props) => {
+  const { table } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -85,7 +87,9 @@ const PickTableDialog = (props) => {
       <Button
         onClick={toggleModal}
         className={
-          table.isAvailable === false ? classes.unavailable : classes.available
+          table.state === 1
+            ? `${classes.cardContainer} ${classes.unavailable} `
+            : `${classes.cardContainer} ${classes.available}`
         }
       >
         <Card className={classes.root} elevation={0}>
@@ -146,38 +150,44 @@ const PickTableDialog = (props) => {
           </CardContent>
           <CardActions
             className={
-              table.isAvailable === false
+              table.state === 1
                 ? classes.footerUnavailable
                 : classes.footerAvailable
             }
           >
-            {table.isAvailable === false ? "NO DISPONIBLE" : "DISPONIBLE"}
+            {table.state === 1 ? "NO DISPONIBLE" : "DISPONIBLE"}
           </CardActions>
         </Card>
       </Button>
-      <Dialog
-        open={open}
-        onClose={toggleModal}
-        aria-labelledby="form-dialog-title"
-        maxWidth="sm"
-        fullWidth={true}
-      >
-        <DialogTitle id="form-dialog-title" className="text-center">
-          Cliente
-        </DialogTitle>
-        <CustomersFormTables
-          toggle={toggleModal}
-          modal={open}
-          table={table}
-          handleSubmit={handleSubmit}
-        />
-      </Dialog>
+      {table.state === 0 && (
+        <Dialog
+          open={open}
+          onClose={toggleModal}
+          aria-labelledby="form-dialog-title"
+          maxWidth="sm"
+          fullWidth={true}
+        >
+          <DialogTitle
+            id="form-dialog-title"
+            className="text-center"
+            style={{ backgroundColor: "#f44336", color: "#fff" }}
+          >
+            Cliente
+          </DialogTitle>
+          <CustomersFormTables
+            toggle={toggleModal}
+            modal={open}
+            table={table}
+            customers={props.customers}
+          />
+        </Dialog>
+      )}
     </div>
   );
 };
 
-PickTableDialog.propTypes = {
+PickTableCard.propTypes = {
   table: PropTypes.object.isRequired,
 };
 
-export default PickTableDialog;
+export default PickTableCard;
