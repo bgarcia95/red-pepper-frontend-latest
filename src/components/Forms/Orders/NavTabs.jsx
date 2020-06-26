@@ -14,15 +14,18 @@ import {
   Grid,
   Card,
   CardContent,
+  CardActionArea,
+  CardActions,
+  Button,
+  CardHeader,
 } from "@material-ui/core";
 import { FaArrowLeft } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
 import { useEffect } from "react";
 import { getDishesAction } from "redux/actions/dishes/dishes";
 import { getCombosAction } from "redux/actions/combos/combos";
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -36,7 +39,7 @@ function TabPanel(props) {
       {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -44,14 +47,14 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
+const a11yProps = (index) => {
   return {
     id: `nav-tab-${index}`,
     "aria-controls": `nav-tabpanel-${index}`,
   };
-}
+};
 
-function LinkTab(props) {
+const LinkTab = (props) => {
   return (
     <Tab
       component="a"
@@ -61,15 +64,34 @@ function LinkTab(props) {
       {...props}
     />
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  centerTitle: {
+  appBar: {
+    backgroundColor: "green",
+  },
+  backButtonContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  title: {
+    margin: "1rem 0",
+  },
+  card: {
+    borderRadius: "3px",
+  },
+  cardTitle: {
     textAlign: "center",
+  },
+  cardContent: {
+    textAlign: "center",
+  },
+  cardActions: {
+    justifyContent: "center",
   },
 }));
 
@@ -78,10 +100,8 @@ const NavTabs = (props) => {
   const [value, setValue] = React.useState(0);
   const { history } = props;
 
-  const dishesStore = useSelector((state) => state.dishes.dishes);
-  const [dishes, setDishes] = useState([]);
-  const combosStore = useSelector((state) => state.combos.combos);
-  const [combos, setCombos] = useState([]);
+  const dishes = useSelector((state) => state.dishes.dishes);
+  const combos = useSelector((state) => state.combos.combos);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,19 +111,14 @@ const NavTabs = (props) => {
     getCombos();
   }, [dispatch]);
 
-  useEffect(() => {
-    setDishes(dishesStore);
-    setCombos(combosStore);
-  }, [dishesStore, combosStore]);
-
   // To handle change on Tabs
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center" }}>
+    <React.Fragment>
+      <div className={classes.backButtonContainer}>
         <IconButton onClick={() => history.push("/ordenes")}>
           <FaArrowLeft size="1.2rem" />
         </IconButton>
@@ -111,11 +126,13 @@ const NavTabs = (props) => {
       </div>
 
       <Container>
-        <div style={{ margin: "1rem 0" }} />
-        <Typography variant="h4" className={classes.centerTitle}>
+        <Typography
+          variant="h4"
+          className={`${classes.cardContent} ${classes.title}`}
+        >
           Preparar Orden
         </Typography>
-        <div style={{ margin: "1rem 0" }} />
+        <div className={classes.title} />
         <Divider />
         <div style={{ margin: "2rem 0" }} />
 
@@ -145,7 +162,7 @@ const NavTabs = (props) => {
            )}
          </Grid> */}
           <div className={classes.root}>
-            <AppBar position="static" style={{ backgroundColor: "green" }}>
+            <AppBar position="static" className={classes.appBar}>
               <Tabs
                 variant="fullWidth"
                 value={value}
@@ -163,12 +180,22 @@ const NavTabs = (props) => {
                 {dishes.map((dish) => (
                   <Grid item md={4} key={dish.id}>
                     <Card>
-                      <CardContent className={classes.centerTitle}>
-                        <Typography>{dish.name}</Typography>
-                        <Typography>
-                          <b>$ {dish.price}</b>
-                        </Typography>
-                      </CardContent>
+                      <CardActionArea className={classes.card}>
+                        <CardHeader
+                          title={dish.name}
+                          className={classes.cardTitle}
+                        />
+                        <CardContent className={classes.cardContent}>
+                          <Typography>
+                            <b>$ {dish.price}</b>
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions className={classes.cardActions}>
+                        <Button color="secondary" variant="contained">
+                          AGREGAR
+                        </Button>
+                      </CardActions>
                     </Card>
                   </Grid>
                 ))}
@@ -179,12 +206,22 @@ const NavTabs = (props) => {
                 {combos.map((combo) => (
                   <Grid item md={4} key={combo.id}>
                     <Card>
-                      <CardContent className={classes.centerTitle}>
-                        <Typography>{combo.name}</Typography>
-                        <Typography>
-                          <b>$ {combo.total}</b>
-                        </Typography>
-                      </CardContent>
+                      <CardActionArea className={classes.card}>
+                        <CardHeader
+                          title={combo.name}
+                          className={classes.cardTitle}
+                        />
+                        <CardContent className={classes.cardContent}>
+                          <Typography>
+                            <b>$ {combo.total}</b>
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                      <CardActions className={classes.cardActions}>
+                        <Button color="secondary" variant="contained">
+                          AGREGAR
+                        </Button>
+                      </CardActions>
                     </Card>
                   </Grid>
                 ))}
@@ -196,7 +233,7 @@ const NavTabs = (props) => {
           </div>
         </Grid>
       </Container>
-    </div>
+    </React.Fragment>
   );
 };
 
