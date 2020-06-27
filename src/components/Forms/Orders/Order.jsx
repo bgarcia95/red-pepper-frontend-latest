@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavTabs = (props) => {
+const Order = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const { history } = props;
@@ -237,4 +237,4 @@ const NavTabs = (props) => {
   );
 };
 
-export default NavTabs;
+export default Order;
