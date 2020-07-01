@@ -12,7 +12,7 @@ import { updateTableAction } from "redux/actions/tables/tables";
 import { withRouter } from "react-router-dom";
 
 const CustomersFormTables = (props) => {
-  const { toggle, table, customers } = props;
+  const { toggle, table, customers, history } = props;
   const dispatch = useDispatch();
   const tableHeaders = [
     { title: "ID", field: "id" },
@@ -84,14 +84,13 @@ const CustomersFormTables = (props) => {
             cancelButtonText: "Cancelar",
           }).then((result) => {
             if (result.value) {
-              debugger;
               dispatch(updateTableAction(tablePayload));
               Swal.fire(
                 "¡Completado!",
                 "La mesa fue asignada satisfactoriamente.",
                 "success"
               );
-              props.history && props.history.push("/ordenes/preparar-orden");
+              history.push(`/ordenes/${table.id}/preparar-orden`);
             }
           });
         };
