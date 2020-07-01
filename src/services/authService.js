@@ -5,6 +5,24 @@ const apiEndpoint = "/authentication";
 const tokenKey = "token";
 // const userToken = "user";
 
+const getLocalStorageItem = (key) => localStorage.getItem(key);
+
+export const getJwt = () => getLocalStorageItem(tokenKey);
+
+export const getDecodedToken = () => {
+  try {
+    const token = getJwt();
+    return jwtDecode(token);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const logout = () => {
+  localStorage.removeItem(tokenKey);
+  // localStorage.removeItem(userToken);
+};
+
 export const login = async (user) => {
   const { data: credentials } = await http.post(`${apiEndpoint}`, user);
   if (credentials) {
@@ -37,19 +55,6 @@ export const tryAutoSignIn = () => {
   return credentials;
 };
 
-const getLocalStorageItem = (key) => localStorage.getItem(key);
-
-export const getJwt = () => getLocalStorageItem(tokenKey);
-
-export const getDecodedToken = () => {
-  try {
-    const token = getJwt();
-    return jwtDecode(token);
-  } catch (error) {
-    return null;
-  }
-};
-
 // For tryAutoSignIn (triggered when refreshing the page and checking if token exists)
 // export const getCurrentUserToken = () => {
 //   try {
@@ -62,11 +67,6 @@ export const getDecodedToken = () => {
 // export const setCurrentUserToken = (userToken) => {
 //   localStorage.setItem(userToken, userToken);
 // };
-
-export const logout = () => {
-  localStorage.removeItem(tokenKey);
-  // localStorage.removeItem(userToken);
-};
 
 export default {
   getJwt,
