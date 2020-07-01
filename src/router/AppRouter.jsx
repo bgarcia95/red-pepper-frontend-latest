@@ -17,21 +17,14 @@ import Proptypes from "prop-types";
 
 const AppRouter = (props) => {
   const { isAuthenticated } = props;
+  const token = localStorage.getItem("token");
 
-  let appRoutes = (
+  let appRoutes = !token && (
     <Switch>
-      {/* <Route exact path="/" component={Login} /> */}
-      <Route path="/login" component={Login} />
+      <Route exact path="/login" component={Login} />
+
       {/* This one will catch anything that has no route. */}
-      <Route
-        render={() => (
-          <Redirect
-            to={{
-              pathname: "/login",
-            }}
-          />
-        )}
-      />
+      <Redirect to="/login" />
     </Switch>
   );
 
@@ -52,7 +45,7 @@ const AppRouter = (props) => {
         <Route path="/ordenes/:tableId/preparar-orden" component={Order} />
 
         {/* This one will catch anything that has no route. */}
-        <Route render={() => <Redirect to={{ pathname: "/insumos" }} />} />
+        <Redirect to="/insumos" />
       </Switch>
     );
   }
