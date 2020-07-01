@@ -108,8 +108,8 @@ const LoginForm = (props) => {
 };
 
 LoginForm.propTypes = {
-  history: PropTypes.object.isRequired,
-  error: PropTypes.bool.isRequired,
+  history: PropTypes.object,
+  // error: PropTypes.bool,
 };
 
 export default LoginForm;
