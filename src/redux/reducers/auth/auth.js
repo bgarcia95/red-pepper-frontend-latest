@@ -3,7 +3,6 @@ import {
   AUTH_SUCCESS,
   AUTH_ERROR,
   AUTH_LOGOUT_START,
-  AUTH_LOGOUT_ERROR,
   AUTH_LOGOUT_SUCCESS,
 } from "redux/utils/actions";
 
@@ -52,14 +51,7 @@ export default (state = tokenDefaultState, action) => {
         decodedToken: null,
         isLoggingOut: false,
       };
-    case AUTH_LOGOUT_ERROR:
-      return {
-        ...state,
-        token: null,
-        currentUserToken: null,
-        decodedToken: null,
-        isLoggingOut: false,
-      };
+
     // case SET_MAIN_USER_TOKEN_START:
     //   return {
     //     ...state,

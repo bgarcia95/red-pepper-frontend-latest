@@ -3,7 +3,6 @@ import {
   AUTH_SUCCESS,
   AUTH_ERROR,
   AUTH_LOGOUT_START,
-  AUTH_LOGOUT_ERROR,
   AUTH_LOGOUT_SUCCESS,
   // SET_MAIN_USER_TOKEN_START,
   // SET_MAIN_USER_TOKEN_SUCCESS,
@@ -34,10 +33,6 @@ export const authLogoutStart = () => ({
 
 export const authLogoutSuccess = () => ({
   type: AUTH_LOGOUT_SUCCESS,
-});
-
-export const authLogOutError = () => ({
-  type: AUTH_LOGOUT_ERROR,
 });
 
 // export const setMainUserTokenStart = () => ({
