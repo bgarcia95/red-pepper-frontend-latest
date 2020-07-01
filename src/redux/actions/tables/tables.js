@@ -108,11 +108,11 @@ export const updateTableAction = (table) => {
       .put("/Table", table)
       .then((response) => {
         dispatch(updateTableSuccess(response.data));
-        Swal.fire(
-          "¡Guardado!",
-          "La mesa fue actualizada satisfactoriamente",
-          "success"
-        );
+        // Swal.fire(
+        //   "¡Guardado!",
+        //   "La mesa fue actualizada satisfactoriamente",
+        //   "success"
+        // );
         dispatch(getTablesAction());
       })
       .catch((error) => {

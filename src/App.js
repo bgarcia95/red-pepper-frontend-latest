@@ -8,7 +8,6 @@ import { tryAutoSignIn } from "redux/actions/auth/auth";
 const App = (props) => {
   const isLogging = useSelector((state) => state.auth.isLogging);
   const isAuthenticated = useSelector((state) => state.auth.token);
-
   const dispatch = useDispatch();
   const {
     location: { pathname },
