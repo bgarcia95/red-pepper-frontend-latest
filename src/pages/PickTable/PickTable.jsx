@@ -83,7 +83,7 @@ const PickTable = (props) => {
           </Grid>
           {tables.map((table) => (
             <React.Fragment key={uuid()}>
-              <Grid item md={4}>
+              <Grid item md={4} xs={12}>
                 <PickTableCard
                   table={table}
                   customers={customers}
