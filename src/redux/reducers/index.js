@@ -8,6 +8,7 @@ import combosReducer from "redux/reducers/combos/combos";
 import tablesReducer from "redux/reducers/tables/tables";
 import employeesReducer from "redux/reducers/employees/employees";
 import customersReducer from "redux/reducers/customers/customers";
+import ordersReducer from "redux/reducers/orders/orders";
 import tokenReducer from "redux/reducers/auth/auth";
 
 export default combineReducers({
@@ -20,5 +21,6 @@ export default combineReducers({
   tables: tablesReducer,
   employees: employeesReducer,
   customers: customersReducer,
+  orders: ordersReducer,
   auth: tokenReducer,
 });
