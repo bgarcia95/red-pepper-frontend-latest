@@ -12,7 +12,7 @@ import Employees from "pages/Employees/Employees";
 import Customers from "pages/Customers/Customers";
 import Orders from "pages/Orders/Orders";
 import PickTable from "pages/PickTable/PickTable";
-import Order from "components/Forms/Orders/Order";
+import Order from "pages/Orders/Order";
 import Proptypes from "prop-types";
 
 const AppRouter = (props) => {
