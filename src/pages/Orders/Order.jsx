@@ -117,6 +117,8 @@ const Order = (props) => {
   const combos = useSelector((state) => state.combos.combos);
   const tableId = useParams().tableId;
   const tables = useSelector((state) => state.tables.tables);
+  const selectedTable = tables.find((table) => table.id === +tableId);
+
   const orderedProducts = useSelector((state) => {
     const productsArray = [];
     for (const key in state.orders.orderedProducts) {
@@ -146,8 +148,6 @@ const Order = (props) => {
     const getTables = () => dispatch(getTablesAction());
     getTables();
   }, [dispatch]);
-
-  const selectedTable = tables.find((table) => table.id === +tableId);
 
   // To handle change on Tabs
   const handleChange = (event, newValue) => {
