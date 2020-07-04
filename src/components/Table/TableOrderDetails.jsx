@@ -70,20 +70,20 @@ const TableOrderDetails = (props) => {
               <TableCell align="right">$ {prod.unitPrice}</TableCell>
               <TableCell align="right">${ccyFormat(prod.total)}</TableCell>
               <TableCell align="center">
-                <Tooltip title="Incrementar">
-                  <IconButton
-                    onClick={() => dispatch(addProductToOrder(prod))}
-                    style={{ backgroundColor: "#ccc" }}
-                  >
-                    <MdAdd size={18} />
-                  </IconButton>
-                </Tooltip>
                 <Tooltip title="Reducir">
                   <IconButton
                     onClick={() => dispatch(reduceProductFromOrder(prod.id))}
                     style={{ backgroundColor: "#ccc" }}
                   >
                     <MdRemove size={18} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Incrementar">
+                  <IconButton
+                    onClick={() => dispatch(addProductToOrder(prod))}
+                    style={{ backgroundColor: "#ccc" }}
+                  >
+                    <MdAdd size={18} />
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Eliminar">
