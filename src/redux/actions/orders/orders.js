@@ -1,18 +1,20 @@
 import {
-  ADD_PRODUCT_TO_ORDER_START,
-  ADD_PRODUCT_TO_ORDER_SUCCESS,
-  ADD_PRODUCT_TO_ORDER_ERROR,
+  ADD_PRODUCT_TO_ORDER,
+  REDUCE_PRODUCT_FROM_ORDER,
+  REMOVE_PRODUCT_FROM_ORDER,
 } from "redux/utils/actions";
 
-export const addProductToOrderStart = () => ({
-  type: ADD_PRODUCT_TO_ORDER_START,
-});
-
-export const addProductToOrderSuccess = (product) => ({
-  type: ADD_PRODUCT_TO_ORDER_SUCCESS,
+export const addProductToOrder = (product) => ({
+  type: ADD_PRODUCT_TO_ORDER,
   product,
 });
 
-export const addProductToOrderError = () => ({
-  type: ADD_PRODUCT_TO_ORDER_ERROR,
+export const reduceProductFromOrder = (id) => ({
+  type: REDUCE_PRODUCT_FROM_ORDER,
+  id,
+});
+
+export const removeProductFromOrder = (id) => ({
+  type: REMOVE_PRODUCT_FROM_ORDER,
+  id,
 });

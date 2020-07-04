@@ -1,6 +1,7 @@
 import {
-  ADD_PRODUCT_TO_ORDER_START,
-  ADD_PRODUCT_TO_ORDER_SUCCESS,
+  ADD_PRODUCT_TO_ORDER,
+  REDUCE_PRODUCT_FROM_ORDER,
+  REMOVE_PRODUCT_FROM_ORDER,
 } from "redux/utils/actions";
 
 const initialState = {
@@ -10,11 +11,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PRODUCT_TO_ORDER_START:
-      return {
-        ...state,
-      };
-    case ADD_PRODUCT_TO_ORDER_SUCCESS:
+    case ADD_PRODUCT_TO_ORDER:
       const addedProduct = action.product;
 
       let newOrUpdatedOrderProduct;
@@ -50,6 +47,49 @@ export default (state = initialState, action) => {
           [addedProduct.id]: newOrUpdatedOrderProduct,
         },
         total: state.total + addedProduct.unitPrice,
+      };
+
+    case REDUCE_PRODUCT_FROM_ORDER:
+      const selectedProduct = state.orderedProducts[action.id];
+      const currentQty = selectedProduct.qty;
+
+      let updatedOrderedProducts;
+
+      if (currentQty > 1) {
+        const updatedItem = {
+          ...selectedProduct,
+          qty: selectedProduct.qty - 1,
+          total: selectedProduct.total - selectedProduct.unitPrice,
+        };
+
+        updatedOrderedProducts = {
+          ...state.orderedProducts,
+          [action.id]: updatedItem,
+        };
+      } else {
+        updatedOrderedProducts = {
+          ...state.orderedProducts,
+        };
+        delete updatedOrderedProducts[action.id];
+      }
+
+      return {
+        ...state,
+        orderedProducts: updatedOrderedProducts,
+        total: state.total - selectedProduct.unitPrice,
+      };
+
+    case REMOVE_PRODUCT_FROM_ORDER:
+      const productToDelete = state.orderedProducts[action.id];
+
+      const updatedState = { ...state.orderedProducts };
+
+      delete updatedState[action.id];
+
+      return {
+        ...state,
+        orderedProducts: updatedState,
+        total: state.total - productToDelete.total,
       };
 
     default:
