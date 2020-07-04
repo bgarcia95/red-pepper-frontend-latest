@@ -29,7 +29,8 @@ import { getDishesAction } from "redux/actions/dishes/dishes";
 import { getCombosAction } from "redux/actions/combos/combos";
 import { getTablesAction } from "redux/actions/tables/tables";
 import { useParams } from "react-router-dom";
-import { addProductToOrderSuccess } from "redux/actions/orders/orders";
+import { addProductToOrder } from "redux/actions/orders/orders";
+import TableOrderDetails from "components/Table/TableOrderDetails";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -120,7 +121,7 @@ const Order = (props) => {
     const productsArray = [];
     for (const key in state.orders.orderedProducts) {
       productsArray.push({
-        productId: key,
+        id: key,
         dishId: state.orders.orderedProducts[key].dishId,
         comboId: state.orders.orderedProducts[key].comboId,
         title: state.orders.orderedProducts[key].title,
@@ -171,7 +172,7 @@ const Order = (props) => {
       unitPrice: unitPrice,
     };
 
-    dispatch(addProductToOrderSuccess(product));
+    dispatch(addProductToOrder(product));
   };
 
   return (
@@ -339,38 +340,13 @@ const Order = (props) => {
                   ))}
                 </Grid>
               </TabPanel>
-              {/* Watch Order */}
               <TabPanel value={value} index={2}>
-                Ver Orden
                 <Divider style={{ margin: "2rem 0" }} />
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  {orderedProducts.map((prod) => (
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: "50%",
-                        margin: "0 auto",
-                      }}
-                    >
-                      <p>{prod.qty}x </p>
-                      <Typography variant="h6">{prod.title}</Typography>
-                      <p>$ {prod.total}</p>
-                    </div>
-                  ))}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      width: "50%",
-                      margin: "0 auto",
-                    }}
-                  >
-                    <Typography variant="h5">Total</Typography>
-                    <Typography variant="h5">$ {totalOrderAmount}</Typography>
-                  </div>
+                  <TableOrderDetails
+                    items={orderedProducts}
+                    totalOrderAmount={totalOrderAmount}
+                  />
                 </div>
               </TabPanel>
             </div>
