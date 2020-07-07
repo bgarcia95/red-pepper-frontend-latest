@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -17,12 +17,13 @@ import {
   CardActionArea,
   CardActions,
   Button,
-  CardHeader,
   CircularProgress,
+  CardMedia,
 } from "@material-ui/core";
 import { FaArrowLeft } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { v4 as uuid } from "uuid";
 import { getDishesAction } from "redux/actions/dishes/dishes";
@@ -73,14 +74,22 @@ const LinkTab = (props) => {
   );
 };
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     margin: "0 0 1rem 0",
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
   appBar: {
-    backgroundColor: "green",
+    backgroundColor: "#259236",
   },
   backButtonContainer: {
     display: "flex",
@@ -106,11 +115,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     borderTop: "1px solid rgb(240,240,240)",
   },
+  cardImage: {
+    objectFit: "cover",
+  },
 }));
 
 const Order = (props) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const { history } = props;
 
   const dishes = useSelector((state) => state.dishes.dishes);
@@ -118,6 +130,20 @@ const Order = (props) => {
   const tableId = useParams().tableId;
   const tables = useSelector((state) => state.tables.tables);
   const selectedTable = tables.find((table) => table.id === +tableId);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const openHandler = () => {
+    setOpenSnackbar(true);
+  };
+
+  const closeHandler = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
 
   const orderedProducts = useSelector((state) => {
     const productsArray = [];
@@ -265,15 +291,30 @@ const Order = (props) => {
                 <Grid container direction="row" spacing={3}>
                   {dishes.map((dish, index) => (
                     <Grid item md={4} xs={12} key={dish.id}>
-                      <Card>
-                        <CardActionArea className={classes.card}>
-                          <CardHeader
-                            title={dish.name}
-                            className={classes.cardTitle}
+                      <Card className={classes.card}>
+                        <CardActionArea>
+                          <CardMedia
+                            src="https://res.cloudinary.com/bgarcia95/image/upload/v1594070889/red-pepper/hamburger_wpycmn.jpg"
+                            title="Hamburger"
+                            component="img"
+                            alt="Hamburger"
+                            height="150"
+                            className={classes.cardImage}
                           />
-                          <CardContent className={classes.cardContent}>
-                            <Typography>
-                              <b>$ {dish.price}</b>
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {dish.name}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              $ {dish.price}
                             </Typography>
                           </CardContent>
                         </CardActionArea>
@@ -281,7 +322,7 @@ const Order = (props) => {
                           <Button
                             color="secondary"
                             variant="contained"
-                            onClick={(e) =>
+                            onClick={(e) => {
                               onAddProductToOrderHandler(
                                 e,
                                 `pD-${index}`,
@@ -289,8 +330,9 @@ const Order = (props) => {
                                 null,
                                 dish.name,
                                 dish.price
-                              )
-                            }
+                              );
+                              openHandler();
+                            }}
                           >
                             AGREGAR
                           </Button>
@@ -305,15 +347,29 @@ const Order = (props) => {
                 <Grid container direction="row" spacing={3}>
                   {combos.map((combo, index) => (
                     <Grid item md={4} key={combo.id}>
-                      <Card>
-                        <CardActionArea className={classes.card}>
-                          <CardHeader
-                            title={combo.name}
-                            className={classes.cardTitle}
+                      <Card className={classes.card}>
+                        <CardActionArea>
+                          <CardMedia
+                            src="https://res.cloudinary.com/bgarcia95/image/upload/v1594071401/red-pepper/combo_vgnq6k.jpg"
+                            title="Combo"
+                            component="img"
+                            alt="Combo"
+                            height="150"
                           />
-                          <CardContent className={classes.cardContent}>
-                            <Typography>
-                              <b>$ {combo.total}</b>
+                          <CardContent>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {combo.name}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              component="p"
+                            >
+                              $ {combo.total}
                             </Typography>
                           </CardContent>
                         </CardActionArea>
@@ -321,7 +377,7 @@ const Order = (props) => {
                           <Button
                             color="secondary"
                             variant="contained"
-                            onClick={(e) =>
+                            onClick={(e) => {
                               onAddProductToOrderHandler(
                                 e,
                                 `pC-${index}`,
@@ -329,8 +385,9 @@ const Order = (props) => {
                                 combo.id,
                                 combo.name,
                                 combo.total
-                              )
-                            }
+                              );
+                              openHandler();
+                            }}
                           >
                             AGREGAR
                           </Button>
@@ -352,6 +409,15 @@ const Order = (props) => {
             </div>
           )}
         </Grid>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={1000}
+          onClose={closeHandler}
+        >
+          <Alert onClose={closeHandler} severity="success">
+            ¡Producto añadido a la orden!
+          </Alert>
+        </Snackbar>
       </Container>
     </React.Fragment>
   );
