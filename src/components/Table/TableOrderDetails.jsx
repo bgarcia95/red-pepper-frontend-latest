@@ -18,7 +18,6 @@ import {
   reduceProductFromOrder,
   removeProductFromOrder,
 } from "redux/actions/orders/orders";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
   table: {
@@ -56,7 +55,7 @@ const TableOrderDetails = (props) => {
           </TableRow>
           <TableRow>
             <TableCell align="right">Cant.</TableCell>
-            <TableCell>Nombre</TableCell>
+            <TableCell align="center">Nombre</TableCell>
             <TableCell align="right">Precio Unitario</TableCell>
             <TableCell align="right">Total</TableCell>
             {items.length > 0 && <TableCell align="center">Acción</TableCell>}
@@ -66,7 +65,7 @@ const TableOrderDetails = (props) => {
           {items.map((prod) => (
             <TableRow key={uuid()}>
               <TableCell align="right">{prod.qty}x</TableCell>
-              <TableCell>{prod.title}</TableCell>
+              <TableCell align="center">{prod.title}</TableCell>
               <TableCell align="right">$ {prod.unitPrice}</TableCell>
               <TableCell align="right">${ccyFormat(prod.total)}</TableCell>
               <TableCell align="center">
@@ -89,7 +88,7 @@ const TableOrderDetails = (props) => {
                 <Tooltip title="Eliminar">
                   <IconButton
                     onClick={() => dispatch(removeProductFromOrder(prod.id))}
-                    style={{ backgroundColor: red[500] }}
+                    style={{ backgroundColor: "#EC1704" }}
                   >
                     <FaTrash size={18} color="#fff" />
                   </IconButton>
