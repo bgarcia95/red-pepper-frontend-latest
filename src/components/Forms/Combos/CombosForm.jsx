@@ -7,15 +7,16 @@ import {
   DialogContent,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { AddButton, CancelButton } from "../../UI/Buttons/Buttons";
 import DialogActions from "@material-ui/core/DialogActions";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import TableComboDetails from "components/Table/TableComboDetails";
-import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
 import PropTypes from "prop-types";
+
+import { AddButton, CancelButton } from "../../UI/Buttons/Buttons";
+import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
+import TableComboDetails from "components/Table/TableComboDetails";
 
 const CombosForm = (props) => {
   const { toggle, payload, dishes } = props;
@@ -28,11 +29,9 @@ const CombosForm = (props) => {
   }));
 
   const filterDishPrice = (id) => {
-    const filtered = dishes
-      .filter((dish) => dish.id === id)
-      .map((filtered) => filtered.price)[0];
+    const filtered = dishes.find((dish) => dish.id === id);
 
-    return filtered;
+    return filtered.price;
   };
 
   const filterDishName = (id) =>
