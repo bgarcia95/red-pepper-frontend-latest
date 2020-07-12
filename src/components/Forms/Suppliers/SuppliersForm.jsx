@@ -70,6 +70,8 @@ const SuppliersForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="name"
+                        name="name"
                         error={errors.name && touched.name}
                         label="Nombre"
                         variant="outlined"
@@ -98,6 +100,8 @@ const SuppliersForm = (props) => {
                       >
                         {() => (
                           <TextField
+                            id="telephone"
+                            name="telephone"
                             label="Teléfono"
                             variant="outlined"
                             error={errors.telephone && touched.telephone}
@@ -118,6 +122,8 @@ const SuppliersForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="address"
+                        name="address"
                         error={errors.address && touched.address}
                         label="Dirección"
                         variant="outlined"

@@ -72,6 +72,8 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="name"
+                        name="name"
                         error={errors.name && touched.name}
                         label="Nombre"
                         variant="outlined"
@@ -92,6 +94,8 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="presentation"
+                        name="presentation"
                         error={errors.presentation && touched.presentation}
                         label="Presentación"
                         variant="outlined"
@@ -114,6 +118,8 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="unitOfMeasure"
+                        name="unitOfMeasure"
                         error={errors.unitOfMeasure && touched.unitOfMeasure}
                         label="Unidad de Medida"
                         variant="outlined"
@@ -136,6 +142,8 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="minimumQty"
+                        name="minimumQty"
                         error={errors.minimumQty && touched.minimumQty}
                         label="Cantidad Mínima"
                         variant="outlined"
@@ -160,6 +168,8 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        id="description"
+                        name="description"
                         error={errors.description && touched.description}
                         label="Descripción"
                         variant="outlined"
