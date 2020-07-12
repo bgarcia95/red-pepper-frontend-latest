@@ -108,9 +108,10 @@ const CustomersFormTables = (props) => {
                         label="Nombre"
                         variant="outlined"
                         value={values.name}
-                        onChange={(event) =>
-                          setFieldValue("name", event.target.value)
-                        }
+                        onChange={(event) => {
+                          setFieldValue("name", event.target.value);
+                          setFieldValue("customerId", null);
+                        }}
                         onBlur={handleBlur}
                         className={
                           errors.name && touched.name
@@ -132,9 +133,10 @@ const CustomersFormTables = (props) => {
                         label="Apellido"
                         variant="outlined"
                         value={values.lastName}
-                        onChange={(event) =>
-                          setFieldValue("lastName", event.target.value)
-                        }
+                        onChange={(event) => {
+                          setFieldValue("lastName", event.target.value);
+                          setFieldValue("customerId", null);
+                        }}
                         onBlur={handleBlur}
                         className={
                           errors.lastName && touched.lastName
