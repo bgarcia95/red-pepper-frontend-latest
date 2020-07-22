@@ -52,14 +52,14 @@ const PickTable = (props) => {
         <Typography variant="h4" className={classes.centerTitle}>
           Selección de Mesa
         </Typography>
-        <div style={{ margin: "1rem 0 2rem 0" }}>
+        <div style={{ margin: "1rem 0 0 0" }}>
           <Divider />
         </div>
 
         <Grid
           container
           justify="flex-start"
-          spacing={2}
+          spacing={3}
           style={{ textAlign: "center" }}
         >
           {loadingTables && (
