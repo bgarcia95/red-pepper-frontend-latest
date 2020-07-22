@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import { Backdrop, CircularProgress } from "@material-ui/core";
 import MaterialTable from "material-table";
@@ -7,13 +7,19 @@ import PropTypes from "prop-types";
 const useStyles1 = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: "blue",
   },
 }));
 
 const TableCustomers = (props) => {
   const classes = useStyles1();
-  const { payload, tableHeaders, onGetCustomerData, tableTitle } = props;
+  const {
+    payload,
+    tableHeaders,
+    onGetCustomerData,
+    tableTitle,
+    clearCustomerData,
+  } = props;
+  const [selectedRow, setSelectedRow] = useState(null);
 
   return (
     <React.Fragment>
@@ -40,18 +46,21 @@ const TableCustomers = (props) => {
             lastTooltip: "Última Página",
           },
         }}
+        onRowClick={(event, rowData) => {
+          setSelectedRow(rowData.tableData.id);
+          onGetCustomerData(rowData.id);
+          if (selectedRow === rowData.tableData.id) {
+            clearCustomerData();
+            setSelectedRow(null);
+          }
+        }}
         options={{
           actionsColumnIndex: -1,
           draggable: false,
-          rowStyle: (x, idx) => {
-            if (idx % 2) {
-              return { backgroundColor: "#f2f2f2" };
-            }
-          },
+          rowStyle: (rowData) => ({
+            backgroundColor: selectedRow === rowData.tableData.id && "#ccc",
+          }),
         }}
-        onRowClick={(event, rowData) =>
-          onGetCustomerData(rowData.id, rowData.name, rowData.lastname)
-        }
       />
     </React.Fragment>
   );
