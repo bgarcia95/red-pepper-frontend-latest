@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { updateTableAction } from "redux/actions/tables/tables";
 import { withRouter } from "react-router-dom";
 
-const CustomersFormTables = (props) => {
+const CustomerFormTables = (props) => {
   const { toggle, table, customers, history } = props;
   const dispatch = useDispatch();
   const tableHeaders = [
@@ -26,13 +26,13 @@ const CustomersFormTables = (props) => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        lastName: "",
-        customerId: "",
+        enteredName: "",
+        enteredLastName: "",
+        customerId: null,
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().required("Requerido"),
-        lastName: Yup.string().required("Requerido"),
+        enteredName: Yup.string().required("Requerido"),
+        enteredLastName: Yup.string().required("Requerido"),
       })}
     >
       {(props) => {
@@ -43,15 +43,23 @@ const CustomersFormTables = (props) => {
           handleBlur,
           setFieldValue,
           setFieldTouched,
+          handleChange,
+          dirty,
+          isSubmitting,
+          isValid,
         } = props;
 
-        const getCustomerData = (id, name, lastName) => {
+        const getCustomerData = (id) => {
           setFieldValue("customerId", id);
-          setFieldValue("name", name);
-          setFieldValue("lastName", lastName);
 
-          setFieldTouched("name", false);
-          setFieldTouched("lastName", false);
+          setFieldValue("enteredName", "");
+          setFieldValue("enteredLastName", "");
+          setFieldTouched("enteredName", false);
+          setFieldTouched("enteredLastName", false);
+        };
+
+        const clearCustomerData = () => {
+          setFieldValue("customerId", null);
         };
 
         const onSubmit = (e) => {
@@ -62,8 +70,8 @@ const CustomersFormTables = (props) => {
           if (!values.customerId) {
             tablePayload = {
               ...table,
-              customerName: values.name,
-              customerLastName: values.lastName,
+              customerName: values.enteredName,
+              customerLastName: values.enteredLastName,
               state: 1,
             };
           } else {
@@ -103,24 +111,24 @@ const CustomersFormTables = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        error={errors.name && touched.name}
-                        name="name"
+                        disabled={!!values.customerId}
+                        error={errors.enteredName && touched.enteredName}
+                        name="enteredName"
                         label="Nombre"
                         variant="outlined"
-                        value={values.name}
-                        onChange={(event) => {
-                          setFieldValue("name", event.target.value);
-                          setFieldValue("customerId", null);
-                        }}
+                        value={values.enteredName}
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         className={
-                          errors.name && touched.name
+                          errors.enteredName && touched.enteredName
                             ? "text-input error"
                             : "text-input"
                         }
                       />
-                      {errors.name && touched.name && (
-                        <div className="input-feedback">{errors.name}</div>
+                      {errors.enteredName && touched.enteredName && (
+                        <div className="input-feedback">
+                          {errors.enteredName}
+                        </div>
                       )}
                     </FormControl>
                   </Grid>
@@ -128,24 +136,26 @@ const CustomersFormTables = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        error={errors.lastName && touched.lastName}
-                        name="lastName"
+                        disabled={!!values.customerId}
+                        error={
+                          errors.enteredLastName && touched.enteredLastName
+                        }
+                        name="enteredLastName"
                         label="Apellido"
                         variant="outlined"
-                        value={values.lastName}
-                        onChange={(event) => {
-                          setFieldValue("lastName", event.target.value);
-                          setFieldValue("customerId", null);
-                        }}
+                        value={values.enteredLastName}
+                        onChange={handleChange}
                         onBlur={handleBlur}
                         className={
-                          errors.lastName && touched.lastName
+                          errors.enteredLastName && touched.enteredLastName
                             ? "text-input error"
                             : "text-input"
                         }
                       />
-                      {errors.lastName && touched.lastName && (
-                        <div className="input-feedback">{errors.lastName}</div>
+                      {errors.enteredLastName && touched.enteredLastName && (
+                        <div className="input-feedback">
+                          {errors.enteredLastName}
+                        </div>
                       )}
                     </FormControl>
                   </Grid>
@@ -155,6 +165,7 @@ const CustomersFormTables = (props) => {
                       tableHeaders={tableHeaders}
                       tableTitle="Clientes"
                       onGetCustomerData={getCustomerData}
+                      clearCustomerData={clearCustomerData}
                     />
                   </Grid>
                 </Grid>
@@ -167,7 +178,11 @@ const CustomersFormTables = (props) => {
                 </CancelButton>
                 <AddButton
                   variant="contained"
-                  disabled={values.name === "" || values.lastName === ""}
+                  disabled={
+                    values.customerId
+                      ? false
+                      : !dirty || isSubmitting || !isValid
+                  }
                   onClick={(e) => onSubmit(e)}
                 >
                   Confirmar
@@ -181,9 +196,9 @@ const CustomersFormTables = (props) => {
   );
 };
 
-CustomersFormTables.propTypes = {
+CustomerFormTables.propTypes = {
   payload: PropTypes.object,
   toggle: PropTypes.func.isRequired,
 };
 
-export default withRouter(CustomersFormTables);
+export default withRouter(CustomerFormTables);
