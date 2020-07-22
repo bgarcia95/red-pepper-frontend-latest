@@ -15,7 +15,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 
-import CustomersFormTables from "components/Forms/Orders/CustomerFormTables";
+import CustomerFormTables from "components/Forms/Orders/CustomerFormTables";
 
 const useStyles = makeStyles({
   buttonContainer: {
@@ -43,7 +43,6 @@ const useStyles = makeStyles({
     borderTopRightRadius: "5px",
     color: "#000",
     width: "100%",
-    margin: "0 auto",
     padding: "10px",
   },
   cardTitle: {
@@ -177,7 +176,7 @@ const PickTableCard = (props) => {
           >
             Cliente
           </DialogTitle>
-          <CustomersFormTables
+          <CustomerFormTables
             toggle={toggleModal}
             modal={open}
             table={table}
