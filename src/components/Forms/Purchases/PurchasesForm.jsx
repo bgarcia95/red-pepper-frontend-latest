@@ -357,7 +357,7 @@ const PurchasesForm = (props) => {
                           value={moment(values.emissionDate).format(
                             "DD/MM/YYYY"
                           )}
-                          disabled={payload}
+                          disabled={payload ? true : false}
                         />
                       ) : (
                         <ThemeProvider theme={defaultMaterialTheme}>
@@ -397,7 +397,7 @@ const PurchasesForm = (props) => {
                                 "aria-label": "change date",
                               }}
                               invalidDateMessage="Formato de fecha incorrecto"
-                              disabled={payload}
+                              disabled={payload ? true : false}
                             />
                           </MuiPickersUtilsProvider>
                           {errors.emissionDate && touched.emissionDate && (
@@ -429,7 +429,7 @@ const PurchasesForm = (props) => {
                             ? "Incluye IVA"
                             : "No Incluye IVA"
                         }
-                        disabled={payload}
+                        disabled={payload ? true : false}
                       />
                     ) : (
                       <FormControlLabel
@@ -445,7 +445,7 @@ const PurchasesForm = (props) => {
                           />
                         }
                         label="Incluir IVA"
-                        disabled={payload}
+                        disabled={payload ? true : false}
                       />
                     )}
                   </Grid>
