@@ -1,14 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useState } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Typography, Divider } from "@material-ui/core";
 import { getCombosAction } from "redux/actions/combos/combos";
 import { getDishesAction } from "redux/actions/dishes/dishes";
 import { useSelector, useDispatch } from "react-redux";
+import Column from "./Column";
 
 const Kitchen = (props) => {
   const [orders, setOrders] = useState([]);
-  const latestOrder = useRef(null);
+  const columns = [
+    { title: "En Cola", status: "En Cola" },
+    { title: "En Proceso", status: "En Proceso" },
+    { title: "Finalizado", status: "Finalizado" },
+  ];
   const combos = useSelector((state) => state.combos.combos);
   const dishes = useSelector((state) => state.dishes.dishes);
   const dispatch = useDispatch();
@@ -19,23 +24,6 @@ const Kitchen = (props) => {
     loadCombos();
     loadDishes();
   }, [dispatch]);
-
-  const getDishName = (dId) => {
-    if (dId === null) {
-      return;
-    }
-
-    return dishes.find((dish) => dish.id === dId).name;
-  };
-
-  const getComboName = (cId) => {
-    if (cId === null) {
-      return;
-    }
-    return combos.find((combo) => combo.id === cId).name;
-  };
-
-  latestOrder.current = orders;
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
@@ -50,18 +38,16 @@ const Kitchen = (props) => {
 
         connection.on("OrderCreated", (order) => {
           console.log("Added Order", order);
-          const updatedOrder = [...latestOrder.current];
-          updatedOrder.push(order);
 
-          setOrders(updatedOrder);
+          setOrders((prevState) => prevState.concat(order));
         });
 
         connection.on("DetailsUpdated", (order) => {
           console.log("Updated Order", order);
-          const updatedOrder = [...latestOrder.current];
-          updatedOrder.push(order);
 
-          setOrders(updatedOrder);
+          setOrders((prevState) =>
+            prevState.map((or) => (or.id === order.id ? (or = order) : or))
+          );
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
@@ -72,6 +58,31 @@ const Kitchen = (props) => {
       <Typography variant="h4" style={{ textAlign: "center" }}>
         Kitchen Screen!
       </Typography>
+
+      <Divider />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        {columns.map((column, index) => (
+          <div
+            style={{
+              display: "flex",
+            }}
+            key={index}
+          >
+            <Column
+              column={column}
+              tasks={orders}
+              combos={combos}
+              dishes={dishes}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
