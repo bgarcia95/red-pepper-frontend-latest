@@ -11,6 +11,7 @@ import {
   FaUserFriends,
   FaUserCheck,
   FaReceipt,
+  FaHamburger,
 } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { FaList } from "react-icons/fa";
@@ -45,7 +46,7 @@ export const DrawerOptions = (props) => {
     },
     {
       text: "Platos",
-      icon: <FaUtensils size="1.2rem" />,
+      icon: <FaHamburger size="1.2rem" />,
       to: "/platos",
     },
     {
@@ -72,6 +73,11 @@ export const DrawerOptions = (props) => {
       text: "Ordenes",
       icon: <FaReceipt size="1.2rem" />,
       to: "/ordenes",
+    },
+    {
+      text: "Cocina",
+      icon: <FaUtensils size="1.2rem" />,
+      to: "/cocina",
     },
   ];
 
