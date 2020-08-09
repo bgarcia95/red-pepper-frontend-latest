@@ -9,6 +9,7 @@ import tablesReducer from "redux/reducers/tables/tables";
 import employeesReducer from "redux/reducers/employees/employees";
 import customersReducer from "redux/reducers/customers/customers";
 import ordersReducer from "redux/reducers/orders/orders";
+import signalROrdersReducer from "redux/reducers/signalR/signalROrders";
 import tokenReducer from "redux/reducers/auth/auth";
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
   employees: employeesReducer,
   customers: customersReducer,
   orders: ordersReducer,
+  signalROrders: signalROrdersReducer,
   auth: tokenReducer,
 });
