@@ -1,0 +1,31 @@
+import {
+  ADD_ORDER_SIGNALR,
+  UPDATE_ORDER_SIGNALR,
+  FETCH_ORDERS,
+} from "redux/utils/actions";
+
+const initialState = {
+  orders: [],
+};
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_ORDERS:
+      return {
+        orders: action.orders,
+      };
+    case ADD_ORDER_SIGNALR:
+      return {
+        orders: state.orders.concat(action.order),
+      };
+
+    case UPDATE_ORDER_SIGNALR:
+      return {
+        orders: state.orders.map((order) =>
+          order.id === action.order.id ? (order = action.order) : order
+        ),
+      };
+    default:
+      return state;
+  }
+};
