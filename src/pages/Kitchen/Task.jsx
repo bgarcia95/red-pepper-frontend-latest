@@ -9,14 +9,14 @@ const Task = (props) => {
       return;
     }
 
-    return dishes.find((dish) => dish.id === dId).name;
+    return dishes.find((dish) => dish.id === dId)?.name;
   };
 
   const getComboName = (cId) => {
     if (cId === null) {
       return;
     }
-    return combos.find((combo) => combo.id === cId).name;
+    return combos.find((combo) => combo.id === cId)?.name;
   };
   return props.task.orderDetails.map(
     (detail, index) =>
