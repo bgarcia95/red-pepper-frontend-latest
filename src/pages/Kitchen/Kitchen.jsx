@@ -11,6 +11,7 @@ import {
   updateOrderSignalR,
   updateOrderDetailsSignalR,
 } from "redux/actions/signalR/signalROrders";
+import { useState } from "react";
 
 const Kitchen = (props) => {
   const columns = [
@@ -32,40 +33,44 @@ const Kitchen = (props) => {
     loadOrders();
   }, [dispatch]);
 
-  const testingNewData = useCallback(
-    (fetchedDetails) => {
-      const currentDetails = orders.map((order) => {
-        return order.orderDetails.map((detail) => detail);
+  const [fetchedDetails, setFetchedDetails] = useState([]);
+
+  const updatedDetailsArray = useCallback(() => {
+    const currentDetails = orders.map((order) => {
+      return order.orderDetails.map((detail) => detail);
+    });
+
+    // YA SIRVE ESTA MIERDA!!
+    // NO TOCAR ESTA MIERDA X
+    const finalDetails = currentDetails.map((curOrderDetails) => {
+      return curOrderDetails.map((curOrderDetail) => {
+        fetchedDetails.map((fetchedDetail) =>
+          fetchedDetail.id === curOrderDetail.id
+            ? (curOrderDetail = fetchedDetail)
+            : curOrderDetail
+        );
+        return curOrderDetail;
       });
+    });
 
-      // YA SIRVE ESTA MIERDA!!
-      // NO TOCAR ESTA MIERDA X
-      const finalDetails = currentDetails.map((curOrderDetails) => {
-        return curOrderDetails.map((curOrderDetail) => {
-          fetchedDetails.map((fetchedDetail) =>
-            fetchedDetail.id === curOrderDetail.id
-              ? (curOrderDetail = fetchedDetail)
-              : curOrderDetail
-          );
-          return curOrderDetail;
-        });
-      });
+    return finalDetails;
 
-      return finalDetails;
+    // NO TOCAR TAMPOCO!
+    // const finalArray = orders.map((order, index) => ({
+    //   ...order,
+    //   orderDetails: finalDetails[index],
+    // }));
 
-      // NO TOCAR TAMPOCO!
-      // const finalArray = orders.map((order, index) => ({
-      //   ...order,
-      //   orderDetails: finalDetails[index],
-      // }));
+    // console.log("Current Details", currentDetails);
+    // console.log("Final Details", finalDetails);
+    // console.log("Final Array", finalArray);
+    // console.log("Final Details Alt", finalDetailsAlt);
+  }, [orders, fetchedDetails]);
 
-      // console.log("Current Details", currentDetails);
-      // console.log("Final Details", finalDetails);
-      // console.log("Final Array", finalArray);
-      // console.log("Final Details Alt", finalDetailsAlt);
-    },
-    [orders]
-  );
+  const onUpdateAndDisplayDetails = () => {
+    dispatch(updateOrderDetailsSignalR(updatedDetailsArray()));
+    dispatch(fetchOrders());
+  };
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
@@ -105,15 +110,13 @@ const Kitchen = (props) => {
       .then((result) => {
         connection.on("DetailsInProcess", (details) => {
           console.log("Updated Details", details);
+          setFetchedDetails(details);
 
-          const updatedDetails = testingNewData(details);
-
-          updatedDetails.length > 0 &&
-            dispatch(updateOrderDetailsSignalR(updatedDetails));
+          onUpdateAndDisplayDetails();
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
-  }, [dispatch, testingNewData]);
+  }, [dispatch]);
 
   return (
     <div>
