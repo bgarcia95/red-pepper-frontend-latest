@@ -7,7 +7,7 @@ import {
 } from "redux/utils/actions";
 
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     http.get("/order").then((response) => {
       dispatch({ type: FETCH_ORDERS, orders: response.data });
     });
@@ -24,13 +24,7 @@ export const updateOrderSignalR = (order) => ({
   order,
 });
 
-export const updateOrderDetailsSignalR = (updatedDetails) => {
-  return (dispatch) => {
-    dispatch({
-      type: UPDATE_ORDER_DETAILS_STATE,
-      updatedDetails,
-    });
-
-    dispatch(fetchOrders());
-  };
-};
+export const updateOrderDetailsSignalR = (updatedDetails) => ({
+  type: UPDATE_ORDER_DETAILS_STATE,
+  updatedDetails,
+});
