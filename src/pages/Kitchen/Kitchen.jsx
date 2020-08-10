@@ -9,6 +9,7 @@ import {
   fetchOrders,
   addOrderSignalR,
   updateOrderSignalR,
+  updateOrderDetailsSignalR,
 } from "redux/actions/signalR/signalROrders";
 
 const Kitchen = (props) => {
@@ -32,31 +33,35 @@ const Kitchen = (props) => {
   }, [dispatch]);
 
   const testingNewData = useCallback(
-    (details) => {
+    (fetchedDetails) => {
       const currentDetails = orders.map((order) => {
         return order.orderDetails.map((detail) => detail);
       });
 
-      const finalDetails = details.map((detail) => {
-        const newArray = currentDetails.map((detArray) => {
-          return detArray.map((curDet) =>
-            curDet.id === detail.id ? (curDet = detail) : curDet
+      // YA SIRVE ESTA MIERDA!!
+      // NO TOCAR ESTA MIERDA X
+      const finalDetails = currentDetails.map((curOrderDetails) => {
+        return curOrderDetails.map((curOrderDetail) => {
+          fetchedDetails.map((fetchedDetail) =>
+            fetchedDetail.id === curOrderDetail.id
+              ? (curOrderDetail = fetchedDetail)
+              : curOrderDetail
           );
+          return curOrderDetail;
         });
-
-        return newArray;
       });
 
-      // const finalDetailsAlt = orders.map((order) => {
-      //   return order.orderDetails.map((detail) => {
-      //     return details.map((fetchedDetail) =>
-      //       detail.id === fetchedDetail.id ? (detail = fetchedDetail) : detail
-      //     );
-      //   });
-      // });
+      return finalDetails;
+
+      // NO TOCAR TAMPOCO!
+      // const finalArray = orders.map((order, index) => ({
+      //   ...order,
+      //   orderDetails: finalDetails[index],
+      // }));
 
       // console.log("Current Details", currentDetails);
-      console.log("Final Details", finalDetails);
+      // console.log("Final Details", finalDetails);
+      // console.log("Final Array", finalArray);
       // console.log("Final Details Alt", finalDetailsAlt);
     },
     [orders]
@@ -89,7 +94,7 @@ const Kitchen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Updated Details");
+    console.log("Connected on Updated Order Details");
     const connection = new HubConnectionBuilder()
       .withUrl("http://localhost:5000/redpeper/app")
       .withAutomaticReconnect()
@@ -101,11 +106,14 @@ const Kitchen = (props) => {
         connection.on("DetailsInProcess", (details) => {
           console.log("Updated Details", details);
 
-          testingNewData(details);
+          const updatedDetails = testingNewData(details);
+
+          updatedDetails.length > 0 &&
+            dispatch(updateOrderDetailsSignalR(updatedDetails));
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
-  }, [testingNewData]);
+  }, [dispatch, testingNewData]);
 
   return (
     <div>
