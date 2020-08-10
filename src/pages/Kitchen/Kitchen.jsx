@@ -94,20 +94,7 @@ const Kitchen = (props) => {
 
           dispatch(updateOrderSignalR(order));
         });
-      })
-      .catch((e) => console.log("Connection failed: ", e));
-  }, [dispatch]);
 
-  useEffect(() => {
-    console.log("Connected on Updated Order Details");
-    const connection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5000/redpeper/app")
-      .withAutomaticReconnect()
-      .build();
-
-    connection
-      .start()
-      .then((result) => {
         connection.on("DetailsInProcess", (details) => {
           console.log("Updated Details", details);
           setFetchedDetails(details);
