@@ -18,29 +18,33 @@ const Task = (props) => {
     }
     return combos.find((combo) => combo.id === cId)?.name;
   };
-  return props.task.orderDetails.map(
-    (detail, index) =>
-      detail.status === props.status && (
-        <div
-          style={{
-            border: " 1px solid lightgrey",
-            borderRadius: "2px",
-            padding: "8px",
-            marginBottom: "8px",
-            backgroundColor: "white",
 
-            display: "flex",
-            flexDirection: "column",
-          }}
-          key={index}
-        >
-          <Typography variant="h6"> {props.task.orderNumber}</Typography>
-          <p>
-            {detail.qty}x{" "}
-            {getDishName(detail.dishId) || getComboName(detail.comboId)}
-          </p>
-        </div>
-      )
+  return (
+    props.task.orderDetails &&
+    props.task.orderDetails.map(
+      (detail, index) =>
+        detail.status === props.status && (
+          <div
+            style={{
+              border: " 1px solid lightgrey",
+              borderRadius: "2px",
+              padding: "8px",
+              marginBottom: "8px",
+              backgroundColor: "white",
+
+              display: "flex",
+              flexDirection: "column",
+            }}
+            key={index}
+          >
+            <Typography variant="h6"> {props.task.orderNumber}</Typography>
+            <p>
+              {detail.qty}x{" "}
+              {getDishName(detail.dishId) || getComboName(detail.comboId)}
+            </p>
+          </div>
+        )
+    )
   );
 };
 
