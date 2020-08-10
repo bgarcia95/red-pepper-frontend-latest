@@ -3,6 +3,7 @@ import {
   ADD_ORDER_SIGNALR,
   UPDATE_ORDER_SIGNALR,
   FETCH_ORDERS,
+  UPDATE_ORDER_DETAILS_STATE,
 } from "redux/utils/actions";
 
 export const fetchOrders = () => {
@@ -22,3 +23,14 @@ export const updateOrderSignalR = (order) => ({
   type: UPDATE_ORDER_SIGNALR,
   order,
 });
+
+export const updateOrderDetailsSignalR = (updatedDetails) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_ORDER_DETAILS_STATE,
+      updatedDetails,
+    });
+
+    dispatch(fetchOrders());
+  };
+};
