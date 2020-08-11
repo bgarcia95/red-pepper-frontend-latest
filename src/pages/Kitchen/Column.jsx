@@ -10,7 +10,9 @@ const Column = (props) => {
         margin: "8px",
         border: "1px solid lightgrey",
         borderRadius: "2px",
-        width: "250px",
+        width: "260px",
+
+        maxHeight: "85vh",
 
         display: "flex",
         flexDirection: "column",
@@ -32,6 +34,7 @@ const Column = (props) => {
           backgroundColor: "white",
           flexGrow: 1,
           minHeight: "100px",
+          overflowY: "scroll",
         }}
       >
         {props.tasks.map((task, index) => {
