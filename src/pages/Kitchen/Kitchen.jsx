@@ -96,7 +96,14 @@ const Kitchen = (props) => {
         });
 
         connection.on("DetailsInProcess", (details) => {
-          console.log("Updated Details", details);
+          console.log("DetailsInProcess Details", details);
+          setFetchedDetails(details);
+
+          onUpdateAndDisplayDetails();
+        });
+
+        connection.on("DetailsFinished", (details) => {
+          console.log("DetailsFinished Details", details);
           setFetchedDetails(details);
 
           onUpdateAndDisplayDetails();
