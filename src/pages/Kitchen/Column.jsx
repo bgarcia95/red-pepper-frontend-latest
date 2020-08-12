@@ -12,7 +12,7 @@ const Column = (props) => {
         borderRadius: "2px",
         width: "260px",
 
-        maxHeight: "85vh",
+        maxHeight: "75vh",
 
         display: "flex",
         flexDirection: "column",
