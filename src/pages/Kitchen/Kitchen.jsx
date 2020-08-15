@@ -137,7 +137,7 @@ const Kitchen = (props) => {
           >
             <Column
               column={column}
-              tasks={orders}
+              orders={orders}
               combos={combos}
               dishes={dishes}
             />

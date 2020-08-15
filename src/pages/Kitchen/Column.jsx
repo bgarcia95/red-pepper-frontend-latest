@@ -57,11 +57,11 @@ const Column = (props) => {
           overflowY: "scroll",
         }}
       >
-        {props.tasks.map((task, index) => {
+        {props.orders.map((order, index) => {
           return (
             <Task
-              key={task.id}
-              task={task}
+              key={order.id}
+              order={order}
               index={index}
               combos={props.combos}
               dishes={props.dishes}
