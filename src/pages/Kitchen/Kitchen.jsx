@@ -115,10 +115,12 @@ const Kitchen = (props) => {
   return (
     <div>
       <Typography variant="h4" style={{ textAlign: "center" }}>
-        Kitchen Screen!
+        Listado de Pedidos
       </Typography>
 
-      <Divider />
+      <div style={{ margin: "20px 0" }}>
+        <Divider />
+      </div>
 
       <div
         style={{
