@@ -2,15 +2,32 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 
 import Task from "./Task";
+import { green, orange, red } from "@material-ui/core/colors";
 
 const Column = (props) => {
+  const getBgColor = (title) => {
+    switch (title) {
+      case "En Cola":
+        return red[500];
+
+      case "En Proceso":
+        return orange[500];
+
+      case "Finalizado":
+        return green[500];
+
+      default:
+        return "inherit";
+    }
+  };
+
   return (
     <div
       style={{
         margin: "8px",
         border: "1px solid lightgrey",
         borderRadius: "2px",
-        width: "260px",
+        minWidth: "360px",
 
         maxHeight: "75vh",
 
@@ -23,9 +40,12 @@ const Column = (props) => {
           padding: 8,
           borderBottom: "1px solid lightgrey",
           textAlign: "center",
+          backgroundColor: getBgColor(props.column.title),
         }}
       >
-        <Typography variant="h5">{props.column.title}</Typography>
+        <Typography variant="h5" style={{ color: "#fff" }}>
+          {props.column.title}
+        </Typography>
       </div>
       <div
         style={{
