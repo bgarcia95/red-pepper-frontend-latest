@@ -41,6 +41,8 @@ const Task = (props) => {
                 {detail.qty}x{" "}
                 {getDishName(detail.dishId) || getComboName(detail.comboId)}
               </p>
+              <Typography variant="subtitle2">Comentarios:</Typography>
+              <p>{detail.comments}</p>
             </div>
           )
       )
