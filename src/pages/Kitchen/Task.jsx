@@ -21,7 +21,7 @@ const Task = (props) => {
 
   return props.order.orderDetails
     ? props.order.orderDetails.map((detail, index) => {
-        const detailCommentsArray = detail.comments?.split(" \n");
+        const detailCommentsArray = detail.comments?.split("\n");
 
         return (
           detail.status === props.status && (
@@ -47,7 +47,12 @@ const Task = (props) => {
                 <Fragment>
                   <Typography variant="subtitle2">Comentarios:</Typography>
                   {detailCommentsArray.map((comment, index) => (
-                    <p key={index}>- {comment}</p>
+                    <p
+                      key={index}
+                      style={{ padding: "5px 0", margin: "5px 0" }}
+                    >
+                      - {comment}
+                    </p>
                   ))}
                 </Fragment>
               )}
