@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Typography } from "@material-ui/core";
 
 const Task = (props) => {
@@ -20,8 +20,10 @@ const Task = (props) => {
   };
 
   return props.order.orderDetails
-    ? props.order.orderDetails.map(
-        (detail, index) =>
+    ? props.order.orderDetails.map((detail, index) => {
+        const detailCommentsArray = detail.comments?.split(" \n");
+
+        return (
           detail.status === props.status && (
             <div
               style={{
@@ -41,11 +43,18 @@ const Task = (props) => {
                 {detail.qty}x{" "}
                 {getDishName(detail.dishId) || getComboName(detail.comboId)}
               </p>
-              <Typography variant="subtitle2">Comentarios:</Typography>
-              <p>{detail.comments}</p>
+              {detail.comments && (
+                <Fragment>
+                  <Typography variant="subtitle2">Comentarios:</Typography>
+                  {detailCommentsArray.map((comment, index) => (
+                    <p key={index}>- {comment}</p>
+                  ))}
+                </Fragment>
+              )}
             </div>
           )
-      )
+        );
+      })
     : null;
 };
 
