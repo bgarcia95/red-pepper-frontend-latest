@@ -108,6 +108,13 @@ const Kitchen = (props) => {
 
           onUpdateAndDisplayDetails();
         });
+
+        connection.on("DetailsDelivered", (details) => {
+          console.log("DetailsDelivered Details", details);
+          setFetchedDetails(details);
+
+          onUpdateAndDisplayDetails();
+        });
       })
       .catch((e) => console.log("Connection failed: ", e));
   }, [dispatch]);
