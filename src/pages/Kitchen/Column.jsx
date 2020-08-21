@@ -75,13 +75,16 @@ const Column = (props) => {
           overflowY: "scroll",
         }}
       >
-        {props.orders.length === 0 && (
+        {props.orders.length === 0 ? (
           <div style={{ textAlign: "center" }}>
             No existen ordenes actualmente
           </div>
-        )}
-        {inQueueDetails.length === 0 && (
-          <p style={{ textAlign: "center" }}>No existen detalles actualmente</p>
+        ) : (
+          inQueueDetails.length === 0 && (
+            <p style={{ textAlign: "center" }}>
+              No existen detalles actualmente
+            </p>
+          )
         )}
         {props.orders.map((order, index) => {
           return (
