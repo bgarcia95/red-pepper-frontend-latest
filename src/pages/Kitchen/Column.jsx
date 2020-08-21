@@ -21,6 +21,24 @@ const Column = (props) => {
     }
   };
 
+  const inQueueDetails = props.orders
+    ?.map((or) => {
+      return or.orderDetails?.map((det) => {
+        if (det.status === props.column.status) {
+          return det;
+        } else {
+          return null;
+        }
+      });
+    })
+    .map((det) => {
+      return det?.filter((d) => d !== null && d.status === props.column.status);
+    })
+    .map((det) => {
+      return det?.findIndex((d) => d.status === props.column.status);
+    })
+    .filter((det) => det > -1);
+
   return (
     <div
       style={{
@@ -58,10 +76,16 @@ const Column = (props) => {
         }}
       >
         {props.orders.length === 0 && (
-          <div style={{ textAlign: "center" }}>No existen ordenes </div>
+          <div style={{ textAlign: "center" }}>
+            No existen ordenes actualmente
+          </div>
         )}
         {props.orders.map((order, index) => {
-          return (
+          return inQueueDetails.length === 0 ? (
+            <p style={{ textAlign: "center" }} key={index}>
+              No existen detalles actualmente
+            </p>
+          ) : (
             <Task
               key={order.id}
               order={order}
