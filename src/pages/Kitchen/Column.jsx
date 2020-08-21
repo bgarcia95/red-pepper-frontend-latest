@@ -85,6 +85,10 @@ const Column = (props) => {
             <p style={{ textAlign: "center" }} key={index}>
               No existen detalles actualmente
             </p>
+          ) : props.orders.length === 0 ? (
+            <p style={{ textAlign: "center" }} key={index}>
+              No existen ordenes actualmente
+            </p>
           ) : (
             <Task
               key={order.id}
