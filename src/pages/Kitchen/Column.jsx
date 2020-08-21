@@ -80,16 +80,11 @@ const Column = (props) => {
             No existen ordenes actualmente
           </div>
         )}
+        {inQueueDetails.length === 0 && (
+          <p style={{ textAlign: "center" }}>No existen detalles actualmente</p>
+        )}
         {props.orders.map((order, index) => {
-          return inQueueDetails.length === 0 ? (
-            <p style={{ textAlign: "center" }} key={index}>
-              No existen detalles actualmente
-            </p>
-          ) : props.orders.length === 0 ? (
-            <p style={{ textAlign: "center" }} key={index}>
-              No existen ordenes actualmente
-            </p>
-          ) : (
+          return (
             <Task
               key={order.id}
               order={order}
