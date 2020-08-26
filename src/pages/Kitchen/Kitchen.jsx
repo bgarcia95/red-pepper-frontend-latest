@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { Typography, Divider } from "@material-ui/core";
 import { getCombosAction } from "redux/actions/combos/combos";
@@ -11,7 +11,7 @@ import {
   updateOrderSignalR,
   updateOrderDetailsSignalR,
 } from "redux/actions/signalR/signalROrders";
-import { useState } from "react";
+import { v4 as uuid } from "uuid";
 
 const Kitchen = (props) => {
   const columns = [
@@ -135,12 +135,12 @@ const Kitchen = (props) => {
           justifyContent: "space-around",
         }}
       >
-        {columns.map((column, index) => (
+        {columns.map((column) => (
           <div
             style={{
               display: "flex",
             }}
-            key={index}
+            key={uuid()}
           >
             <Column
               column={column}
