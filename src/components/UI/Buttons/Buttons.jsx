@@ -3,7 +3,7 @@ import { green } from "@material-ui/core/colors";
 
 // Action Buttons
 
-export const AddButton = withStyles((theme) => ({
+export const AddButton = withStyles(() => ({
   root: {
     color: "white",
     backgroundColor: green[600],
@@ -14,7 +14,7 @@ export const AddButton = withStyles((theme) => ({
   },
 }))(Button);
 
-export const EditButton = withStyles((theme) => ({
+export const EditButton = withStyles(() => ({
   root: {
     height: "30px",
   },
