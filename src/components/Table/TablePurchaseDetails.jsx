@@ -51,7 +51,7 @@ const TablePurchaseDetails = (props) => {
             </TableCell>
             <TableCell align="right">Precio</TableCell>
             {invoiceTotal === 0 || fetchedDetails ? null : (
-              <TableCell align="center"></TableCell>
+              <TableCell align="center"/>
             )}
           </TableRow>
           <TableRow>

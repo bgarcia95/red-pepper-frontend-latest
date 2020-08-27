@@ -51,7 +51,7 @@ const TableOrderDetails = (props) => {
               Detalles
             </TableCell>
             <TableCell align="right">Total</TableCell>
-            {items.length > 0 && <TableCell align="right"></TableCell>}
+            {items.length > 0 && <TableCell align="right"/>}
           </TableRow>
           <TableRow>
             <TableCell align="right">Cant.</TableCell>
