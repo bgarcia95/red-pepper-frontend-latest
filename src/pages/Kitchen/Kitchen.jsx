@@ -117,6 +117,7 @@ const Kitchen = (props) => {
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
+    // eslint-disable-next-line
   }, [dispatch]);
 
   return (
