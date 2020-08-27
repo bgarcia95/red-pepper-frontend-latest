@@ -261,7 +261,7 @@ const PurchasesForm = (props) => {
                             ? "text-input error"
                             : "text-input"
                         }
-                        disabled={payload ? true : false}
+                        disabled={!!payload}
                       />
                       {errors.invoiceNumber && touched.invoiceNumber && (
                         <div className="input-feedback">
@@ -277,7 +277,7 @@ const PurchasesForm = (props) => {
                           label="Proveedor"
                           variant="outlined"
                           value={filteredProvider(payload.providerId)}
-                          disabled={payload ? true : false}
+                          disabled={!!payload}
                         />
                       ) : (
                         <React.Fragment>
@@ -323,7 +323,7 @@ const PurchasesForm = (props) => {
                                 : "text-input"
                             }
                             onBlur={handleBlur}
-                            disabled={payload ? true : false}
+                            disabled={!!payload}
                             noOptionsText="No hay opciones"
                             clearText="Limpiar"
                             renderInput={(params) => (
@@ -357,7 +357,7 @@ const PurchasesForm = (props) => {
                           value={moment(values.emissionDate).format(
                             "DD/MM/YYYY"
                           )}
-                          disabled={payload ? true : false}
+                          disabled={!!payload}
                         />
                       ) : (
                         <ThemeProvider theme={defaultMaterialTheme}>
@@ -397,7 +397,7 @@ const PurchasesForm = (props) => {
                                 "aria-label": "change date",
                               }}
                               invalidDateMessage="Formato de fecha incorrecto"
-                              disabled={payload ? true : false}
+                              disabled={!!payload}
                             />
                           </MuiPickersUtilsProvider>
                           {errors.emissionDate && touched.emissionDate && (
@@ -429,7 +429,7 @@ const PurchasesForm = (props) => {
                             ? "Incluye IVA"
                             : "No Incluye IVA"
                         }
-                        disabled={payload ? true : false}
+                        disabled={!!payload}
                       />
                     ) : (
                       <FormControlLabel
@@ -445,7 +445,7 @@ const PurchasesForm = (props) => {
                           />
                         }
                         label="Incluir IVA"
-                        disabled={payload ? true : false}
+                        disabled={!!payload}
                       />
                     )}
                   </Grid>
@@ -498,7 +498,7 @@ const PurchasesForm = (props) => {
                                 : "text-input"
                             }
                             onBlur={handleBlur}
-                            disabled={payload ? true : false}
+                            disabled={!!payload}
                             noOptionsText="No hay opciones"
                             clearText="Limpiar"
                             renderInput={(params) => (
@@ -562,7 +562,7 @@ const PurchasesForm = (props) => {
                                   "aria-label": "change date",
                                 }}
                                 invalidDateMessage="Formato de fecha incorrecto"
-                                disabled={payload ? true : false}
+                                disabled={!!payload}
                               />
                             </MuiPickersUtilsProvider>
                             {errors.expirationDate &&
@@ -591,7 +591,7 @@ const PurchasesForm = (props) => {
                                 ? "text-input error"
                                 : "text-input"
                             }
-                            disabled={payload ? true : false}
+                            disabled={!!payload}
                           />
                           {errors.quantity && touched.quantity && (
                             <div className="input-feedback">
@@ -617,7 +617,7 @@ const PurchasesForm = (props) => {
                                 ? "text-input error"
                                 : "text-input"
                             }
-                            disabled={payload ? true : false}
+                            disabled={!!payload}
                           />
                           {errors.unitPrice && touched.unitPrice && (
                             <div className="input-feedback">
