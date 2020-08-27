@@ -81,7 +81,7 @@ export const loginAction = (user) => {
           authService.getDecodedToken()
         )
       );
-      Swal.fire({
+      await Swal.fire({
         position: "center",
         icon: "success",
         title: "Inicio de Sesión exitoso!",
@@ -96,7 +96,7 @@ export const loginAction = (user) => {
               ? error.response.data
               : error.response.statusText;
           dispatch(authError(errorMessage));
-          Swal.fire({
+          await Swal.fire({
             position: "center",
             icon: "error",
             title: "Credenciales incorrectas",
