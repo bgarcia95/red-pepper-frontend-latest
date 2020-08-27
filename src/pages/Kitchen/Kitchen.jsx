@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { HubConnectionBuilder } from "@microsoft/signalr";
-import { Typography, Divider } from "@material-ui/core";
-import { getCombosAction } from "redux/actions/combos/combos";
-import { getDishesAction } from "redux/actions/dishes/dishes";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useCallback, useEffect, useState} from "react";
+import {HubConnectionBuilder} from "@microsoft/signalr";
+import {Divider, Typography} from "@material-ui/core";
+import {getCombosAction} from "redux/actions/combos/combos";
+import {getDishesAction} from "redux/actions/dishes/dishes";
+import {useDispatch, useSelector} from "react-redux";
 import Column from "./Column";
 import {
-  fetchOrders,
-  addOrderSignalR,
-  updateOrderSignalR,
-  updateOrderDetailsSignalR,
+    addOrderSignalR,
+    fetchOrders,
+    updateOrderDetailsSignalR,
+    updateOrderSignalR,
 } from "redux/actions/signalR/signalROrders";
-import { v4 as uuid } from "uuid";
+import {v4 as uuid} from "uuid";
 
 const Kitchen = (props) => {
   const columns = [
@@ -42,18 +42,16 @@ const Kitchen = (props) => {
 
     // YA SIRVE ESTA MIERDA!!
     // NO TOCAR ESTA MIERDA X
-    const finalDetails = currentDetails.map((curOrderDetails) => {
-      return curOrderDetails.map((curOrderDetail) => {
-        fetchedDetails.map((fetchedDetail) =>
-          fetchedDetail.id === curOrderDetail.id
-            ? (curOrderDetail = fetchedDetail)
-            : curOrderDetail
-        );
-        return curOrderDetail;
-      });
+      return currentDetails.map((curOrderDetails) => {
+        return curOrderDetails.map((curOrderDetail) => {
+            fetchedDetails.map((fetchedDetail) =>
+                fetchedDetail.id === curOrderDetail.id
+                    ? (curOrderDetail = fetchedDetail)
+                    : curOrderDetail
+            );
+            return curOrderDetail;
+        });
     });
-
-    return finalDetails;
 
     // NO TOCAR TAMPOCO!
     // const finalArray = orders.map((order, index) => ({
