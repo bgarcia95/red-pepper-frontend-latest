@@ -32,7 +32,7 @@ const FormDialog = (props) => {
     setOpen(!open);
   };
 
-  let button = "";
+  let button;
 
   if (buttonLabel === "Editar") {
     button = (
