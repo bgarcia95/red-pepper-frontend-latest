@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   TextField,
   FormControl,
@@ -53,7 +53,7 @@ const DishesForm = (props) => {
     ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
   );
 
-  const inputFileRef = useRef(null);
+  // const inputFileRef = useRef(null);
 
   return (
     <Formik
@@ -181,6 +181,11 @@ const DishesForm = (props) => {
 
           // console.log(fd.get(''));
 
+          // const fd = new FormData();
+          // values.image && fd.append("image", values.image);
+
+          // console.log(fd.get("image"));
+
           if (payload) {
             // const dish = {
             //   name: values.name,
@@ -205,7 +210,7 @@ const DishesForm = (props) => {
             // console.log(fd.get("dishCategoryId"));
             // console.log(fd.get("description"));
             // console.log(fd.get("price"));
-            console.log(fd.get("dishSupplies"));
+            // console.log(fd.get("dishSupplies"));
             // console.log(fd.get("image"));
 
             Swal.fire({
@@ -235,12 +240,14 @@ const DishesForm = (props) => {
               Comment: detail.comment,
             }));
 
+            const stringedDetails = JSON.stringify(details);
+
             const fd = new FormData();
             fd.append("name", values.name);
             fd.append("dishCategoryId", values.categoryId);
             fd.append("description", values.description);
             fd.append("price", values.price);
-            fd.append("dishSupplies", details);
+            fd.append("dishSupplies", JSON.parse(stringedDetails));
             fd.append("image", values.image);
 
             Swal.fire({
@@ -281,7 +288,7 @@ const DishesForm = (props) => {
         return (
           <React.Fragment>
             <DialogContent dividers>
-              <form className='form-control' encType='multipart/form-data'>
+              <form className='form-control'>
                 <Grid container alignItems='flex-start' spacing={2}>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
@@ -426,12 +433,12 @@ const DishesForm = (props) => {
                         type='file'
                         name='image'
                         onChange={fileSelectedHandler}
-                        style={{ display: "none" }}
-                        ref={inputFileRef}
+                        // style={{ display: "none" }}
+                        // ref={inputFileRef}
                       />
-                      <button onClick={() => inputFileRef.current.click()}>
+                      {/* <button onClick={() => inputFileRef.current?.click()}>
                         Elegir Imagen
-                      </button>
+                      </button> */}
                     </FormControl>
                   </Grid>
 
