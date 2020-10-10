@@ -58,7 +58,7 @@ const DishesForm = (props) => {
   return (
     <Formik
       initialValues={{
-        // dish header
+        // Dish header
         name: payload ? payload.name : "",
         categoryId: payload ? payload.dishCategoryId : null,
         categoryName: payload ? filteredCategory(payload.dishCategoryId) : null,
@@ -67,7 +67,7 @@ const DishesForm = (props) => {
           : "",
         description: payload ? payload.description : "",
         image: "",
-        fetchedImage: payload?.dishImage.image,
+        fetchedImage: payload?.dishImage?.image,
         imagePreviewUrl: "",
         price: payload ? payload.price : "",
         // Supply input
@@ -240,15 +240,13 @@ const DishesForm = (props) => {
               Comment: detail.comment,
             }));
 
-            const stringedDetails = JSON.stringify(details);
-
             const fd = new FormData();
             fd.append("name", values.name);
             fd.append("dishCategoryId", values.categoryId);
             fd.append("description", values.description);
             fd.append("price", values.price);
-            fd.append("dishSupplies", JSON.parse(stringedDetails));
-            fd.append("image", values.image);
+            fd.append("dishSupplies", JSON.stringify(details));
+            values.image && fd.append("image", values.image);
 
             Swal.fire({
               title: "¿Estás seguro/a?",
@@ -444,11 +442,11 @@ const DishesForm = (props) => {
 
                   <Grid item xs={2}>
                     <FormControl fullWidth>
-                      {(values.imagePreviewUrl || payload?.dishImage.image) && (
+                      {(values.imagePreviewUrl || values.fetchedImage) && (
                         <img
                           src={
                             values.imagePreviewUrl ||
-                            `data:image/jpeg;base64,${payload?.dishImage.image}`
+                            `data:image/jpeg;base64,${values.fetchedImage}`
                           }
                           style={{
                             width: "100%",
