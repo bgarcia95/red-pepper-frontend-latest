@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   TextField,
   FormControl,
@@ -53,6 +53,8 @@ const DishesForm = (props) => {
     ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
   );
 
+  const inputFileRef = useRef(null);
+
   return (
     <Formik
       initialValues={{
@@ -65,6 +67,8 @@ const DishesForm = (props) => {
           : "",
         description: payload ? payload.description : "",
         image: "",
+        fetchedImage: payload?.dishImage.image,
+        imagePreviewUrl: "",
         price: payload ? payload.price : "",
         // Supply input
         supplyId: null,
@@ -175,16 +179,6 @@ const DishesForm = (props) => {
         const onSubmit = (e) => {
           e.preventDefault();
 
-          const fd = new FormData();
-
-          fd.append("name", values.name);
-          fd.append("dishCategoryId", values.categoryId);
-          fd.append("description", values.description);
-          fd.append("price", values.price);
-          fd.append("dishSupplies", values.dishDetails);
-          fd.append("image", values.image);
-          fd.append("id", payload.id);
-
           // console.log(fd.get(''));
 
           if (payload) {
@@ -197,6 +191,16 @@ const DishesForm = (props) => {
             //   image: values.image,
             // };
             // console.log(dish);
+
+            const fd = new FormData();
+            fd.append("name", values.name);
+            fd.append("dishCategoryId", values.categoryId);
+            fd.append("description", values.description);
+            fd.append("price", values.price);
+            fd.append("dishSupplies", values.dishDetails);
+            values.image && fd.append("image", values.image);
+            fd.append("id", payload.id);
+
             Swal.fire({
               title: "¿Estás seguro/a?",
               text: "Se procederá con la actualización del platillo  ",
@@ -207,7 +211,9 @@ const DishesForm = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(updateDishAction(fd));
+                dispatch(
+                  updateDishAction(fd /* { ...dish, id: payload.id } */)
+                );
                 Swal.fire(
                   "¡Completado!",
                   "El platillo fué actualizado satisfactoriamente.",
@@ -222,14 +228,14 @@ const DishesForm = (props) => {
               Comment: detail.comment,
             }));
 
-            const dish = {
-              Name: values.name,
-              DishCategoryId: values.categoryId,
-              Description: values.description,
-              Price: values.price,
-              DishSupplies: details,
-              Image: values.image,
-            };
+            const fd = new FormData();
+            fd.append("name", values.name);
+            fd.append("dishCategoryId", values.categoryId);
+            fd.append("description", values.description);
+            fd.append("price", values.price);
+            fd.append("dishSupplies", values.dishDetails);
+            fd.append("image", values.image);
+
             Swal.fire({
               title: "¿Estás seguro/a?",
               text: "Se procederá con el registro del platillo  ",
@@ -240,7 +246,7 @@ const DishesForm = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(addDishAction(dish));
+                dispatch(addDishAction(fd));
                 Swal.fire(
                   "¡Completado!",
                   "El platillo fué registrado satisfactoriamente.",
@@ -254,8 +260,15 @@ const DishesForm = (props) => {
         };
 
         const fileSelectedHandler = (event) => {
-          console.log(event.target.files[0]);
-          setFieldValue("image", event.target.files[0]);
+          let reader = new FileReader();
+          let file = event.target.files[0];
+
+          reader.onloadend = () => {
+            setFieldValue("image", file);
+            setFieldValue("imagePreviewUrl", reader.result);
+          };
+
+          reader.readAsDataURL(file);
         };
 
         return (
@@ -400,14 +413,42 @@ const DishesForm = (props) => {
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={2}>
                     <FormControl fullWidth={true}>
                       <input
                         type='file'
                         name='image'
                         onChange={fileSelectedHandler}
+                        style={{ display: "none" }}
+                        ref={inputFileRef}
                       />
+                      <button onClick={() => inputFileRef.current.click()}>
+                        Elegir Imagen
+                      </button>
                     </FormControl>
+                  </Grid>
+
+                  <Grid item xs={2}>
+                    <FormControl fullWidth>
+                      {(values.imagePreviewUrl || payload?.dishImage.image) && (
+                        <img
+                          src={
+                            values.imagePreviewUrl ||
+                            `data:image/jpeg;base64,${payload?.dishImage.image}`
+                          }
+                          style={{
+                            width: "100%",
+                            height: 100,
+                            objectFit: "contain",
+                          }}
+                          alt='Preview'
+                        />
+                      )}
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Divider />
                   </Grid>
 
                   <Grid item xs={12}>
