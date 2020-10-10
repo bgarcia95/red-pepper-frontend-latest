@@ -64,6 +64,7 @@ const DishesForm = (props) => {
           ? filteredCategory(payload.dishCategoryId)
           : "",
         description: payload ? payload.description : "",
+        image: "",
         price: payload ? payload.price : "",
         // Supply input
         supplyId: null,
@@ -73,6 +74,7 @@ const DishesForm = (props) => {
         expirationDate: null,
         comment: "",
         dishDetails: payload ? payload.dishSupplies : [],
+
         suppliesSelect: payload ? filteredOptions : suppliesSelect,
       }}
       validationSchema={Yup.object().shape({
@@ -173,14 +175,28 @@ const DishesForm = (props) => {
         const onSubmit = (e) => {
           e.preventDefault();
 
+          const fd = new FormData();
+
+          fd.append("name", values.name);
+          fd.append("dishCategoryId", values.categoryId);
+          fd.append("description", values.description);
+          fd.append("price", values.price);
+          fd.append("dishSupplies", values.dishDetails);
+          fd.append("image", values.image);
+          fd.append("id", payload.id);
+
+          // console.log(fd.get(''));
+
           if (payload) {
-            const dish = {
-              name: values.name,
-              dishCategoryId: values.categoryId,
-              description: values.description,
-              price: values.price,
-              dishSupplies: values.dishDetails,
-            };
+            // const dish = {
+            //   name: values.name,
+            //   dishCategoryId: values.categoryId,
+            //   description: values.description,
+            //   price: values.price,
+            //   dishSupplies: values.dishDetails,
+            //   image: values.image,
+            // };
+            // console.log(dish);
             Swal.fire({
               title: "¿Estás seguro/a?",
               text: "Se procederá con la actualización del platillo  ",
@@ -191,7 +207,7 @@ const DishesForm = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(updateDishAction({ ...dish, id: payload.id }));
+                dispatch(updateDishAction(fd));
                 Swal.fire(
                   "¡Completado!",
                   "El platillo fué actualizado satisfactoriamente.",
@@ -212,6 +228,7 @@ const DishesForm = (props) => {
               Description: values.description,
               Price: values.price,
               DishSupplies: details,
+              Image: values.image,
             };
             Swal.fire({
               title: "¿Estás seguro/a?",
@@ -232,21 +249,27 @@ const DishesForm = (props) => {
                 toggle();
               }
             });
+            // console.log(dish);
           }
+        };
+
+        const fileSelectedHandler = (event) => {
+          console.log(event.target.files[0]);
+          setFieldValue("image", event.target.files[0]);
         };
 
         return (
           <React.Fragment>
             <DialogContent dividers>
-              <form className="form-control">
-                <Grid container alignItems="flex-start" spacing={2}>
+              <form className='form-control' encType='multipart/form-data'>
+                <Grid container alignItems='flex-start' spacing={2}>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        name="name"
-                        label="Nombre del Platillo"
-                        variant="outlined"
+                        name='name'
+                        label='Nombre del Platillo'
+                        variant='outlined'
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -257,7 +280,7 @@ const DishesForm = (props) => {
                         }
                       />
                       {errors.name && touched.name && (
-                        <div className="input-feedback">{errors.name}</div>
+                        <div className='input-feedback'>{errors.name}</div>
                       )}
                     </FormControl>
                   </Grid>
@@ -265,7 +288,7 @@ const DishesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <React.Fragment>
                         <Autocomplete
-                          id="categoryInputName"
+                          id='categoryInputName'
                           options={categoriesSelect}
                           getOptionLabel={(option) =>
                             typeof option === "string" ? option : option.label
@@ -306,13 +329,13 @@ const DishesForm = (props) => {
                               : "text-input"
                           }
                           onBlur={handleBlur}
-                          noOptionsText="No hay opciones"
-                          clearText="Limpiar"
+                          noOptionsText='No hay opciones'
+                          clearText='Limpiar'
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              label="Categoría"
-                              variant="outlined"
+                              label='Categoría'
+                              variant='outlined'
                               error={
                                 errors.categoryInputName &&
                                 touched.categoryInputName
@@ -322,7 +345,7 @@ const DishesForm = (props) => {
                         />
                         {errors.categoryInputName &&
                           touched.categoryInputName && (
-                            <div className="input-feedback">
+                            <div className='input-feedback'>
                               {errors.categoryInputName}
                             </div>
                           )}
@@ -332,11 +355,11 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name="price"
-                        label="Precio"
+                        name='price'
+                        label='Precio'
                         error={errors.price && touched.price}
-                        variant="outlined"
-                        type="number"
+                        variant='outlined'
+                        type='number'
                         inputProps={{ min: "1", step: "1" }}
                         value={values.price}
                         onChange={handleChange}
@@ -348,17 +371,17 @@ const DishesForm = (props) => {
                         }
                       />
                       {errors.price && touched.price && (
-                        <div className="input-feedback">{errors.price}</div>
+                        <div className='input-feedback'>{errors.price}</div>
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={8}>
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.description && touched.description}
-                        name="description"
-                        label="Descripción"
-                        variant="outlined"
+                        name='description'
+                        label='Descripción'
+                        variant='outlined'
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -371,10 +394,19 @@ const DishesForm = (props) => {
                         rows={3}
                       />
                       {errors.description && touched.description && (
-                        <div className="input-feedback">
+                        <div className='input-feedback'>
                           {errors.description}
                         </div>
                       )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControl fullWidth={true}>
+                      <input
+                        type='file'
+                        name='image'
+                        onChange={fileSelectedHandler}
+                      />
                     </FormControl>
                   </Grid>
 
@@ -385,7 +417,7 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        id="supplyInputName"
+                        id='supplyInputName'
                         options={values.suppliesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label
@@ -422,13 +454,13 @@ const DishesForm = (props) => {
                             : "text-input"
                         }
                         onBlur={handleBlur}
-                        noOptionsText="No hay opciones"
-                        clearText="Limpiar"
+                        noOptionsText='No hay opciones'
+                        clearText='Limpiar'
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Insumo"
-                            variant="outlined"
+                            label='Insumo'
+                            variant='outlined'
                             error={
                               errors.supplyInputName && touched.supplyInputName
                             }
@@ -436,7 +468,7 @@ const DishesForm = (props) => {
                         )}
                       />
                       {errors.supplyInputName && touched.supplyInputName && (
-                        <div className="input-feedback">
+                        <div className='input-feedback'>
                           {errors.supplyInputName}
                         </div>
                       )}
@@ -446,11 +478,11 @@ const DishesForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name="quantity"
-                        label="Cantidad"
+                        name='quantity'
+                        label='Cantidad'
                         error={errors.quantity && touched.quantity}
-                        variant="outlined"
-                        type="number"
+                        variant='outlined'
+                        type='number'
                         inputProps={{ min: "1", step: "1" }}
                         value={values.quantity}
                         onChange={handleChange}
@@ -462,7 +494,7 @@ const DishesForm = (props) => {
                         }
                       />
                       {errors.quantity && touched.quantity && (
-                        <div className="input-feedback">{errors.quantity}</div>
+                        <div className='input-feedback'>{errors.quantity}</div>
                       )}
                     </FormControl>
                   </Grid>
@@ -470,9 +502,9 @@ const DishesForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.comment && touched.comment}
-                        name="comment"
-                        label="Comentario"
-                        variant="outlined"
+                        name='comment'
+                        label='Comentario'
+                        variant='outlined'
                         value={values.comment}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -485,7 +517,7 @@ const DishesForm = (props) => {
                         rows={3}
                       />
                       {errors.comment && touched.comment && (
-                        <div className="input-feedback">{errors.comment}</div>
+                        <div className='input-feedback'>{errors.comment}</div>
                       )}
                     </FormControl>
                   </Grid>
@@ -493,12 +525,12 @@ const DishesForm = (props) => {
                     item
                     xs={12}
                     md={2}
-                    className="text-center"
+                    className='text-center'
                     style={{ marginTop: "5px" }}
                   >
                     <AddButton
                       disabled={!values.supplyName || values.quantity <= 0}
-                      variant="contained"
+                      variant='contained'
                       onClick={(e) => {
                         onSubmitSupply(e);
                       }}
@@ -522,15 +554,15 @@ const DishesForm = (props) => {
               </form>
             </DialogContent>
             <DialogActions>
-              <div className="center-content">
-                <CancelButton onClick={toggle} variant="contained">
+              <div className='center-content'>
+                <CancelButton onClick={toggle} variant='contained'>
                   Cancelar
                 </CancelButton>
 
                 {payload ? (
                   <AddButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     disabled={
                       isSubmitting || !dirty || values.dishDetails.length === 0
                     }
@@ -540,8 +572,8 @@ const DishesForm = (props) => {
                   </AddButton>
                 ) : (
                   <AddButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     disabled={
                       !values.name ||
                       !values.categoryName ||
