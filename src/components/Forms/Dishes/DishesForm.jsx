@@ -197,9 +197,16 @@ const DishesForm = (props) => {
             fd.append("dishCategoryId", values.categoryId);
             fd.append("description", values.description);
             fd.append("price", values.price);
-            fd.append("dishSupplies", values.dishDetails);
+            fd.append("dishSupplies", JSON.stringify(values.dishDetails));
             values.image && fd.append("image", values.image);
             fd.append("id", payload.id);
+
+            // console.log(fd.get("name"));
+            // console.log(fd.get("dishCategoryId"));
+            // console.log(fd.get("description"));
+            // console.log(fd.get("price"));
+            console.log(fd.get("dishSupplies"));
+            // console.log(fd.get("image"));
 
             Swal.fire({
               title: "¿Estás seguro/a?",
@@ -233,7 +240,7 @@ const DishesForm = (props) => {
             fd.append("dishCategoryId", values.categoryId);
             fd.append("description", values.description);
             fd.append("price", values.price);
-            fd.append("dishSupplies", values.dishDetails);
+            fd.append("dishSupplies", details);
             fd.append("image", values.image);
 
             Swal.fire({
