@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   TextField,
   FormControl,
@@ -48,12 +48,16 @@ const CombosForm = (props) => {
     ({ value: id1 }) => !detailsArray.some(({ value: id2 }) => id2 === id1)
   );
 
+  const inputFileRef = useRef(null);
+
   return (
     <Formik
       initialValues={{
         // dish header
         name: payload ? payload.name : "",
         description: payload ? payload.description : "",
+        image: "",
+        fetchedImage: payload?.comboImage?.image,
         // Dish Input
         dishId: null,
         dishName: null,
@@ -161,12 +165,21 @@ const CombosForm = (props) => {
           e.preventDefault();
 
           if (payload) {
-            const combo = {
-              name: values.name,
-              description: values.description,
-              total: comboTotal,
-              comboDetails: values.comboDetails,
-            };
+            // const combo = {
+            //   name: values.name,
+            //   description: values.description,
+            //   total: comboTotal,
+            //   comboDetails: values.comboDetails,
+            // };
+
+            const fd = new FormData();
+            fd.append("Name", values.name);
+            fd.append("Description", values.description);
+            fd.append("Total", comboTotal);
+            fd.append("ComboDetails", JSON.stringify(values.comboDetails));
+            values.image && fd.append("Image", values.image);
+            fd.append("Id", payload.id);
+
             Swal.fire({
               title: "¿Estás seguro/a?",
               text: "Se procederá con la actualización del combo",
@@ -177,7 +190,7 @@ const CombosForm = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(updateComboAction({ ...combo, id: payload.id }));
+                dispatch(updateComboAction(fd));
                 Swal.fire(
                   "¡Completado!",
                   "El combo fué actualizado satisfactoriamente.",
@@ -192,12 +205,20 @@ const CombosForm = (props) => {
               Price: detail.price,
             }));
 
-            const combo = {
-              Name: values.name,
-              Description: values.description,
-              Total: comboTotal,
-              ComboDetails: details,
-            };
+            // const combo = {
+            //   Name: values.name,
+            //   Description: values.description,
+            //   Total: comboTotal,
+            //   ComboDetails: details,
+            // };
+
+            const fd = new FormData();
+            fd.append("Name", values.name);
+            fd.append("Description", values.description);
+            fd.append("Total", comboTotal);
+            fd.append("ComboDetails", JSON.stringify(details));
+            values.image && fd.append("Image", values.image);
+
             Swal.fire({
               title: "¿Estás seguro/a?",
               text: "Se procederá con el registro del combo  ",
@@ -208,7 +229,7 @@ const CombosForm = (props) => {
               cancelButtonText: "Cancelar",
             }).then((result) => {
               if (result.value) {
-                dispatch(addComboAction(combo));
+                dispatch(addComboAction(fd));
                 Swal.fire(
                   "¡Completado!",
                   "El combo fué registrado satisfactoriamente.",
@@ -228,18 +249,46 @@ const CombosForm = (props) => {
 
         const comboTotal = total(values.comboDetails);
 
+        const fileSelectedHandler = (event) => {
+          let reader = new FileReader();
+          let file = event.target.files[0];
+
+          reader.onloadend = () => {
+            setFieldValue("image", file);
+            setFieldValue("imagePreviewUrl", reader.result);
+          };
+
+          reader.readAsDataURL(file);
+        };
+
         return (
           <React.Fragment>
             <DialogContent dividers>
-              <form className="form-control">
-                <Grid container alignItems="flex-start" spacing={2}>
+              <form className='form-control'>
+                <Grid container alignItems='flex-start' spacing={2}>
+                  <Grid item xs={12} style={{ textAlign: "center" }}>
+                    {(values.imagePreviewUrl || values.fetchedImage) && (
+                      <img
+                        src={
+                          values.imagePreviewUrl ||
+                          `data:image/jpeg;base64,${values.fetchedImage}`
+                        }
+                        style={{
+                          width: 350,
+                          height: 250,
+                          borderRadius: 10,
+                        }}
+                        alt='Preview'
+                      />
+                    )}
+                  </Grid>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.name && touched.name}
-                        name="name"
-                        label="Nombre del Combo"
-                        variant="outlined"
+                        name='name'
+                        label='Nombre del Combo'
+                        variant='outlined'
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -252,7 +301,7 @@ const CombosForm = (props) => {
                         rows={3}
                       />
                       {errors.name && touched.name && (
-                        <div className="input-feedback">{errors.name}</div>
+                        <div className='input-feedback'>{errors.name}</div>
                       )}
                     </FormControl>
                   </Grid>
@@ -260,9 +309,9 @@ const CombosForm = (props) => {
                     <FormControl fullWidth={true}>
                       <TextField
                         error={errors.description && touched.description}
-                        name="description"
-                        label="Descripción"
-                        variant="outlined"
+                        name='description'
+                        label='Descripción'
+                        variant='outlined'
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -275,7 +324,7 @@ const CombosForm = (props) => {
                         rows={3}
                       />
                       {errors.description && touched.description && (
-                        <div className="input-feedback">
+                        <div className='input-feedback'>
                           {errors.description}
                         </div>
                       )}
@@ -284,8 +333,8 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        label="Total"
-                        variant="outlined"
+                        label='Total'
+                        variant='outlined'
                         disabled
                         value={comboTotal}
                       />
@@ -297,7 +346,7 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        id="dishInputName"
+                        id='dishInputName'
                         options={values.dishesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label
@@ -334,13 +383,13 @@ const CombosForm = (props) => {
                             : "text-input"
                         }
                         onBlur={handleBlur}
-                        noOptionsText="No hay opciones"
-                        clearText="Limpiar"
+                        noOptionsText='No hay opciones'
+                        clearText='Limpiar'
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="Platillo"
-                            variant="outlined"
+                            label='Platillo'
+                            variant='outlined'
                             error={
                               errors.dishInputName && touched.dishInputName
                             }
@@ -348,7 +397,7 @@ const CombosForm = (props) => {
                         )}
                       />
                       {errors.dishInputName && touched.dishInputName && (
-                        <div className="input-feedback">
+                        <div className='input-feedback'>
                           {errors.dishInputName}
                         </div>
                       )}
@@ -358,11 +407,11 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name="quantity"
-                        label="Cantidad"
+                        name='quantity'
+                        label='Cantidad'
                         error={errors.quantity && touched.quantity}
-                        variant="outlined"
-                        type="number"
+                        variant='outlined'
+                        type='number'
                         inputProps={{ min: "1", step: "1" }}
                         value={values.quantity}
                         onChange={handleChange}
@@ -374,18 +423,18 @@ const CombosForm = (props) => {
                         }
                       />
                       {errors.quantity && touched.quantity && (
-                        <div className="input-feedback">{errors.quantity}</div>
+                        <div className='input-feedback'>{errors.quantity}</div>
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} md={3}>
+                  <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name="dishPrice"
-                        label="Precio Combo"
+                        name='dishPrice'
+                        label='Precio Combo'
                         error={errors.dishPrice && touched.dishPrice}
-                        variant="outlined"
-                        type="number"
+                        variant='outlined'
+                        type='number'
                         inputProps={{ min: "1", step: "1" }}
                         value={values.dishPrice}
                         onChange={handleChange}
@@ -397,15 +446,15 @@ const CombosForm = (props) => {
                         }
                       />
                       {errors.dishPrice && touched.dishPrice && (
-                        <div className="input-feedback">{errors.dishPrice}</div>
+                        <div className='input-feedback'>{errors.dishPrice}</div>
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} md={3}>
+                  <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        label="Precio Original"
-                        variant="outlined"
+                        label='Precio Original'
+                        variant='outlined'
                         value={
                           values.dishId ? filterDishPrice(values.dishId) : ""
                         }
@@ -413,10 +462,26 @@ const CombosForm = (props) => {
                       />
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12} md={2}>
+                    <input
+                      type='file'
+                      name='image'
+                      onChange={fileSelectedHandler}
+                      style={{ display: "none" }}
+                      ref={inputFileRef}
+                    />
+                    <button
+                      onClick={() => inputFileRef.current?.click()}
+                      type='button'
+                    >
+                      Elegir Imagen
+                    </button>
+                    <p>{values.image.name}</p>
+                  </Grid>
                   <Grid
                     item
                     xs={12}
-                    className="text-center"
+                    className='text-center'
                     style={{ marginTop: "5px" }}
                   >
                     <AddButton
@@ -425,7 +490,7 @@ const CombosForm = (props) => {
                         values.quantity <= 0 ||
                         values.dishPrice <= 0
                       }
-                      variant="contained"
+                      variant='contained'
                       onClick={(e) => {
                         onSubmitDish(e);
                       }}
@@ -450,15 +515,15 @@ const CombosForm = (props) => {
               </form>
             </DialogContent>
             <DialogActions>
-              <div className="center-content">
-                <CancelButton onClick={toggle} variant="contained">
+              <div className='center-content'>
+                <CancelButton onClick={toggle} variant='contained'>
                   Cancelar
                 </CancelButton>
 
                 {payload ? (
                   <AddButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     disabled={
                       isSubmitting || !dirty || values.comboDetails.length === 0
                     }
@@ -468,8 +533,8 @@ const CombosForm = (props) => {
                   </AddButton>
                 ) : (
                   <AddButton
-                    type="submit"
-                    variant="contained"
+                    type='submit'
+                    variant='contained'
                     disabled={
                       !values.name ||
                       !values.description ||
