@@ -64,6 +64,7 @@ const CategoriesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.name && touched.name}
                         name="name"
                         label="Categoría"
@@ -86,6 +87,7 @@ const CategoriesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.description && touched.description}
                         name="description"
                         label="Descripción"

@@ -264,8 +264,8 @@ const CombosForm = (props) => {
         return (
           <React.Fragment>
             <DialogContent dividers>
-              <form className='form-control'>
-                <Grid container alignItems='flex-start' spacing={2}>
+              <form className="form-control">
+                <Grid container alignItems="flex-start" spacing={2}>
                   <Grid item xs={12} style={{ textAlign: "center" }}>
                     {(values.imagePreviewUrl || values.fetchedImage) && (
                       <img
@@ -278,17 +278,18 @@ const CombosForm = (props) => {
                           height: 250,
                           borderRadius: 10,
                         }}
-                        alt='Preview'
+                        alt="Preview"
                       />
                     )}
                   </Grid>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.name && touched.name}
-                        name='name'
-                        label='Nombre del Combo'
-                        variant='outlined'
+                        name="name"
+                        label="Nombre del Combo"
+                        variant="outlined"
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -301,17 +302,18 @@ const CombosForm = (props) => {
                         rows={3}
                       />
                       {errors.name && touched.name && (
-                        <div className='input-feedback'>{errors.name}</div>
+                        <div className="input-feedback">{errors.name}</div>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.description && touched.description}
-                        name='description'
-                        label='Descripción'
-                        variant='outlined'
+                        name="description"
+                        label="Descripción"
+                        variant="outlined"
                         value={values.description}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -324,7 +326,7 @@ const CombosForm = (props) => {
                         rows={3}
                       />
                       {errors.description && touched.description && (
-                        <div className='input-feedback'>
+                        <div className="input-feedback">
                           {errors.description}
                         </div>
                       )}
@@ -333,8 +335,8 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        label='Total'
-                        variant='outlined'
+                        label="Total"
+                        variant="outlined"
                         disabled
                         value={comboTotal}
                       />
@@ -346,7 +348,7 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={4}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
-                        id='dishInputName'
+                        id="dishInputName"
                         options={values.dishesSelect}
                         getOptionLabel={(option) =>
                           typeof option === "string" ? option : option.label
@@ -383,13 +385,14 @@ const CombosForm = (props) => {
                             : "text-input"
                         }
                         onBlur={handleBlur}
-                        noOptionsText='No hay opciones'
-                        clearText='Limpiar'
+                        noOptionsText="No hay opciones"
+                        clearText="Limpiar"
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label='Platillo'
-                            variant='outlined'
+                            required
+                            label="Platillo"
+                            variant="outlined"
                             error={
                               errors.dishInputName && touched.dishInputName
                             }
@@ -397,7 +400,7 @@ const CombosForm = (props) => {
                         )}
                       />
                       {errors.dishInputName && touched.dishInputName && (
-                        <div className='input-feedback'>
+                        <div className="input-feedback">
                           {errors.dishInputName}
                         </div>
                       )}
@@ -407,11 +410,12 @@ const CombosForm = (props) => {
                   <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name='quantity'
-                        label='Cantidad'
+                        required
+                        name="quantity"
+                        label="Cantidad"
                         error={errors.quantity && touched.quantity}
-                        variant='outlined'
-                        type='number'
+                        variant="outlined"
+                        type="number"
                         inputProps={{ min: "1", step: "1" }}
                         value={values.quantity}
                         onChange={handleChange}
@@ -423,18 +427,19 @@ const CombosForm = (props) => {
                         }
                       />
                       {errors.quantity && touched.quantity && (
-                        <div className='input-feedback'>{errors.quantity}</div>
+                        <div className="input-feedback">{errors.quantity}</div>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        name='dishPrice'
-                        label='Precio Combo'
+                        required
+                        name="dishPrice"
+                        label="Precio Combo"
                         error={errors.dishPrice && touched.dishPrice}
-                        variant='outlined'
-                        type='number'
+                        variant="outlined"
+                        type="number"
                         inputProps={{ min: "1", step: "1" }}
                         value={values.dishPrice}
                         onChange={handleChange}
@@ -446,15 +451,15 @@ const CombosForm = (props) => {
                         }
                       />
                       {errors.dishPrice && touched.dishPrice && (
-                        <div className='input-feedback'>{errors.dishPrice}</div>
+                        <div className="input-feedback">{errors.dishPrice}</div>
                       )}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} md={2}>
                     <FormControl fullWidth={true}>
                       <TextField
-                        label='Precio Original'
-                        variant='outlined'
+                        label="Precio Original"
+                        variant="outlined"
                         value={
                           values.dishId ? filterDishPrice(values.dishId) : ""
                         }
@@ -464,15 +469,15 @@ const CombosForm = (props) => {
                   </Grid>
                   <Grid item xs={12} md={2}>
                     <input
-                      type='file'
-                      name='image'
+                      type="file"
+                      name="image"
                       onChange={fileSelectedHandler}
                       style={{ display: "none" }}
                       ref={inputFileRef}
                     />
                     <button
                       onClick={() => inputFileRef.current?.click()}
-                      type='button'
+                      type="button"
                     >
                       Elegir Imagen
                     </button>
@@ -481,7 +486,7 @@ const CombosForm = (props) => {
                   <Grid
                     item
                     xs={12}
-                    className='text-center'
+                    className="text-center"
                     style={{ marginTop: "5px" }}
                   >
                     <AddButton
@@ -490,7 +495,7 @@ const CombosForm = (props) => {
                         values.quantity <= 0 ||
                         values.dishPrice <= 0
                       }
-                      variant='contained'
+                      variant="contained"
                       onClick={(e) => {
                         onSubmitDish(e);
                       }}
@@ -515,15 +520,15 @@ const CombosForm = (props) => {
               </form>
             </DialogContent>
             <DialogActions>
-              <div className='center-content'>
-                <CancelButton onClick={toggle} variant='contained'>
+              <div className="center-content">
+                <CancelButton onClick={toggle} variant="contained">
                   Cancelar
                 </CancelButton>
 
                 {payload ? (
                   <AddButton
-                    type='submit'
-                    variant='contained'
+                    type="submit"
+                    variant="contained"
                     disabled={
                       isSubmitting || !dirty || values.comboDetails.length === 0
                     }
@@ -533,8 +538,8 @@ const CombosForm = (props) => {
                   </AddButton>
                 ) : (
                   <AddButton
-                    type='submit'
-                    variant='contained'
+                    type="submit"
+                    variant="contained"
                     disabled={
                       !values.name ||
                       !values.description ||

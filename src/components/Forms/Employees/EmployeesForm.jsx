@@ -197,6 +197,7 @@ const EmployeesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.name && touched.name}
                         name="name"
                         label="Nombres"
@@ -218,6 +219,7 @@ const EmployeesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.lastName && touched.lastName}
                         name="lastName"
                         label="Apellidos"
@@ -281,6 +283,7 @@ const EmployeesForm = (props) => {
                           locale={values.locale}
                         >
                           <KeyboardDatePicker
+                            required
                             name="birthDate"
                             label="Fecha de Nacimiento"
                             value={values.birthDate}
@@ -332,6 +335,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
+                            required
                             name="dui"
                             label="DUI"
                             variant="outlined"
@@ -361,6 +365,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
+                            required
                             name="nit"
                             label="NIT"
                             variant="outlined"
@@ -390,6 +395,7 @@ const EmployeesForm = (props) => {
                       >
                         {() => (
                           <TextField
+                            required
                             name="telephone"
                             label="Teléfono"
                             variant="outlined"
@@ -411,6 +417,7 @@ const EmployeesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.email && touched.email}
                         name="email"
                         label="Correo electrónico"
@@ -432,6 +439,7 @@ const EmployeesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.address && touched.address}
                         name="address"
                         label="Dirección"

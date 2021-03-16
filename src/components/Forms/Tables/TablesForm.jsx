@@ -66,6 +66,7 @@ const TablesForm = (props) => {
                   <Grid item xs={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.name && touched.name}
                         name="name"
                         label="Nombre"
@@ -87,6 +88,7 @@ const TablesForm = (props) => {
                   <Grid item xs={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.chairs && touched.chairs}
                         name="chairs"
                         type="number"
@@ -110,6 +112,7 @@ const TablesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         error={errors.description && touched.description}
                         name="description"
                         label="Descripción"

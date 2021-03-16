@@ -249,6 +249,7 @@ const PurchasesForm = (props) => {
                   <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         name="invoiceNumber"
                         error={errors.invoiceNumber && touched.invoiceNumber}
                         label="N° de Factura"
@@ -274,6 +275,7 @@ const PurchasesForm = (props) => {
                     <FormControl fullWidth={true}>
                       {payload ? (
                         <TextField
+                          required
                           label="Proveedor"
                           variant="outlined"
                           value={filteredProvider(payload.providerId)}
@@ -329,6 +331,7 @@ const PurchasesForm = (props) => {
                             renderInput={(params) => (
                               <TextField
                                 {...params}
+                                required
                                 label="Proveedor"
                                 variant="outlined"
                                 error={
@@ -352,6 +355,7 @@ const PurchasesForm = (props) => {
                     <FormControl fullWidth={true}>
                       {payload ? (
                         <TextField
+                          required
                           label="Fecha de Emisión"
                           variant="outlined"
                           value={moment(values.emissionDate).format(
@@ -504,6 +508,7 @@ const PurchasesForm = (props) => {
                             renderInput={(params) => (
                               <TextField
                                 {...params}
+                                required
                                 label="Insumo"
                                 variant="outlined"
                                 error={
@@ -577,6 +582,7 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={2}>
                         <FormControl fullWidth={true}>
                           <TextField
+                            required
                             name="quantity"
                             label="Cantidad"
                             error={errors.quantity && touched.quantity}
@@ -603,6 +609,7 @@ const PurchasesForm = (props) => {
                       <Grid item xs={12} md={2}>
                         <FormControl fullWidth={true}>
                           <TextField
+                            required
                             name="unitPrice"
                             label="Precio Unitario"
                             error={errors.unitPrice && touched.unitPrice}

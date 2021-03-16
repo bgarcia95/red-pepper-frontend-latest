@@ -72,6 +72,7 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         id="name"
                         name="name"
                         error={errors.name && touched.name}
@@ -94,6 +95,7 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         id="presentation"
                         name="presentation"
                         error={errors.presentation && touched.presentation}
@@ -118,6 +120,7 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         id="unitOfMeasure"
                         name="unitOfMeasure"
                         error={errors.unitOfMeasure && touched.unitOfMeasure}
@@ -142,6 +145,7 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         id="minimumQty"
                         name="minimumQty"
                         error={errors.minimumQty && touched.minimumQty}
@@ -168,6 +172,7 @@ const SuppliesForm = (props) => {
                   <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
+                        required
                         id="description"
                         name="description"
                         error={errors.description && touched.description}
