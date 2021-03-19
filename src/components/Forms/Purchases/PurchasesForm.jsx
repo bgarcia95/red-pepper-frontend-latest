@@ -371,6 +371,7 @@ const PurchasesForm = (props) => {
                             locale={values.locale}
                           >
                             <KeyboardDatePicker
+                              required
                               name="emissionDate"
                               label="Fecha de Emision"
                               value={values.emissionDate}
