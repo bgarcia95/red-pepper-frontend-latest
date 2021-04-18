@@ -17,6 +17,7 @@ import Proptypes from "prop-types";
 import Kitchen from "pages/Kitchen/Kitchen";
 import InventoryReporting from "pages/Reporting/InventoryReporting";
 import SalesReporting from "pages/Reporting/SalesReporting";
+import InventoryAdjustment from "pages/InventoryAdjustment/InventoryAdjustment";
 
 const AppRouter = (props) => {
   const { isAuthenticated } = props;
@@ -49,6 +50,7 @@ const AppRouter = (props) => {
         <Route exact path="/cocina" component={Kitchen} />
         <Route exact path="/reporteria/inventario" component={InventoryReporting} />
         <Route exact path="/reporteria/ventas" component={SalesReporting} />
+        <Route exact path="/ajuste-inventario" component={InventoryAdjustment} />
 
         {/* This one will catch anything that has no route. */}
         <Redirect to="/insumos" />
