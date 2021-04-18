@@ -23,7 +23,6 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import { useEffect } from "react";
-import DownloadLink from "react-download-link";
 import MomentUtils from "@date-io/moment";
 import { green } from "@material-ui/core/colors";
 
