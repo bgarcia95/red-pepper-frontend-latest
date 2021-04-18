@@ -1,22 +1,22 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   TextField,
   FormControl,
   Grid,
   Divider,
   DialogContent,
-} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import DialogActions from "@material-ui/core/DialogActions";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
-import PropTypes from "prop-types";
+} from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import DialogActions from '@material-ui/core/DialogActions';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import PropTypes from 'prop-types';
 
-import { AddButton, CancelButton } from "../../UI/Buttons/Buttons";
-import { addComboAction, updateComboAction } from "redux/actions/combos/combos";
-import TableComboDetails from "components/Table/TableComboDetails";
+import { AddButton, CancelButton } from '../../UI/Buttons/Buttons';
+import { addComboAction, updateComboAction } from 'redux/actions/combos/combos';
+import TableComboDetails from 'components/Table/TableComboDetails';
 
 const CombosForm = (props) => {
   const { toggle, payload, dishes } = props;
@@ -54,30 +54,30 @@ const CombosForm = (props) => {
     <Formik
       initialValues={{
         // dish header
-        name: payload ? payload.name : "",
-        description: payload ? payload.description : "",
-        image: "",
+        name: payload ? payload.name : '',
+        description: payload ? payload.description : '',
+        image: '',
         fetchedImage: payload?.comboImage?.image,
         // Dish Input
         dishId: null,
         dishName: null,
-        dishInputName: "",
-        quantity: "",
-        dishPrice: "",
-        suggestedPrice: "",
+        dishInputName: '',
+        quantity: '',
+        dishPrice: '',
+        suggestedPrice: '',
         comboDetails: payload ? payload.comboDetails : [],
         dishesSelect: payload ? filteredOptions : dishesSelect,
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().required("Requerido"),
-        description: Yup.string().required("Requerido"),
-        dishInputName: Yup.string().required("Requerido"),
+        name: Yup.string().required('Requerido'),
+        description: Yup.string().required('Requerido'),
+        dishInputName: Yup.string().required('Requerido'),
         quantity: Yup.number()
-          .positive("El valor ingresado debe ser mayor a 0")
-          .required("Requerido"),
+          .positive('El valor ingresado debe ser mayor a 0')
+          .required('Requerido'),
         dishPrice: Yup.number()
-          .positive("El valor ingresado debe ser mayor a 0")
-          .required("Requerido"),
+          .positive('El valor ingresado debe ser mayor a 0')
+          .required('Requerido'),
       })}
     >
       {(props) => {
@@ -94,15 +94,15 @@ const CombosForm = (props) => {
         } = props;
 
         const clearDetailHandler = () => {
-          setFieldValue("dishName", null);
-          setFieldValue("dishId", null);
-          setFieldValue("dishInputName", "");
-          setFieldValue("quantity", "");
-          setFieldValue("dishPrice", "");
+          setFieldValue('dishName', null);
+          setFieldValue('dishId', null);
+          setFieldValue('dishInputName', '');
+          setFieldValue('quantity', '');
+          setFieldValue('dishPrice', '');
 
-          setFieldTouched("dishInputName", false);
-          setFieldTouched("quantity", false);
-          setFieldTouched("dishPrice", false);
+          setFieldTouched('dishInputName', false);
+          setFieldTouched('quantity', false);
+          setFieldTouched('dishPrice', false);
         };
 
         const onSubmitDish = (e) => {
@@ -117,7 +117,7 @@ const CombosForm = (props) => {
             };
             values.comboDetails = [...values.comboDetails, dish];
             setFieldValue(
-              "dishesSelect",
+              'dishesSelect',
               values.dishesSelect
                 .map((dish) => dish)
                 .filter((dish) => dish.value !== values.dishId)
@@ -131,7 +131,7 @@ const CombosForm = (props) => {
             };
             values.comboDetails = [...values.comboDetails, dish];
             setFieldValue(
-              "dishesSelect",
+              'dishesSelect',
               values.dishesSelect
                 .map((dish) => dish)
                 .filter((dish) => dish.value !== values.dishId)
@@ -142,7 +142,7 @@ const CombosForm = (props) => {
 
         const onDeleteItem = (id) => {
           setFieldValue(
-            "comboDetails",
+            'comboDetails',
             values.comboDetails.filter((item) => item.dishId !== id)
           );
 
@@ -156,7 +156,7 @@ const CombosForm = (props) => {
           };
 
           setFieldValue(
-            "dishesSelect",
+            'dishesSelect',
             (values.dishesSelect = [...values.dishesSelect, newOption])
           );
         };
@@ -173,28 +173,28 @@ const CombosForm = (props) => {
             // };
 
             const fd = new FormData();
-            fd.append("Name", values.name);
-            fd.append("Description", values.description);
-            fd.append("Total", comboTotal);
-            fd.append("ComboDetails", JSON.stringify(values.comboDetails));
-            values.image && fd.append("Image", values.image);
-            fd.append("Id", payload.id);
+            fd.append('Name', values.name);
+            fd.append('Description', values.description);
+            fd.append('Total', comboTotal);
+            fd.append('ComboDetails', JSON.stringify(values.comboDetails));
+            values.image && fd.append('Image', values.image);
+            fd.append('Id', payload.id);
 
             Swal.fire({
-              title: "¿Estás seguro/a?",
-              text: "Se procederá con la actualización del combo",
+              title: '¿Estás seguro/a?',
+              text: 'Se procederá con la actualización del combo',
               showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, guardar!",
-              cancelButtonText: "Cancelar",
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '¡Sí, guardar!',
+              cancelButtonText: 'Cancelar',
             }).then((result) => {
               if (result.value) {
                 dispatch(updateComboAction(fd));
                 Swal.fire(
-                  "¡Completado!",
-                  "El combo fué actualizado satisfactoriamente.",
-                  "success"
+                  '¡Completado!',
+                  'El combo fué actualizado satisfactoriamente.',
+                  'success'
                 );
               }
             });
@@ -213,27 +213,27 @@ const CombosForm = (props) => {
             // };
 
             const fd = new FormData();
-            fd.append("Name", values.name);
-            fd.append("Description", values.description);
-            fd.append("Total", comboTotal);
-            fd.append("ComboDetails", JSON.stringify(details));
-            values.image && fd.append("Image", values.image);
+            fd.append('Name', values.name);
+            fd.append('Description', values.description);
+            fd.append('Total', comboTotal);
+            fd.append('ComboDetails', JSON.stringify(details));
+            values.image && fd.append('Image', values.image);
 
             Swal.fire({
-              title: "¿Estás seguro/a?",
-              text: "Se procederá con el registro del combo  ",
+              title: '¿Estás seguro/a?',
+              text: 'Se procederá con el registro del combo  ',
               showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "¡Sí, guardar!",
-              cancelButtonText: "Cancelar",
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: '¡Sí, guardar!',
+              cancelButtonText: 'Cancelar',
             }).then((result) => {
               if (result.value) {
                 dispatch(addComboAction(fd));
                 Swal.fire(
-                  "¡Completado!",
-                  "El combo fué registrado satisfactoriamente.",
-                  "success"
+                  '¡Completado!',
+                  'El combo fué registrado satisfactoriamente.',
+                  'success'
                 );
                 toggle();
               }
@@ -254,8 +254,8 @@ const CombosForm = (props) => {
           let file = event.target.files[0];
 
           reader.onloadend = () => {
-            setFieldValue("image", file);
-            setFieldValue("imagePreviewUrl", reader.result);
+            setFieldValue('image', file);
+            setFieldValue('imagePreviewUrl', reader.result);
           };
 
           reader.readAsDataURL(file);
@@ -266,7 +266,7 @@ const CombosForm = (props) => {
             <DialogContent dividers>
               <form className="form-control">
                 <Grid container alignItems="flex-start" spacing={2}>
-                  <Grid item xs={12} style={{ textAlign: "center" }}>
+                  <Grid item xs={12} style={{ textAlign: 'center' }}>
                     {(values.imagePreviewUrl || values.fetchedImage) && (
                       <img
                         src={
@@ -282,6 +282,22 @@ const CombosForm = (props) => {
                       />
                     )}
                   </Grid>
+									<Grid item xs={12} style={{textAlign: 'center'}}>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={fileSelectedHandler}
+                      style={{ display: 'none' }}
+                      ref={inputFileRef}
+                    />
+                    <button
+                      onClick={() => inputFileRef.current?.click()}
+                      type="button"
+                    >
+                      Elegir Imagen
+                    </button>
+                    <p>{values.image.name}</p>
+                  </Grid>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <TextField
@@ -295,8 +311,8 @@ const CombosForm = (props) => {
                         onBlur={handleBlur}
                         className={
                           errors.name && touched.name
-                            ? "text-input error"
-                            : "text-input"
+                            ? 'text-input error'
+                            : 'text-input'
                         }
                         multiline
                         rows={3}
@@ -319,8 +335,8 @@ const CombosForm = (props) => {
                         onBlur={handleBlur}
                         className={
                           errors.description && touched.description
-                            ? "text-input error"
-                            : "text-input"
+                            ? 'text-input error'
+                            : 'text-input'
                         }
                         multiline
                         rows={3}
@@ -345,13 +361,13 @@ const CombosForm = (props) => {
                   <Grid item xs={12}>
                     <Divider />
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <Autocomplete
                         id="dishInputName"
                         options={values.dishesSelect}
                         getOptionLabel={(option) =>
-                          typeof option === "string" ? option : option.label
+                          typeof option === 'string' ? option : option.label
                         }
                         getOptionSelected={(option, value) =>
                           value === option.label
@@ -359,30 +375,30 @@ const CombosForm = (props) => {
                         value={values.dishName}
                         onChange={(event, newValue) => {
                           if (newValue !== null) {
-                            setFieldValue("dishName", newValue.label);
-                            setFieldValue("dishId", newValue.value);
-                            setFieldValue("dishInputName", newValue.label);
+                            setFieldValue('dishName', newValue.label);
+                            setFieldValue('dishId', newValue.value);
+                            setFieldValue('dishInputName', newValue.label);
                           }
                         }}
                         inputValue={values.dishInputName}
                         onInputChange={(event, newInputValue, reason) => {
-                          setFieldValue("dishInputName", newInputValue);
+                          setFieldValue('dishInputName', newInputValue);
 
-                          if (event.target.value === "") {
-                            setFieldValue("dishInputName", "");
-                            setFieldValue("dishName", null);
-                            setFieldValue("dishId", null);
+                          if (event.target.value === '') {
+                            setFieldValue('dishInputName', '');
+                            setFieldValue('dishName', null);
+                            setFieldValue('dishId', null);
                           }
-                          if (reason === "clear") {
-                            setFieldValue("dishName", null);
-                            setFieldValue("dishId", null);
-                            setFieldValue("dishInputName", "");
+                          if (reason === 'clear') {
+                            setFieldValue('dishName', null);
+                            setFieldValue('dishId', null);
+                            setFieldValue('dishInputName', '');
                           }
                         }}
                         className={
                           errors.dishInputName && touched.dishInputName
-                            ? "text-input error"
-                            : "text-input"
+                            ? 'text-input error'
+                            : 'text-input'
                         }
                         onBlur={handleBlur}
                         noOptionsText="No hay opciones"
@@ -416,14 +432,14 @@ const CombosForm = (props) => {
                         error={errors.quantity && touched.quantity}
                         variant="outlined"
                         type="number"
-                        inputProps={{ min: "1", step: "1" }}
+                        inputProps={{ min: '1', step: '1' }}
                         value={values.quantity}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={
                           errors.quantity && touched.quantity
-                            ? "text-input error"
-                            : "text-input"
+                            ? 'text-input error'
+                            : 'text-input'
                         }
                       />
                       {errors.quantity && touched.quantity && (
@@ -440,14 +456,14 @@ const CombosForm = (props) => {
                         error={errors.dishPrice && touched.dishPrice}
                         variant="outlined"
                         type="number"
-                        inputProps={{ min: "1", step: "1" }}
+                        inputProps={{ min: '1', step: '1' }}
                         value={values.dishPrice}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         className={
                           errors.dishPrice && touched.dishPrice
-                            ? "text-input error"
-                            : "text-input"
+                            ? 'text-input error'
+                            : 'text-input'
                         }
                       />
                       {errors.dishPrice && touched.dishPrice && (
@@ -455,39 +471,23 @@ const CombosForm = (props) => {
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} md={2}>
+                  <Grid item xs={12} md={3}>
                     <FormControl fullWidth={true}>
                       <TextField
                         label="Precio Original"
                         variant="outlined"
                         value={
-                          values.dishId ? filterDishPrice(values.dishId) : ""
+                          values.dishId ? filterDishPrice(values.dishId) : ''
                         }
                         disabled
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} md={2}>
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={fileSelectedHandler}
-                      style={{ display: "none" }}
-                      ref={inputFileRef}
-                    />
-                    <button
-                      onClick={() => inputFileRef.current?.click()}
-                      type="button"
-                    >
-                      Elegir Imagen
-                    </button>
-                    <p>{values.image.name}</p>
-                  </Grid>
                   <Grid
                     item
                     xs={12}
                     className="text-center"
-                    style={{ marginTop: "5px" }}
+                    style={{ marginTop: '5px' }}
                   >
                     <AddButton
                       disabled={

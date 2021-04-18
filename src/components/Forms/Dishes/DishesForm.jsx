@@ -303,6 +303,22 @@ const DishesForm = (props) => {
                       />
                     )}
                   </Grid>
+									<Grid item xs={3} md={12} style={{textAlign: 'center'}}>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={fileSelectedHandler}
+                      style={{ display: "none" }}
+                      ref={inputFileRef}
+                    />
+                    <button
+                      onClick={() => inputFileRef.current?.click()}
+                      type="button"
+                    >
+                      Elegir Imagen
+                    </button>
+                    <p>{values.image.name}</p>
+                  </Grid>
                   <Grid item xs={12} md={5}>
                     <FormControl fullWidth={true}>
                       <TextField
@@ -419,7 +435,7 @@ const DishesForm = (props) => {
                       )}
                     </FormControl>
                   </Grid>
-                  <Grid item xs={9}>
+                  <Grid item xs={12}>
                     <FormControl fullWidth={true}>
                       <TextField
                         required
@@ -444,22 +460,6 @@ const DishesForm = (props) => {
                         </div>
                       )}
                     </FormControl>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <input
-                      type="file"
-                      name="image"
-                      onChange={fileSelectedHandler}
-                      style={{ display: "none" }}
-                      ref={inputFileRef}
-                    />
-                    <button
-                      onClick={() => inputFileRef.current?.click()}
-                      type="button"
-                    >
-                      Elegir Imagen
-                    </button>
-                    <p>{values.image.name}</p>
                   </Grid>
 
                   <Grid item xs={12}>
