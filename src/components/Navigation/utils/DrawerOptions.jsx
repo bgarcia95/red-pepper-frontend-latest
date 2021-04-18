@@ -23,6 +23,7 @@ import { FaUtensils } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { BiTrendingUp } from "react-icons/bi";
 import { BsListCheck } from "react-icons/bs";
+import { GoChecklist } from 'react-icons/go';
 
 import { NavLink } from "react-router-dom";
 import { List, makeStyles } from "@material-ui/core";
@@ -93,6 +94,11 @@ const options = [
     text: "Reporteria",
     icon: <HiOutlineDocumentReport size="1.2rem" />,
     to: "/reporteria",
+  },
+	{
+    text: "Ajuste de Inventario",
+    icon: <GoChecklist size="1.5rem" />,
+    to: "/ajuste-inventario",
   },
 ];
 
