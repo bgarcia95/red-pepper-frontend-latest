@@ -92,7 +92,7 @@ const Navigation = (props) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
+      {location !== '/cocina' && <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           {isAuthenticated ? (
             <IconButton
@@ -129,9 +129,9 @@ const Navigation = (props) => {
             </div>
           ) : null}
         </Toolbar>
-      </AppBar>
+      </AppBar>}
 
-      {isAuthenticated ? (
+      {location !== '/cocina' ?? isAuthenticated ? (
         <nav className={classes.drawer} aria-label="menu options">
           {/* Mobile Version */}
           <Hidden smUp implementation="css">

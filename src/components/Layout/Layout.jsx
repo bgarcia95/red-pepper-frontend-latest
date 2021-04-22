@@ -36,7 +36,7 @@ const Layout = (props) => {
         location={props.pathname}
       />
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        {props.pathname !== '/cocina' && <div className={classes.toolbar} />}
         <AppRouter isAuthenticated={props.isAuthenticated} />
       </main>
     </div>
