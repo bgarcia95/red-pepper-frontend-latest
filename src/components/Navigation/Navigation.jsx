@@ -131,7 +131,7 @@ const Navigation = (props) => {
         </Toolbar>
       </AppBar>}
 
-      {location !== '/cocina' ?? isAuthenticated ? (
+      {(location !== '/cocina' || location !== '/login') && isAuthenticated ? (
         <nav className={classes.drawer} aria-label="menu options">
           {/* Mobile Version */}
           <Hidden smUp implementation="css">
