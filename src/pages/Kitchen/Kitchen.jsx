@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { Divider, Typography } from "@material-ui/core";
 import { getCombosAction } from "redux/actions/combos/combos";
 import { getDishesAction } from "redux/actions/dishes/dishes";
 import { useDispatch, useSelector } from "react-redux";
 import Column from "./Column";
 import {
   addOrderSignalR,
-  fetchOrders,
+	fetchOrdersKitchen,
   updateOrderDetailsSignalR,
   updateOrderSignalR,
 } from "redux/actions/signalR/signalROrders";
@@ -27,7 +26,7 @@ const Kitchen = (props) => {
   useEffect(() => {
     const loadCombos = () => dispatch(getCombosAction());
     const loadDishes = () => dispatch(getDishesAction());
-    const loadOrders = () => dispatch(fetchOrders());
+    const loadOrders = () => dispatch(fetchOrdersKitchen());
     loadCombos();
     loadDishes();
     loadOrders();
@@ -65,9 +64,8 @@ const Kitchen = (props) => {
     // console.log("Final Details Alt", finalDetailsAlt);
   }, [orders, fetchedDetails]);
 
-  const onUpdateAndDisplayDetails = () => {
+  const onUpdateAndDisplayDetails = async () => {
     dispatch(updateOrderDetailsSignalR(updatedDetailsArray()));
-    dispatch(fetchOrders());
   };
 
   useEffect(() => {
@@ -97,21 +95,21 @@ const Kitchen = (props) => {
           console.log("DetailsInProcess Details", details);
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails();
+          onUpdateAndDisplayDetails().then(() => dispatch(fetchOrdersKitchen()));
         });
 
         connection.on("DetailsFinished", (details) => {
           console.log("DetailsFinished Details", details);
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails();
+          onUpdateAndDisplayDetails().then(()=> dispatch(fetchOrdersKitchen()));
         });
 
         connection.on("DetailsDelivered", (details) => {
           console.log("DetailsDelivered Details", details);
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails();
+          onUpdateAndDisplayDetails().then(()=> dispatch(fetchOrdersKitchen()));
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
@@ -127,19 +125,12 @@ const Kitchen = (props) => {
   }, [dispatch]);
 
   return (
-    <div>
-      <Typography variant="h4" style={{ textAlign: "center" }}>
-        Listado de Pedidos
-      </Typography>
-
-      <div style={{ margin: "20px 0" }}>
-        <Divider />
-      </div>
+    <div style={{width: '100vw', height: '100vh'}}>
 
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-evenly",
         }}
       >
         {columns.map((column) => (
