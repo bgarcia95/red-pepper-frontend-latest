@@ -22,7 +22,6 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { useEffect } from "react";
 import MomentUtils from "@date-io/moment";
 import { green } from "@material-ui/core/colors";
 
