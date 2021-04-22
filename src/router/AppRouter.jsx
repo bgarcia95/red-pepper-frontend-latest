@@ -26,9 +26,10 @@ const AppRouter = (props) => {
   let appRoutes = !token && (
     <Switch>
       <Route exact path="/login" component={Login} />
-
+      <Route exact path="/cocina" component={Kitchen} />
       {/* This one will catch anything that has no route. */}
       <Redirect to="/login" />
+
     </Switch>
   );
 
@@ -47,7 +48,6 @@ const AppRouter = (props) => {
         <Route exact path="/ordenes" component={Orders} />
         <Route exact path="/ordenes/elegir-mesa" component={PickTable} />
         <Route path="/ordenes/:tableId/preparar-orden" component={Order} />
-        <Route exact path="/cocina" component={Kitchen} />
         <Route exact path="/reporteria/inventario" component={InventoryReporting} />
         <Route exact path="/reporteria/ventas" component={SalesReporting} />
         <Route exact path="/ajuste-inventario" component={InventoryAdjustment} />
