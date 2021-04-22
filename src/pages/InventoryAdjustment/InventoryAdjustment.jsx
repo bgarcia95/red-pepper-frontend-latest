@@ -1,31 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect} from 'react';
 import {
-  createMuiTheme,
   Divider,
   FormControl,
   Grid,
-  InputLabel,
-  makeStyles,
-  MenuItem,
-  Select,
   TextField,
-  ThemeProvider,
   Typography,
 } from '@material-ui/core';
 import { AddButton } from 'components/UI/Buttons/Buttons';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  generateCurrentInventory,
-  generateSpecificDateInventory,
-  generateRangeDateInventory,
-} from 'redux/actions/reporting/reporting';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { useEffect } from 'react';
-import MomentUtils from '@date-io/moment';
-import { green } from '@material-ui/core/colors';
 import { getSuppliesAction } from 'redux/actions/supplies/supplies';
 import * as Yup from 'yup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -33,76 +15,7 @@ import { Formik } from 'formik';
 import httpService from 'services/httpService';
 import Swal from 'sweetalert2';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    // minWidth: 200,
-    width: '100%',
-  },
-  datePickerInput: {
-    width: '95%',
-  },
-  datePicker: {
-    margin: '0 30px',
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  root: {
-    flexGrow: 1,
-    textAlign: 'center',
-  },
-}));
-
-const defaultMaterialTheme = createMuiTheme({
-  overrides: {
-    MuiPickersToolbar: {
-      toolbar: {
-        backgroundColor: green[700],
-      },
-    },
-    MuiPickersDay: {
-      daySelected: {
-        backgroundColor: green[400],
-        '&:hover': {
-          backgroundColor: green[700],
-          color: 'white',
-        },
-      },
-      current: {
-        color: green[900],
-      },
-    },
-    MuiPickersModal: {
-      dialogAction: {
-        color: green[400],
-      },
-    },
-    MuiPickersYear: {
-      yearSelected: {
-        color: green[700],
-      },
-      root: {
-        '&:focus': {
-          color: green[700],
-        },
-      },
-    },
-    MuiPickersMonth: {
-      monthSelected: {
-        color: green[700],
-      },
-      root: {
-        '&:focus': {
-          color: green[700],
-        },
-      },
-    },
-  },
-});
-
 const InventoryAdjustment = () => {
-  const classes = useStyles();
 
   const supplies = useSelector((state) => state.supplies.supplies);
 
@@ -150,9 +63,11 @@ const InventoryAdjustment = () => {
           setFieldValue('supplyId', null);
           setFieldValue('supplyInputName', '');
           setFieldValue('quantity', '');
+          setFieldValue('comment', '');
 
           setFieldTouched('supplyInputName', false);
           setFieldTouched('quantity', false);
+          setFieldTouched('comment', false);
         };
 
         const onSubmit = (e) => {
@@ -181,6 +96,8 @@ const InventoryAdjustment = () => {
                 'El ajuste de inventario se realizó satisfactoriamente.',
                 'success'
               );
+
+							clearDetailHandler();
             }
           });
 					} catch (error) {
@@ -220,7 +137,7 @@ const InventoryAdjustment = () => {
                       onInputChange={(event, newInputValue, reason) => {
                         setFieldValue('supplyInputName', newInputValue);
 
-                        if (event.target.value === '') {
+                        if (event?.target?.value === '') {
                           setFieldValue('supplyInputName', '');
                           setFieldValue('supplyName', null);
                           setFieldValue('supplyId', null);
