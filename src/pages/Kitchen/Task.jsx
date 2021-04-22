@@ -39,17 +39,18 @@ const Task = (props) => {
               key={index}
             >
               <Typography variant="h6"> {props.order.orderNumber}</Typography>
-              <p>
+              <p style={{margin: 0, padding: 0}}>
                 {detail.qty}x{" "}
                 {getDishName(detail.dishId) || getComboName(detail.comboId)}
               </p>
               {detail.comments && (
                 <Fragment>
-                  <Typography variant="subtitle2">Comentarios:</Typography>
+                  <p style={{margin: '10px 0'}}>Comentarios:</p>
                   {detailCommentsArray.map((comment, index) => (
                     <p
                       key={index}
-                      style={{ padding: "5px 0", margin: "5px 0" }}
+                      // style={{ padding: "5px 0", margin: "5px 0" }}
+                      style={{margin: 0, padding: 0}}
                     >
                       - {comment}
                     </p>

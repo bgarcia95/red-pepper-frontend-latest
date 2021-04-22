@@ -63,7 +63,7 @@ const Column = (props) => {
           backgroundColor: getBgColor(props.column.title),
         }}
       >
-        <Typography variant="h5" style={{ color: '#fff' }}>
+        <Typography variant="h6" style={{ color: '#fff' }}>
           {props.column.title}
         </Typography>
       </div>
