@@ -15,10 +15,10 @@ export const fetchOrders = () => {
 };
 
 export const fetchOrdersKitchen = () => {
-	return (dispatch) => {
-		http.get("http://localhost:5000/api/Kitchen").then((response) => {
-			dispatch({ type: FETCH_ORDERS, orders: response.data });
-		});
+	return async (dispatch) => {
+		const response = await http.get("/Kitchen");
+
+		dispatch({ type: FETCH_ORDERS, orders: response.data });
 	};
 }
 
