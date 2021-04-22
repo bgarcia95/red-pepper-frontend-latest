@@ -136,7 +136,7 @@ const SalesReporting = () => {
           <Typography variant="h5" align="center">
             Reportería Ventas
           </Typography>
-          <Grid container className={classes.root} style={{ margin: "20px 0" }} className="text-center">
+          <Grid container style={{ margin: "20px 0" }} className="text-center">
             <Grid item xs={12}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">
