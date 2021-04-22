@@ -47,9 +47,11 @@ const Column = (props) => {
         border: '1px solid lightgrey',
         borderRadius: '2px',
         // overflow: 'hidden',
-        minWidth: '300px',
+        flexGrow: 1,
+        minWidth: '275px',
         maxHeight: '90vh',
         display: 'flex',
+        // flex: 1,
         flexDirection: 'column',
       }}
     >
