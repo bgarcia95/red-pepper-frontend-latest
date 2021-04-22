@@ -13,13 +13,11 @@ import {
   FaPepperHot,
   FaUserFriends,
   FaUserCheck,
-  // FaReceipt,
   FaHamburger,
 } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { FaList } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { FaUtensils } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { BiTrendingUp } from "react-icons/bi";
 import { BsListCheck } from "react-icons/bs";
@@ -79,16 +77,6 @@ const options = [
     text: "Clientes",
     icon: <FaUserCheck size="1.2rem" />,
     to: "/clientes",
-  },
-  // {
-  //   text: "Ordenes",
-  //   icon: <FaReceipt size="1.2rem" />,
-  //   to: "/ordenes",
-  // },
-  {
-    text: "Cocina",
-    icon: <FaUtensils size="1.2rem" />,
-    to: "/cocina",
   },
   {
     text: "Reporteria",
