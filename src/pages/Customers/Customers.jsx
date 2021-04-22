@@ -19,7 +19,7 @@ const Customers = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     {
       title: "Nombre Completo",
       field: "name",

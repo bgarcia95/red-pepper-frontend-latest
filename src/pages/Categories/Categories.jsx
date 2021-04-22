@@ -17,7 +17,7 @@ const Categories = () => {
 
   const categories = useSelector((state) => state.categories.categories);
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     { title: "Categoría", field: "name" },
     { title: "Descripción", field: "description" },
   ];

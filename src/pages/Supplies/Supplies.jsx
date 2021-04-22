@@ -19,7 +19,7 @@ const Supplies = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     { title: "Nombre", field: "name" },
     { title: "Presentación", field: "presentation" },
     { title: "Descripción", field: "description" },

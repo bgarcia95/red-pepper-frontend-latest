@@ -22,7 +22,7 @@ const Combos = () => {
   }, [dispatch]);
 
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     { title: "Nombre", field: "name" },
     { title: "Descripción", field: "description" },
     {

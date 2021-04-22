@@ -15,7 +15,7 @@ const CustomerFormTables = (props) => {
   const { toggle, table, customers, history } = props;
   const dispatch = useDispatch();
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     {
       title: "Nombre Completo",
       field: "name",

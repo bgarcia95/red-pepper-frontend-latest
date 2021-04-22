@@ -17,7 +17,7 @@ const Suppliers = () => {
 
   const suppliers = useSelector((state) => state.suppliers.suppliers);
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     { title: "Nombre", field: "name" },
     { title: "Dirección", field: "address" },
     { title: "Teléfono", field: "telephone" },

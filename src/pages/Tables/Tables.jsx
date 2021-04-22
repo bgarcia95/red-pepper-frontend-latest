@@ -19,7 +19,7 @@ const Tables = () => {
   const tables = useSelector((state) => state.tables.tables);
 
   const tableHeaders = [
-    { title: "ID", field: "id" },
+    // { title: "ID", field: "id" },
     { title: "Nombre", field: "name" },
     { title: "Descripción", field: "description" },
     { title: "N° de Sillas", field: "chairs" },
