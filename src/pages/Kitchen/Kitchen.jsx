@@ -68,9 +68,10 @@ const Kitchen = (props) => {
     dispatch(updateOrderDetailsSignalR(updatedDetailsArray()));
   };
 
+
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5000/redpeper/app")
+      .withUrl(`http://192.168.1.3:5000/redpeper/app`) // enter local ip address
       .withAutomaticReconnect()
       .build();
 
