@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Column from "./Column";
 import {
   addOrderSignalR,
-	fetchOrdersKitchen,
+  fetchOrdersKitchen,
   updateOrderDetailsSignalR,
   updateOrderSignalR,
 } from "redux/actions/signalR/signalROrders";
@@ -68,7 +68,6 @@ const Kitchen = (props) => {
     dispatch(updateOrderDetailsSignalR(updatedDetailsArray()));
   };
 
-
   useEffect(() => {
     const connection = new HubConnectionBuilder()
       .withUrl(`http://192.168.1.3:5000/redpeper/app`) // enter local ip address
@@ -96,21 +95,28 @@ const Kitchen = (props) => {
           console.log("DetailsInProcess Details", details);
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails().then(() => dispatch(fetchOrdersKitchen()));
+          onUpdateAndDisplayDetails().then(() =>
+            dispatch(fetchOrdersKitchen())
+          );
         });
 
         connection.on("DetailsFinished", (details) => {
           console.log("DetailsFinished Details", details);
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails().then(()=> dispatch(fetchOrdersKitchen()));
+          onUpdateAndDisplayDetails().then(() =>
+            dispatch(fetchOrdersKitchen())
+          );
         });
 
         connection.on("DetailsDelivered", (details) => {
           console.log("DetailsDelivered Details", details);
+          
           setFetchedDetails(details);
 
-          onUpdateAndDisplayDetails().then(()=> dispatch(fetchOrdersKitchen()));
+          onUpdateAndDisplayDetails().then(() =>
+            dispatch(fetchOrdersKitchen())
+          );
         });
       })
       .catch((e) => console.log("Connection failed: ", e));
@@ -125,9 +131,14 @@ const Kitchen = (props) => {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  return (
-    <div style={{width: '100%', height: '100%'}}>
+  useEffect(() => {
+    const interval = setInterval(() => dispatch(fetchOrdersKitchen()), 15000);
 
+    return () => clearInterval(interval);
+  }, [dispatch]);
+
+  return (
+    <div style={{ width: "100%", height: "100%" }}>
       <div
         style={{
           display: "flex",
