@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const httpService = axios.create({
-  baseURL: `http://192.168.1.3:5000/api`, // enter local ip address
+  baseURL: `https://192.168.1.9:5000/api`, // enter local ip address
 });
 
 const setJwt = (jwt) => {
