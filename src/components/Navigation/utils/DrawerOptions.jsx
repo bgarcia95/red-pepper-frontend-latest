@@ -54,7 +54,7 @@ const options = [
     to: "/categorias",
   },
   {
-    text: "Platos",
+    text: "Individuales",
     icon: <FaHamburger size="1.2rem" />,
     to: "/platos",
   },
