@@ -131,11 +131,11 @@ const Kitchen = (props) => {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  useEffect(() => {
-    const interval = setInterval(() => dispatch(fetchOrdersKitchen()), 15000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => dispatch(fetchOrdersKitchen()), 15000);
 
-    return () => clearInterval(interval);
-  }, [dispatch]);
+  //   return () => clearInterval(interval);
+  // }, [dispatch]);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
