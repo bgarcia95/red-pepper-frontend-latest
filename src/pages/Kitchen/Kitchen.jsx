@@ -11,6 +11,8 @@ import {
   updateOrderSignalR,
 } from "redux/actions/signalR/signalROrders";
 import { v4 as uuid } from "uuid";
+import Sound from "react-sound";
+import NotificationSound from "../../assets/sounds/notification-sound.wav";
 
 const Kitchen = (props) => {
   const columns = [
@@ -70,7 +72,7 @@ const Kitchen = (props) => {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl(`http://192.168.1.9:5000/redpeper/app`) // enter local ip address
+      .withUrl(`http://192.168.1.3:5000/redpeper/app`) // enter local ip address
       .withAutomaticReconnect()
       .build();
 
@@ -111,7 +113,7 @@ const Kitchen = (props) => {
 
         connection.on("DetailsDelivered", (details) => {
           console.log("DetailsDelivered Details", details);
-          
+
           setFetchedDetails(details);
 
           onUpdateAndDisplayDetails().then(() =>
@@ -137,6 +139,41 @@ const Kitchen = (props) => {
   //   return () => clearInterval(interval);
   // }, [dispatch]);
 
+  const [inQueueDetails, setInQueueDetails] = useState(0);
+
+  useEffect(() => {
+    const containsInQueueDetails = orders
+      ?.map((or) =>
+        or.orderDetails?.find((orDet) =>
+          orDet.status === "En Cola" ? orDet : null
+        )
+      )
+      .filter((det) => det);
+
+    setInQueueDetails(containsInQueueDetails?.length ?? 0);
+  }, [orders]);
+
+  // const notificationAudio = new Audio(NotificationSound);
+
+  // const playSound = (audioFile) => {
+  //   if (inQueueDetails > 0) {
+  //     audioFile.play();
+  //   } else {
+  //     audioFile.pause();
+  //   }
+  // };
+
+  // console.log('inQueueDetails', inQueueDetails);
+
+  // useEffect(() => {
+  //   if (inQueueDetails > 0) {
+  //     playSound(notificationAudio);
+  //     notificationAudio.loop = true;
+  //   } else {
+  //     notificationAudio.pause();
+  //   }
+  // }, [inQueueDetails, notificationAudio]);
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <div
@@ -145,6 +182,7 @@ const Kitchen = (props) => {
           justifyContent: "space-evenly",
         }}
       >
+        <Sound url={NotificationSound} loop playStatus={orders.length > 0 && inQueueDetails > 0 ? 'PLAYING' : 'STOPPED'}/>
         {columns.map((column) => (
           <div
             style={{

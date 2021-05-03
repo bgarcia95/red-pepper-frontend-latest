@@ -39,6 +39,8 @@ const Column = (props) => {
     })
     .filter((det) => det > -1);
 
+    const mergedDetails = props.orders.map(order => order?.orderDetails?.map(det => det)).flat().sort((a,b) => a.id - b.id);
+    // console.log('mergedDetails Column', mergedDetails);
 
   return (
     <div
@@ -88,15 +90,20 @@ const Column = (props) => {
             </p>
           )
         )}
-        {props.orders.map((order, index) => {
+        {mergedDetails?.map((detail, index) => {
+            const orderInfo = props.orders?.find((or) => or.id === detail?.orderId);
+            // console.log('orderInfo', orderInfo)
+
           return (
             <Task
-              key={order.id}
-              order={order}
+              key={detail?.id || index}
+              detail={detail}
               index={index}
               combos={props.combos}
               dishes={props.dishes}
               status={props.column.status}
+              orderNumber={orderInfo?.orderNumber}
+              orderType={orderInfo?.orderTypeId || orderInfo?.orderType}
             />
           );
         })}
