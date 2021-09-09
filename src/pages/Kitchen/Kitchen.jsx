@@ -72,7 +72,7 @@ const Kitchen = (props) => {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl(`http://192.168.1.3:5000/redpeper/app`) // enter local ip address
+      .withUrl(`https://redpepper-app.herokuapp.com/redpeper/app`) // enter local ip address
       .withAutomaticReconnect()
       .build();
 
@@ -187,6 +187,7 @@ const Kitchen = (props) => {
           <div
             style={{
               display: "flex",
+              width: '100%'
             }}
             key={uuid()}
           >
