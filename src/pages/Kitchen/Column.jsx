@@ -50,7 +50,7 @@ const Column = (props) => {
         borderRadius: '2px',
         // overflow: 'hidden',
         flexGrow: 1,
-        minWidth: '275px',
+        minWidth: '30vw',
         maxHeight: '90vh',
         display: 'flex',
         // flex: 1,
